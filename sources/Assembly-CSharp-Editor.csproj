@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{51274145-2D58-5DB3-8DFD-DD0B47247B60}</ProjectGuid>
+	<ProjectGuid>{B800E62B-0A7C-F722-369E-AD2960E6A5C0}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,13 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\TransformExTest.cs" />
-     <Compile Include="Assets\Scripts\Utils\CommandMonoBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvent.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEventArgs.cs" />
-     <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
-     <Compile Include="Assets\Scripts\Utils\PendingCommand.cs" />
-     <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
+     <Compile Include="Assets\Scripts\Editor\TaggedGameObjectsLister.cs" />
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{51274145-2D58-5DB3-8DFD-DD0B47247B60}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

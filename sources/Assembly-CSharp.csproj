@@ -44,7 +44,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Utils\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\TransformExTest.cs" />
+     <Compile Include="Assets\Scripts\Utils\CommandMonoBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Utils\GameEvent.cs" />
+     <Compile Include="Assets\Scripts\Utils\GameEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
+     <Compile Include="Assets\Scripts\Utils\PendingCommand.cs" />
+     <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,9 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{F2AB5FB2-18DA-8B84-623F-45579AA4BA11}") = "sources", "Assembly-CSharp-vs.csproj", "{51274145-2D58-5DB3-8DFD-DD0B47247B60}"
+Project("{F2AB5FB2-18DA-8B84-623F-45579AA4BA11}") = "sources", "Assembly-CSharp.csproj", "{51274145-2D58-5DB3-8DFD-DD0B47247B60}"
 EndProject
-Project("{F2AB5FB2-18DA-8B84-623F-45579AA4BA11}") = "sources", "Assembly-CSharp-Editor-vs.csproj", "{B800E62B-0A7C-F722-369E-AD2960E6A5C0}"
+Project("{F2AB5FB2-18DA-8B84-623F-45579AA4BA11}") = "sources", "Assembly-CSharp-Editor.csproj", "{B800E62B-0A7C-F722-369E-AD2960E6A5C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,7 +23,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-		GlobalSection(MonoDevelopProperties) = preSolution
+	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -41,5 +41,4 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
-
 EndGlobal
