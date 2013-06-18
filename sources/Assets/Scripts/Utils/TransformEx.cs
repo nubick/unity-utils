@@ -4,6 +4,8 @@ namespace Assets.Scripts.Utils
 {
 	public static class TransformEx
 	{
+		#region Position...
+
 		public static void SetPosition(this Transform transform, float x, float y, float z)
 		{
 			transform.position = new Vector3(x, y, z);
@@ -61,21 +63,38 @@ namespace Assets.Scripts.Utils
 
 		public static void IncLocalX(this Transform transform, float dx)
 		{
-			transform.localPosition = new Vector3(transform.localPosition.x + dx, transform.localPosition.y, transform.localPosition.z);
+			transform.localPosition = new Vector3(transform.localPosition.x + dx, transform.localPosition.y,
+			                                      transform.localPosition.z);
 		}
 
 		public static void IncLocalY(this Transform transform, float dy)
 		{
-			transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + dy, transform.localPosition.z);
+			transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + dy,
+			                                      transform.localPosition.z);
 		}
 
 		public static void IncLocalZ(this Transform transform, float dz)
 		{
-			transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + dz);
+			transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y,
+			                                      transform.localPosition.z + dz);
 		}
 
+		#endregion
 
+		public static void SetScaleX(this Transform transform, float scaleX)
+		{
+			transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+		}
 
+		public static void SetScaleY(this Transform transform, float scaleY)
+		{
+			transform.localScale = new Vector3(transform.localScale.x, scaleY, transform.localScale.z);
+		}
+
+		public static void SetScaleZ(this Transform transform, float scaleZ)
+		{
+			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, scaleZ);
+		}
 
 		public static void SetRotation(this Transform transform, float angle)
 		{
