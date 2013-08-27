@@ -35,7 +35,7 @@ namespace Assets.Scripts.Utils
 
 		public bool PopIsOccurred(bool restart = true)
 		{
-			bool isOccurred = IsOccured();
+			bool isOccurred = IsOccurred();
 			if (isOccurred)
 			{
 				if (restart)
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Utils
 			return isOccurred;
 		}
 
-		public bool IsOccured()
+		public bool IsOccurred()
 		{
 			return _isActive && _lastTimeOccured + _duration <= Time.time;
 		}
