@@ -24,14 +24,26 @@ namespace Assets.Scripts.Utils
 			}
 		}
 
-		protected void Subscribe<TEventArgs>(GameEvent<TEventArgs> gameEvent, Action<TEventArgs> action)
+		protected void Subscribe<TEventArgs>(GameEvent<TEventArgs> gameEvent, Action<TEventArgs> action, bool isPrior = false)
 			where TEventArgs : GameEventArgs
 		{
-			gameEvent.Subscribe(args =>
+			if (isPrior)
+			{
+				gameEvent.Subscribe(args =>
+				{
+					PendingCommand<TEventArgs> command = new PendingCommand<TEventArgs>(action, args);
+					_pendingCommands.Enqueue(command);
+					return command;
+				});
+			}
+			else
+			{
+				gameEvent.Subscribe(args =>
 				{
 					PendingCommand<TEventArgs> command = new PendingCommand<TEventArgs>(action, args);
 					_pendingCommands.Enqueue(command);
 				});
+			}
 		}
 
 		protected void Subscribe<TEventArgs>(GameEvent<TEventArgs> gameEvent, Action<TEventArgs> action, float delay)
@@ -45,4 +57,5 @@ namespace Assets.Scripts.Utils
 		}
 
 	}
+
 }
