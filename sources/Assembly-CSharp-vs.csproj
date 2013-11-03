@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Tests\GameRandomTest.cs" />
     <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
     <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
     <Compile Include="Assets\Scripts\Utils\CommandMonoBehaviour.cs" />

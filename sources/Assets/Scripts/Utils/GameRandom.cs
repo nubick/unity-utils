@@ -25,5 +25,11 @@ namespace Assets.Scripts.Utils
 				array[indRnd] = source[i];
 			}
 		}
+
+		public static T NextEnum<T>()
+		{
+			var values = Enum.GetValues(typeof(T));
+			return (T)values.GetValue(Random.Range(0, values.Length));
+		}
 	}
 }
