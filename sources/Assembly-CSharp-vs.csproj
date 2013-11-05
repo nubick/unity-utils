@@ -49,6 +49,7 @@
     <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
     <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
     <Compile Include="Assets\Scripts\Utils\CommandMonoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Utils\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Utils\GameEventArgs.cs" />
     <Compile Include="Assets\Scripts\Utils\GameRandom.cs" />
