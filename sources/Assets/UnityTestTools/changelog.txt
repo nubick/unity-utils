@@ -1,0 +1,26 @@
+Version 1.1
+Fixes:
+- fixed display error that happened when unit test class inherited from another TestFixture class
+- fixed false positive result when "Succeed on assertions" was checked and no assertions were present in the test
+- fixed XmlResultWriter to be generate XML file compatible with XSD scheme
+- XmlResultWriter result writer was rewritten to remove XML libraries dependency
+- Fixed an issue with a check that should be executed once after a specified frame in OnUpdate.
+- added missing file UnityUnitTest.cs
+Improvements:
+- Added Japanese translation of the documentation
+- ErrorPause value will be reverted to previous state after test run finishes
+- Assertion Component will not copy reference to a GameObject if the GameObject is the same as the component is attached to. Instead, it will set the reference to the new GameObject.
+- Integration tests batch runner can now run multiple scenes
+- Unit test runner will now include tests written in UnityScript and Boo
+- Unit tests will not run automatically if the compilation failes
+- Added scene auto-save option to the Unit Test Runner 
+Other:
+- changed icons
+- restructured project files
+- moved XmlResultWriter to Common folder
+- added UnityScript and Boo unit tests examples
+- added more unit tests examples
+- Test runners visual adjustments
+
+Version 1.0
+- Initial release

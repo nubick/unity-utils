@@ -31,5 +31,11 @@ namespace Assets.Scripts.Utils
 			var values = Enum.GetValues(typeof(T));
 			return (T)values.GetValue(Random.Range(0, values.Length));
 		}
+
+	    public static float NextDiscrete(float min, float max, int count)
+	    {
+	        if (count < 2) return min;
+	        return min + Random.Range(0, count)*(max - min)/(count - 1);
+	    }
 	}
 }
