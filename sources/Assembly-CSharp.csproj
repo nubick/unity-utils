@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
      <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
+     <Compile Include="Assets\Scripts\Utils\2D\Parallax.cs" />
      <Compile Include="Assets\Scripts\Utils\CommandMonoBehaviour.cs" />
      <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
      <Compile Include="Assets\Scripts\Utils\GameEvent.cs" />

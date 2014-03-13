@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Utils\Extensions.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Utils\2D\Parallax.cs">
     <Files>
-      <File FileName="Assets\Scripts\Utils\Extensions.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Utils\2D\Parallax.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
