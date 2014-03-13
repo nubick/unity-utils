@@ -1,5 +1,5 @@
 ﻿
-namespace Assets.Scripts.Utils
+namespace Assets.Scripts.Utils.GameEvents
 {
 	public class GameEventArgs
 	{

@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
      <Compile Include="Assets\Scripts\Utils\GameEvent.cs" />
      <Compile Include="Assets\Scripts\Utils\GameEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Utils\GameEventCallback.cs" />
      <Compile Include="Assets\Scripts\Utils\GameRandom.cs" />
      <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
      <Compile Include="Assets\Scripts\Utils\PendingCommand.cs" />
