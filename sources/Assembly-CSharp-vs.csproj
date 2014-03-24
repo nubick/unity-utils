@@ -47,10 +47,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Tests\Scene2DUI.cs" />
     <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
     <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
     <Compile Include="Assets\Scripts\Utils\2D\Parallax.cs" />
-    <Compile Include="Assets\Scripts\Utils\BlinkTween.cs" />
+    <Compile Include="Assets\Scripts\Utils\Tweens\BlinkTween.cs" />
     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
     <Compile Include="Assets\Scripts\Utils\GameEvents\CommandMonoBehaviour.cs" />
     <Compile Include="Assets\Scripts\Utils\GameEvents\GameEvent.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Assets\Scripts\Utils\SortingLayerSettings.cs" />
     <Compile Include="Assets\Scripts\Utils\TimeEvent.cs" />
     <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
+    <Compile Include="Assets\Scripts\Utils\Tweens\FlashTween.cs" />
     <Compile Include="Assets\Scripts\Utils\UI\ButtonHandler.cs" />
     <Compile Include="Assets\Scripts\Utils\UI\ButtonScale.cs" />
     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />

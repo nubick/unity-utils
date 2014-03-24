@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Utils
+namespace Assets.Scripts.Utils.Tweens
 {
     public class BlinkTween : MonoBehaviour
     {
