@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Utils\TimeEvent.cs" />
      <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
      <Compile Include="Assets\Scripts\Utils\Tweens\BlinkTween.cs" />
+     <Compile Include="Assets\Scripts\Utils\Tweens\FadeOutTween.cs" />
      <Compile Include="Assets\Scripts\Utils\Tweens\FlashTween.cs" />
      <Compile Include="Assets\Scripts\Utils\UI\ButtonHandler.cs" />
      <Compile Include="Assets\Scripts\Utils\UI\ButtonScale.cs" />
