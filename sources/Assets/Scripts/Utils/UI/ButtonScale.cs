@@ -2,11 +2,12 @@
 
 namespace Assets.Scripts.Utils.UI
 {
+    [RequireComponent(typeof(BoxCollider2D))]
 	public class ButtonScale : MonoBehaviourBase
 	{
 		private Vector3 _originalScale;
 		private bool _isScaled;
-		public float Scale = 1.1f;
+		public float Scale = 1.05f;
 
 		public void OnMouseEnter()
 		{

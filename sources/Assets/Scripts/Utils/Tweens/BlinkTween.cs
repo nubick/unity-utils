@@ -7,8 +7,9 @@ namespace Assets.Scripts.Utils.Tweens
     {
         public float BlinkDelay;
 
-        public void Start()
+        public void OnEnable()
         {
+            StopAllCoroutines();
             StartCoroutine(BlinkCoroutine());
         }
 
