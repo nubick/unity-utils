@@ -1,138 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-	<ProductVersion>10.0.20506</ProductVersion>
-	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{51274145-2D58-5DB3-8DFD-DD0B47247B60}</ProjectGuid>
-	<OutputType>Library</OutputType>
-	<AppDesignerFolder>Properties</AppDesignerFolder>
-	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
-	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-	<FileAlignment>512</FileAlignment>
-	<BaseDirectory>Assets</BaseDirectory>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{51274145-2D58-5DB3-8DFD-DD0B47247B60}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	<DebugSymbols>true</DebugSymbols>
-	<DebugType>full</DebugType>
-	<Optimize>false</Optimize>
-	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
-	<ErrorReport>prompt</ErrorReport>
-	<WarningLevel>4</WarningLevel>
-	<NoWarn>0169</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_4;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	<DebugType>pdbonly</DebugType>
-	<Optimize>true</Optimize>
-	<OutputPath>Temp\bin\Release\</OutputPath>
-	<DefineConstants>TRACE</DefineConstants>
-	<ErrorReport>prompt</ErrorReport>
-	<WarningLevel>4</WarningLevel>
-	<NoWarn>0169</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="System" />
+    <Reference Include="System" />
     <Reference Include="System.XML" />
-	<Reference Include="System.Core" />
-	<Reference Include="System.Xml.Linq" />
-	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
-	</Reference>
-	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
-	</Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Tests\Scene2DUI.cs" />
-     <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
-     <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
-     <Compile Include="Assets\Scripts\Utils\2D\Parallax.cs" />
-     <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvents\CommandMonoBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvents\GameEvent.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvents\GameEventArgs.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvents\GameEventCallback.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameEvents\PendingCommand.cs" />
-     <Compile Include="Assets\Scripts\Utils\GameRandom.cs" />
-     <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
-     <Compile Include="Assets\Scripts\Utils\SiteLocker.cs" />
-     <Compile Include="Assets\Scripts\Utils\Social\SocialLink.cs" />
-     <Compile Include="Assets\Scripts\Utils\SortingLayerSettings.cs" />
-     <Compile Include="Assets\Scripts\Utils\TimeEvent.cs" />
-     <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
-     <Compile Include="Assets\Scripts\Utils\Tweens\BlinkTween.cs" />
-     <Compile Include="Assets\Scripts\Utils\Tweens\FadeOutTween.cs" />
-     <Compile Include="Assets\Scripts\Utils\Tweens\FlashTween.cs" />
-     <Compile Include="Assets\Scripts\Utils\UI\ButtonClickScale.cs" />
-     <Compile Include="Assets\Scripts\Utils\UI\ButtonHandler.cs" />
-     <Compile Include="Assets\Scripts\Utils\UI\ButtonScale.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponentExt.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBase.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\BoolComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ColliderComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBase.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\FloatComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\GeneralComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IntComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IsRenderedByCamera.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\StringComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\TransformComparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ValueDoesNotChange.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector2Comparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector3Comparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector4Comparer.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\Comparers\VectorComparerBase.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\PropertyResolver.cs" />
-     <Compile Include="Assets\UnityTestTools\Assertions\ScriptSelector.cs" />
-     <Compile Include="Assets\UnityTestTools\Common\ITestResult.cs" />
-     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\ResultSummarizer.cs" />
-     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\StackTraceFilter.cs" />
-     <Compile Include="Assets\UnityTestTools\Common\ResultWriter\XmlResultWriter.cs" />
-     <Compile Include="Assets\UnityTestTools\Common\TestResultState.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\DelayedDeactivation.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\Eject.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\TheGreatActivator.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Fx\GlowPlaneOrient.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Fx\ReflectionFx.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\GameScore.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\DemoControl.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\GameOverGUI.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\InitLevelManager.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CustomComponent.cs" />
-     <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\ThrowCustomException.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestRunnerCallback.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTest.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestComponent.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResult.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunner.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
-     <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Cursor.shader" />
-     <None Include="Assets\UnityTestTools\LICENSE.txt" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditiveBlend.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Additive.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\HeightDepthOfField.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\BlurPassesForDof.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\Fallback.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Multiply.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\CharacterSelfIlluminationReflective.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\ColoredNoise.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\PlanarRealtimeReflection.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\EnemySelfIlluminationReflective.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\AngryInclude.cginc" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\MobileBloom.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditive.shader" />
-     <None Include="Assets\UnityTestTools\changelog.txt" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\LaserScope.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\SuperSimpleSelfIllumination.shader" />
-     <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
+    <Compile Include="Assets\Scripts\Tests\Scene2DUI.cs" />
+    <Compile Include="Assets\Scripts\Tests\TimeEventTest.cs" />
+    <Compile Include="Assets\Scripts\Tests\TransformExTest.cs" />
+    <Compile Include="Assets\Scripts\Utils\2D\Parallax.cs" />
+    <Compile Include="Assets\Scripts\Utils\Extensions.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameEvents\CommandMonoBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameEvents\GameEvent.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameEvents\GameEventArgs.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameEvents\GameEventCallback.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameEvents\PendingCommand.cs" />
+    <Compile Include="Assets\Scripts\Utils\GameRandom.cs" />
+    <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
+    <Compile Include="Assets\Scripts\Utils\PlatformUIObject.cs" />
+    <Compile Include="Assets\Scripts\Utils\SiteLocker.cs" />
+    <Compile Include="Assets\Scripts\Utils\Social\SocialLink.cs" />
+    <Compile Include="Assets\Scripts\Utils\SortingLayerSettings.cs" />
+    <Compile Include="Assets\Scripts\Utils\TimeEvent.cs" />
+    <Compile Include="Assets\Scripts\Utils\TransformEx.cs" />
+    <Compile Include="Assets\Scripts\Utils\Tweens\BlinkTween.cs" />
+    <Compile Include="Assets\Scripts\Utils\Tweens\FadeOutTween.cs" />
+    <Compile Include="Assets\Scripts\Utils\Tweens\FlashTween.cs" />
+    <Compile Include="Assets\Scripts\Utils\UI\ButtonClickScale.cs" />
+    <Compile Include="Assets\Scripts\Utils\UI\ButtonHandler.cs" />
+    <Compile Include="Assets\Scripts\Utils\UI\ButtonScale.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponentExt.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\BoolComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ColliderComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\FloatComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\GeneralComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IntComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IsRenderedByCamera.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\StringComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\TransformComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ValueDoesNotChange.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector2Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector3Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector4Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\VectorComparerBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\PropertyResolver.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\ScriptSelector.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\ITestResult.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\ResultWriter\ResultSummarizer.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\ResultWriter\StackTraceFilter.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\ResultWriter\XmlResultWriter.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\TestResultState.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\DelayedDeactivation.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\Eject.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Animation\Escape\TheGreatActivator.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Fx\GlowPlaneOrient.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Fx\ReflectionFx.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\GameScore.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\DemoControl.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\GameOverGUI.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\Misc\InitLevelManager.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CustomComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\ThrowCustomException.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestRunnerCallback.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTest.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResult.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunner.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Cursor.shader" />
+    <None Include="Assets\UnityTestTools\LICENSE.txt" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditiveBlend.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Additive.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\HeightDepthOfField.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\BlurPassesForDof.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\Fallback.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Multiply.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\CharacterSelfIlluminationReflective.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\ColoredNoise.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\PlanarRealtimeReflection.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\EnemySelfIlluminationReflective.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\AngryInclude.cginc" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Resources\MobileBloom.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditive.shader" />
+    <None Include="Assets\UnityTestTools\changelog.txt" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\LaserScope.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\SuperSimpleSelfIllumination.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -142,5 +144,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>

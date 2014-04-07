@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils;
+﻿using System;
+using Assets.Scripts.Utils;
 using Assets.Scripts.Utils.Tweens;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Tests
         public GameObject FlashObject;
         public float FlashDuration;
 
-        public GameObject FadeOutSprite;
+        public GameObject[] FadeOutObjects;
         public float FadeOutTime;
 
         public void OnGUI()
@@ -23,7 +24,11 @@ namespace Assets.Scripts.Tests
 
             if (GUILayout.Button("Run Fade Out Tween"))
             {
-                FadeOutTween.Run(FadeOutSprite, FadeOutTime);
+                foreach (GameObject fadeOutObject in FadeOutObjects)
+                {
+                    fadeOutObject.SetActive(true);
+                    FadeOutTween.Run(fadeOutObject, FadeOutTime);
+                }
             }
 
             GUILayout.EndVertical();

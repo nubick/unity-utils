@@ -7,12 +7,13 @@ namespace Assets.Scripts.Utils.Tweens
         private float _starTime;
         private float _duration;
         private SpriteRenderer _spriteRenderer;
+        private TextMesh _textMesh;
 
         public static void Run(GameObject item, float duration)
         {
             FadeOutTween tween = item.GetComponent<FadeOutTween>();
             if (tween == null)
-                tween = item.gameObject.AddComponent<FadeOutTween>();
+                tween = item.AddComponent<FadeOutTween>();
             else
                 tween.StopAllCoroutines();
             tween.Run(duration);
@@ -23,6 +24,7 @@ namespace Assets.Scripts.Utils.Tweens
             _duration = duration;
             _starTime = Time.time;
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _textMesh = GetComponent<TextMesh>();
         }
 
         public void Update()
@@ -32,14 +34,22 @@ namespace Assets.Scripts.Utils.Tweens
             {
                 gameObject.SetActive(false);
                 Destroy(this);
-                _spriteRenderer.color = _spriteRenderer.color.SetA(1f);
+                UpdateAlpha(1f);
             }
             else
             {
-                float alpha = Mathf.Lerp(1f, 0f, normalizedTime);
-                _spriteRenderer.color = _spriteRenderer.color.SetA(alpha);
+                UpdateAlpha(Mathf.Lerp(1f, 0f, normalizedTime));
             }
         }
+
+        private void UpdateAlpha(float alpha)
+        {
+            if (_spriteRenderer != null)
+                _spriteRenderer.color = _spriteRenderer.color.SetA(alpha);
+            if (_textMesh != null)
+                _textMesh.color = _textMesh.color.SetA(alpha);
+        }
+
     }
 
 

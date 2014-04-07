@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Utils\GameEvents\PendingCommand.cs" />
      <Compile Include="Assets\Scripts\Utils\GameRandom.cs" />
      <Compile Include="Assets\Scripts\Utils\MonoBehaviourBase.cs" />
+     <Compile Include="Assets\Scripts\Utils\PlatformUIObject.cs" />
      <Compile Include="Assets\Scripts\Utils\SiteLocker.cs" />
      <Compile Include="Assets\Scripts\Utils\Social\SocialLink.cs" />
      <Compile Include="Assets\Scripts\Utils\SortingLayerSettings.cs" />
