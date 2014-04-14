@@ -13,10 +13,17 @@ namespace Assets.Scripts.Utils.Tweens
         {
             FadeOutTween tween = item.GetComponent<FadeOutTween>();
             if (tween == null)
-                tween = item.AddComponent<FadeOutTween>();
+                tween = item.gameObject.AddComponent<FadeOutTween>();
             else
                 tween.StopAllCoroutines();
             tween.Run(duration);
+        }
+
+        public static void Stop(GameObject item)
+        {
+            FadeOutTween tween = item.GetComponent<FadeOutTween>();
+            if (tween != null)
+                tween.Stop();
         }
 
         private void Run(float duration)
@@ -31,15 +38,9 @@ namespace Assets.Scripts.Utils.Tweens
         {
             float normalizedTime = (Time.time - _starTime) / _duration;
             if (normalizedTime > 1f)
-            {
-                gameObject.SetActive(false);
-                Destroy(this);
-                UpdateAlpha(1f);
-            }
+                Stop();
             else
-            {
                 UpdateAlpha(Mathf.Lerp(1f, 0f, normalizedTime));
-            }
         }
 
         private void UpdateAlpha(float alpha)
@@ -50,7 +51,11 @@ namespace Assets.Scripts.Utils.Tweens
                 _textMesh.color = _textMesh.color.SetA(alpha);
         }
 
+        private void Stop()
+        {
+            gameObject.SetActive(false);
+            Destroy(this);
+            UpdateAlpha(1f);
+        }
     }
-
-
 }

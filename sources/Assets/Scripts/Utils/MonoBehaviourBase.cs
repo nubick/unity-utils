@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq.Expressions;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Utils
 {
@@ -31,5 +34,33 @@ namespace Assets.Scripts.Utils
 			return (T) Instantiate(obj, position, rotation);
 		}
 
-	}
+        #region Invoke
+
+	    private string GetMethodName(Expression<Action> expr)
+	    {
+	        return ((MethodCallExpression) expr.Body).Method.Name;
+	    }
+
+        protected void Invoke(Expression<Action> expr, float time)
+	    {
+	        Invoke(GetMethodName(expr), time);
+        }
+
+	    protected bool IsInvoking(Expression<Action> expr)
+	    {
+	        return IsInvoking(GetMethodName(expr));
+	    }
+
+	    protected void CancelInvoke(Expression<Action> expr)
+	    {
+	        CancelInvoke(GetMethodName(expr));
+	    }
+
+	    protected void InvokeRepeating(Expression<Action> expr, float time, float repeatRate)
+	    {
+	        InvokeRepeating(GetMethodName(expr), time, repeatRate);
+	    }
+
+	    #endregion
+    }
 }
