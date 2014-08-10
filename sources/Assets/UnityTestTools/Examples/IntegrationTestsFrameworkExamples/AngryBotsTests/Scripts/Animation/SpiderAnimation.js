@@ -18,32 +18,32 @@ private var lastAnimTime : float = 0;
 function OnEnable () {
 	tr = motor.transform;
 	
-	animation[activateAnim.name].enabled = true;
-	animation[activateAnim.name].weight = 1;
-	animation[activateAnim.name].time = 0;
-	animation[activateAnim.name].speed = 1;
+	GetComponent.<Animation>()[activateAnim.name].enabled = true;
+	GetComponent.<Animation>()[activateAnim.name].weight = 1;
+	GetComponent.<Animation>()[activateAnim.name].time = 0;
+	GetComponent.<Animation>()[activateAnim.name].speed = 1;
 	
-	animation[forwardAnim.name].layer = 1;
-	animation[forwardAnim.name].enabled = true;
-	animation[forwardAnim.name].weight = 0;
-	animation[backAnim.name].layer = 1;
-	animation[backAnim.name].enabled = true;
-	animation[backAnim.name].weight = 0;
-	animation[leftAnim.name].layer = 1;
-	animation[leftAnim.name].enabled = true;
-	animation[leftAnim.name].weight = 0;
-	animation[rightAnim.name].layer = 1;
-	animation[rightAnim.name].enabled = true;
-	animation[rightAnim.name].weight = 0;
+	GetComponent.<Animation>()[forwardAnim.name].layer = 1;
+	GetComponent.<Animation>()[forwardAnim.name].enabled = true;
+	GetComponent.<Animation>()[forwardAnim.name].weight = 0;
+	GetComponent.<Animation>()[backAnim.name].layer = 1;
+	GetComponent.<Animation>()[backAnim.name].enabled = true;
+	GetComponent.<Animation>()[backAnim.name].weight = 0;
+	GetComponent.<Animation>()[leftAnim.name].layer = 1;
+	GetComponent.<Animation>()[leftAnim.name].enabled = true;
+	GetComponent.<Animation>()[leftAnim.name].weight = 0;
+	GetComponent.<Animation>()[rightAnim.name].layer = 1;
+	GetComponent.<Animation>()[rightAnim.name].enabled = true;
+	GetComponent.<Animation>()[rightAnim.name].weight = 0;
 	
 }
 
 function OnDisable () {
-	animation[activateAnim.name].enabled = true;
-	animation[activateAnim.name].weight = 1;
-	animation[activateAnim.name].normalizedTime = 1;
-	animation[activateAnim.name].speed = -1;
-	animation.CrossFade (activateAnim.name, 0.3, PlayMode.StopAll);
+	GetComponent.<Animation>()[activateAnim.name].enabled = true;
+	GetComponent.<Animation>()[activateAnim.name].weight = 1;
+	GetComponent.<Animation>()[activateAnim.name].normalizedTime = 1;
+	GetComponent.<Animation>()[activateAnim.name].speed = -1;
+	GetComponent.<Animation>().CrossFade (activateAnim.name, 0.3, PlayMode.StopAll);
 }
 
 function Update () {
@@ -52,10 +52,10 @@ function Update () {
 	
 	var walkWeight : float = direction.magnitude;
 	
-	animation[forwardAnim.name].speed = walkWeight;
-	animation[rightAnim.name].speed = walkWeight;
-	animation[backAnim.name].speed = walkWeight;
-	animation[leftAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[forwardAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[rightAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[backAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[leftAnim.name].speed = walkWeight;
 	
 	var angle : float = Mathf.DeltaAngle (
 		HorizontalAngle (tr.forward),
@@ -66,31 +66,31 @@ function Update () {
 		var w : float;
 		if (angle < -90) {
 			w = Mathf.InverseLerp (-180, -90, angle);
-			animation[forwardAnim.name].weight = 0;
-			animation[rightAnim.name].weight = 0;
-			animation[backAnim.name].weight = 1 - w;
-			animation[leftAnim.name].weight = 1;
+			GetComponent.<Animation>()[forwardAnim.name].weight = 0;
+			GetComponent.<Animation>()[rightAnim.name].weight = 0;
+			GetComponent.<Animation>()[backAnim.name].weight = 1 - w;
+			GetComponent.<Animation>()[leftAnim.name].weight = 1;
 		}
 		else if (angle < 0) {
 			w = Mathf.InverseLerp (-90, 0, angle);
-			animation[forwardAnim.name].weight = w;
-			animation[rightAnim.name].weight = 0;
-			animation[backAnim.name].weight = 0;
-			animation[leftAnim.name].weight = 1 - w;
+			GetComponent.<Animation>()[forwardAnim.name].weight = w;
+			GetComponent.<Animation>()[rightAnim.name].weight = 0;
+			GetComponent.<Animation>()[backAnim.name].weight = 0;
+			GetComponent.<Animation>()[leftAnim.name].weight = 1 - w;
 		}
 		else if (angle < 90) {
 			w = Mathf.InverseLerp (0, 90, angle);
-			animation[forwardAnim.name].weight = 1 - w;
-			animation[rightAnim.name].weight = w;
-			animation[backAnim.name].weight = 0;
-			animation[leftAnim.name].weight = 0;
+			GetComponent.<Animation>()[forwardAnim.name].weight = 1 - w;
+			GetComponent.<Animation>()[rightAnim.name].weight = w;
+			GetComponent.<Animation>()[backAnim.name].weight = 0;
+			GetComponent.<Animation>()[leftAnim.name].weight = 0;
 		}
 		else {
 			w = Mathf.InverseLerp (90, 180, angle);
-			animation[forwardAnim.name].weight = 0;
-			animation[rightAnim.name].weight = 1 - w;
-			animation[backAnim.name].weight = w;
-			animation[leftAnim.name].weight = 0;
+			GetComponent.<Animation>()[forwardAnim.name].weight = 0;
+			GetComponent.<Animation>()[rightAnim.name].weight = 1 - w;
+			GetComponent.<Animation>()[backAnim.name].weight = w;
+			GetComponent.<Animation>()[leftAnim.name].weight = 0;
 		}
 	}
 	
@@ -102,7 +102,7 @@ function Update () {
 	}
 	
 	if (footstepSounds && walkWeight > 0.2) {
-		var newAnimTime = Mathf.Repeat (animation[forwardAnim.name].normalizedTime * 4 + 0.1, 1);
+		var newAnimTime = Mathf.Repeat (GetComponent.<Animation>()[forwardAnim.name].normalizedTime * 4 + 0.1, 1);
 		if (newAnimTime < lastAnimTime) {
 			if (Time.time > lastFootstepTime + 0.1) {
 				footstepSignals.SendSignals (this);

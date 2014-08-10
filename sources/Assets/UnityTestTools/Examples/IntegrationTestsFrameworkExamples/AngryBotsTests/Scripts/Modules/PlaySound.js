@@ -4,8 +4,8 @@ var audioSource : AudioSource;
 var sound : AudioClip;
 
 function Awake () {
-	if (!audioSource && audio)
-		audioSource = audio;
+	if (!audioSource && GetComponent.<AudioSource>())
+		audioSource = GetComponent.<AudioSource>();
 }
 
 function OnSignal () {

@@ -2,7 +2,7 @@ namespace UnityTest
 {
 	public interface IUnitTestEngine
 	{
-		UnitTestResult[] GetTests (bool reload);
-		UnitTestResult[] RunTests(string[] tests, UnitTestRunner.ITestRunnerCallback testRunnerEventListener);
+		UnitTestRendererLine GetTests (out UnitTestResult[] results, out string[] categories);
+		void RunTests ( TestFilter filter, UnitTestRunner.ITestRunnerCallback testRunnerEventListener );
 	}
 }

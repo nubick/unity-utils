@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Utils
@@ -37,5 +38,19 @@ namespace Assets.Scripts.Utils
 	        if (count < 2) return min;
 	        return min + Random.Range(0, count)*(max - min)/(count - 1);
 	    }
+
+        public static int NextWeightedInd(int[] weights)
+        {
+            int randomInt = Random.Range(1, weights.Sum() + 1);
+            int sum = 0;
+            for (int i = 0; i < weights.Length; i++)
+            {
+                sum += weights[i];
+                if (randomInt <= sum)
+                    return i;
+            }
+            throw new Exception("Logic error!");
+        }
+
 	}
 }

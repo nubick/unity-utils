@@ -42,9 +42,9 @@ function OnSpotted () {
 		behaviourOnSpotted.enabled = true;
 		behaviourOnLostTrack.enabled = false;
 		
-		if (audio && soundOnSpotted) {
-			audio.clip = soundOnSpotted;
-			audio.Play ();
+		if (GetComponent.<AudioSource>() && soundOnSpotted) {
+			GetComponent.<AudioSource>().clip = soundOnSpotted;
+			GetComponent.<AudioSource>().Play ();
 		}
 	}
 }

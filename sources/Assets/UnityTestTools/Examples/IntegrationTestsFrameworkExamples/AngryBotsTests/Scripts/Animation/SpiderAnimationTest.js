@@ -16,15 +16,15 @@ private var tr : Transform;
 function OnEnable () {
 	tr = rigid.transform;
 	
-	animation[forwardAnim.name].layer = 1;
-	animation[forwardAnim.name].enabled = true;
-	animation[backAnim.name].layer = 1;
-	animation[backAnim.name].enabled = true;
-	animation[leftAnim.name].layer = 1;
-	animation[leftAnim.name].enabled = true;
-	animation[rightAnim.name].layer = 1;
-	animation[rightAnim.name].enabled = true;
-	animation.SyncLayer (1);
+	GetComponent.<Animation>()[forwardAnim.name].layer = 1;
+	GetComponent.<Animation>()[forwardAnim.name].enabled = true;
+	GetComponent.<Animation>()[backAnim.name].layer = 1;
+	GetComponent.<Animation>()[backAnim.name].enabled = true;
+	GetComponent.<Animation>()[leftAnim.name].layer = 1;
+	GetComponent.<Animation>()[leftAnim.name].enabled = true;
+	GetComponent.<Animation>()[rightAnim.name].layer = 1;
+	GetComponent.<Animation>()[rightAnim.name].enabled = true;
+	GetComponent.<Animation>().SyncLayer (1);
 }
 
 function Update () {
@@ -35,10 +35,10 @@ function Update () {
 	
 	var walkWeight : float = velocity.magnitude / 2.4;
 	
-	animation[forwardAnim.name].speed = walkWeight;
-	animation[rightAnim.name].speed = walkWeight;
-	animation[backAnim.name].speed = walkWeight;
-	animation[leftAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[forwardAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[rightAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[backAnim.name].speed = walkWeight;
+	GetComponent.<Animation>()[leftAnim.name].speed = walkWeight;
 	
 	if (velocity == Vector3.zero) {
 		return;
@@ -52,31 +52,31 @@ function Update () {
 	var w : float;
 	if (angle < -90) {
 		w = Mathf.InverseLerp (-180, -90, angle);
-		animation[forwardAnim.name].weight = 0;
-		animation[rightAnim.name].weight = 0;
-		animation[backAnim.name].weight = 1 - w;
-		animation[leftAnim.name].weight = 1;
+		GetComponent.<Animation>()[forwardAnim.name].weight = 0;
+		GetComponent.<Animation>()[rightAnim.name].weight = 0;
+		GetComponent.<Animation>()[backAnim.name].weight = 1 - w;
+		GetComponent.<Animation>()[leftAnim.name].weight = 1;
 	}
 	else if (angle < 0) {
 		w = Mathf.InverseLerp (-90, 0, angle);
-		animation[forwardAnim.name].weight = w;
-		animation[rightAnim.name].weight = 0;
-		animation[backAnim.name].weight = 0;
-		animation[leftAnim.name].weight = 1 - w;
+		GetComponent.<Animation>()[forwardAnim.name].weight = w;
+		GetComponent.<Animation>()[rightAnim.name].weight = 0;
+		GetComponent.<Animation>()[backAnim.name].weight = 0;
+		GetComponent.<Animation>()[leftAnim.name].weight = 1 - w;
 	}
 	else if (angle < 90) {
 		w = Mathf.InverseLerp (0, 90, angle);
-		animation[forwardAnim.name].weight = 1 - w;
-		animation[rightAnim.name].weight = w;
-		animation[backAnim.name].weight = 0;
-		animation[leftAnim.name].weight = 0;
+		GetComponent.<Animation>()[forwardAnim.name].weight = 1 - w;
+		GetComponent.<Animation>()[rightAnim.name].weight = w;
+		GetComponent.<Animation>()[backAnim.name].weight = 0;
+		GetComponent.<Animation>()[leftAnim.name].weight = 0;
 	}
 	else {
 		w = Mathf.InverseLerp (90, 180, angle);
-		animation[forwardAnim.name].weight = 0;
-		animation[rightAnim.name].weight = 1 - w;
-		animation[backAnim.name].weight = w;
-		animation[leftAnim.name].weight = 0;
+		GetComponent.<Animation>()[forwardAnim.name].weight = 0;
+		GetComponent.<Animation>()[rightAnim.name].weight = 1 - w;
+		GetComponent.<Animation>()[backAnim.name].weight = w;
+		GetComponent.<Animation>()[leftAnim.name].weight = 0;
 	}
 }
 

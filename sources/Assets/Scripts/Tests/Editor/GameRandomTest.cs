@@ -57,5 +57,38 @@ namespace Assets.Scripts.Tests.Editor
                     Math.Abs(randomValue - (min + max)/2) < 0.001);
             }
         }
+
+	    [Test]
+	    public void NextWeightedIndTest1()
+	    {
+	        int[] weights = {10, 0};
+	        for (int attempt = 1; attempt <= 100; attempt++)
+	        {
+	            int ind = GameRandom.NextWeightedInd(weights);
+	            Assert.AreEqual(0, ind);
+	        }
+	    }
+
+        [Test]
+        public void NextWeightedIndTest2()
+        {
+            int[] weights = { 0, 100 };
+            for (int attempt = 1; attempt <= 100; attempt++)
+            {
+                int ind = GameRandom.NextWeightedInd(weights);
+                Assert.AreEqual(1, ind);
+            }
+        }
+
+        [Test]
+        public void NextWeightedIndTest3()
+        {
+            int[] weights = {0, 100, 0, 0, 200};
+            for (int attempt = 1; attempt <= 100; attempt++)
+            {
+                int ind = GameRandom.NextWeightedInd(weights);
+                Assert.IsTrue(ind == 1 || ind == 4);
+            }
+        }
 	}
 }

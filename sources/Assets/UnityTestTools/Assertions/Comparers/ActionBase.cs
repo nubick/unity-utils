@@ -9,6 +9,9 @@ namespace UnityTest
 	public abstract class ActionBase : ScriptableObject
 	{
 		public GameObject go;
+		protected object objVal;
+
+		private MemberResolver memberResolver;
 
 		public string thisPropertyPath = "";
 		public virtual Type[] GetAccepatbleTypesForA()
@@ -24,49 +27,23 @@ namespace UnityTest
 
 		public bool Compare ()
 		{
-			var objVal = GetPropertyValue(go,
-											thisPropertyPath, GetAccepatbleTypesForA());
-
-			return Compare(objVal);
+			if (memberResolver == null)
+				memberResolver = new MemberResolver (go, thisPropertyPath);
+			objVal = memberResolver.GetValue (UseCache);
+			var result = Compare(objVal);
+			return result;
 		}
 
 		protected abstract bool Compare (object objVal);
 
-		protected object GetPropertyValue(GameObject gameObject, string path, Type[] acceptableTypes)
-		{
-			var objVal = PropertyResolver.GetPropertyValueFromString(gameObject,
-												path);
-
-			if (acceptableTypes != null && !acceptableTypes.Contains(objVal.GetType(), new IsTypeComparer()))
-				Debug.LogWarning(gameObject.GetType() + "." + thisPropertyPath + " is not acceptable type for the comparer");
-
-			return objVal;
-		}
-
-		public object GetPropertyValue()
-		{
-			return PropertyResolver.GetPropertyValueFromString(go,
-												thisPropertyPath);
-		}
-
-		private class IsTypeComparer : IEqualityComparer<Type>
-		{
-			public bool Equals(Type x, Type y)
-			{
-				return x.IsAssignableFrom(y);
-			}
-
-			public int GetHashCode(Type obj)
-			{
-				return obj.GetHashCode();
-			}
-		}
-
+		virtual protected bool UseCache { get { return false; } }
+		
 		public virtual Type GetParameterType() { return typeof(object); }
 
 		public virtual string GetConfigurationDescription ()
 		{
 			string result = "";
+#if !UNITY_METRO
 			foreach (var prop in GetType().GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
 				.Where (info => info.FieldType.IsSerializable))
 			{
@@ -77,13 +54,27 @@ namespace UnityTest
 					value = ((float)value).ToString("0.########");
 				result += value + " ";
 			}
+#endif
 			return result;
+		}
+
+		IEnumerable<FieldInfo> GetFields (Type type)
+		{
+#if !UNITY_METRO
+			return type.GetFields (BindingFlags.Public | BindingFlags.Instance);
+#else
+			return null;
+#endif
 		}
 
 		public ActionBase CreateCopy (GameObject oldGameObject, GameObject newGameObject)
 		{
+#if !UNITY_METRO
 			var newObj = CreateInstance (GetType ()) as ActionBase;
-			var fields = GetType ().GetFields (BindingFlags.Public | BindingFlags.Instance);
+#else
+			var newObj = (ActionBase)this.MemberwiseClone();
+#endif
+			var fields = GetFields (GetType ());
 			foreach (var field in fields)
 			{
 				var value = field.GetValue (this);
@@ -97,9 +88,14 @@ namespace UnityTest
 			return newObj;
 		}
 
+		public virtual void Fail ( AssertionComponent assertion )
+		{
+			Debug.LogException (new AssertionException (assertion), assertion.GetFailureReferenceObject());
+		}
+
 		public virtual string GetFailureMessage ()
 		{
-			return name + " assertion failed.\n(" + go + ")." + thisPropertyPath + " failed.";
+			return GetType ().Name + " assertion failed.\n(" + go + ")." + thisPropertyPath + " failed. Value: " + objVal;
 		}
 	}
 
@@ -120,5 +116,6 @@ namespace UnityTest
 		{
 			return typeof(T);
 		}
+		protected override bool UseCache { get { return true; } }
 	}
 }

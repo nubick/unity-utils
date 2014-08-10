@@ -47,7 +47,7 @@ function OnEnable () {
 	noticeTime = Time.time;
 	animationBehaviour.enabled = true;
 	if (blinkPlane) 
-		blinkPlane.renderer.enabled = false;	
+		blinkPlane.GetComponent.<Renderer>().enabled = false;	
 }
 
 function OnDisable () {
@@ -58,7 +58,7 @@ function OnDisable () {
 	else
 		proximityRenderer.material.color = Color.white;
 	if (blinkPlane) 
-		blinkPlane.renderer.enabled = false;
+		blinkPlane.GetComponent.<Renderer>().enabled = false;
 }
 
 function Update () {
@@ -121,7 +121,7 @@ function Update () {
 			comp.Blink ();	
 		}
 		if (blinkPlane) 
-			blinkPlane.renderer.enabled = !blinkPlane.renderer.enabled;
+			blinkPlane.GetComponent.<Renderer>().enabled = !blinkPlane.GetComponent.<Renderer>().enabled;
 	}
 	if (Time.time > lastBlinkTime + 0.04) {
 		proximityRenderer.material.color = Color.white;
@@ -136,7 +136,7 @@ function Explode () {
 		// Apply damage
 		targetHealth.OnDamage (damageAmount * damageFraction, character.position - player.position);
 	}
-	player.rigidbody.AddExplosionForce (10, character.position, damageRadius, 0.0, ForceMode.Impulse);
+	player.GetComponent.<Rigidbody>().AddExplosionForce (10, character.position, damageRadius, 0.0, ForceMode.Impulse);
 	Spawner.Spawn (intentionalExplosion, transform.position, Quaternion.identity);
 	Spawner.Destroy (character.gameObject);
 }

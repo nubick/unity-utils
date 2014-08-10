@@ -4,6 +4,10 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_METRO
+#warning Assertion component is not supported on Windows Store apps
+#endif
+
 namespace UnityTest
 {
 	[Serializable]
@@ -68,9 +72,7 @@ namespace UnityTest
 
 			scrollPosition = EditorGUILayout.BeginScrollView (scrollPosition);
 			if (allAssertions != null)
-				GetResultRendere ().Render (FilterResults (allAssertions,
-															filterText.ToLower ()),
-											foldMarkers);
+				GetResultRendere ().Render (FilterResults (allAssertions, filterText.ToLower ()), foldMarkers);
 			EditorGUILayout.EndScrollView ();
 		}
 
@@ -136,24 +138,17 @@ namespace UnityTest
 		private void DrawMenuPanel ()
 		{
 			EditorGUILayout.BeginHorizontal ();
-			EditorGUILayout.LabelField ("Group by",
-										GUILayout.MaxWidth (60));
-			groupBy = (GroupByType) EditorGUILayout.EnumPopup (groupBy,
-																GUILayout.MaxWidth (150));
+			EditorGUILayout.LabelField ("Group by", GUILayout.MaxWidth (60));
+			groupBy = (GroupByType) EditorGUILayout.EnumPopup (groupBy, GUILayout.MaxWidth (150));
 
 			GUILayout.FlexibleSpace ();
 
-			showType = (ShowType) EditorGUILayout.EnumPopup (showType,
-															GUILayout.MaxWidth (100));
+			showType = (ShowType) EditorGUILayout.EnumPopup (showType, GUILayout.MaxWidth (100));
 
-			EditorGUILayout.LabelField ("Filter by",
-										GUILayout.MaxWidth (50));
-			filterType = (FilterType) EditorGUILayout.EnumPopup (filterType,
-																GUILayout.MaxWidth (100));
-			filterText = EditorGUILayout.TextField (filterText,
-													GUILayout.MaxWidth (100));
-			if (GUILayout.Button ("clear",
-								GUILayout.ExpandWidth (false)))
+			EditorGUILayout.LabelField ("Filter by", GUILayout.MaxWidth (50));
+			filterType = (FilterType) EditorGUILayout.EnumPopup (filterType, GUILayout.MaxWidth (100));
+			filterText = EditorGUILayout.TextField (filterText, GUILayout.MaxWidth (100));
+			if (GUILayout.Button ("clear", GUILayout.ExpandWidth (false)))
 				filterText = "";
 			EditorGUILayout.EndHorizontal ();
 		}

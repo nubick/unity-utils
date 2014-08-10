@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Threading;
 using NUnit.Framework;
 
 namespace UnityTest
 {
+	[TestFixture]
+	[Category ("Sample Tests")]
 	internal class SampleTests
 	{
 		[Test]
+		[Category ("Faling Tests")]
 		public void ExceptionTest ()
 		{
 			throw new Exception ("Exception throwing test");
@@ -21,18 +24,21 @@ namespace UnityTest
 
 		[Test]
 		[MaxTime (100)]
+		[Category ("Faling Tests")]
 		public void SlowTest ()
 		{
 			Thread.Sleep (200);
 		}
 
 		[Test]
+		[Category ("Faling Tests")]
 		public void FailingTest ()
 		{
 			Assert.Fail ();
 		}
 
 		[Test]
+		[Category ("Faling Tests")]
 		public void InconclusiveTest ()
 		{
 			Assert.Inconclusive();

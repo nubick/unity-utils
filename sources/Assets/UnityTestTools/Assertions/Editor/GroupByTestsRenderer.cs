@@ -10,10 +10,13 @@ namespace UnityTest
 		{
 			return assertionComponents.GroupBy (c =>
 			{
-				var topGO = TestManager.FindTopGameObject (c.gameObject);
-				if (topGO.GetComponents<TestComponent> () != null)
-					return topGO;
-				return topGO;
+				var temp = c.transform;
+				while (temp != null)
+				{
+					if (temp.GetComponent (typeof (TestComponent)) != null) return c.gameObject;
+					temp = temp.parent.transform;
+				}
+				return null;
 			});
 		}
 

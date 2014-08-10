@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace UnityTest
 			
 		private readonly string name;
 		private bool focusBackToEdit;
-		private ErrorType errorType;
+		private SelectedPathError error;
 
 		public PropertyPathSelector (string name)
 		{
@@ -24,20 +25,13 @@ namespace UnityTest
 
 		public void Draw(GameObject go, ActionBase comparer, string propertPath, Type[] accepatbleTypes, Action<GameObject> onSelectedGO, Action<string> onSelectedPath)
 		{
-			var newGO = (GameObject)EditorGUILayout.ObjectField(name,
-																		go,
-																		typeof (GameObject),
-																		true);
-			if (newGO != go)
+			var newGO = (GameObject)EditorGUILayout.ObjectField(name, go, typeof (GameObject), true);
+			if (newGO != go) 
 				onSelectedGO(newGO);
 
 			if (go != null)
 			{
-				var newPath =  DrawListOfMethods (go,
-														comparer,
-														propertPath,
-														accepatbleTypes,
-														thisDropDown);
+				var newPath =  DrawListOfMethods (go, comparer, propertPath, accepatbleTypes, thisDropDown);
 
 				if (newPath != propertPath)
 					onSelectedPath (newPath);
@@ -46,62 +40,45 @@ namespace UnityTest
 
 		private string DrawListOfMethods(GameObject go, ActionBase comparer, string propertPath, Type[] accepatbleTypes, DropDownControl<string> dropDown)
 		{
-			
-
 			string result = propertPath;
 			if (accepatbleTypes == null)
 			{
-				result = DrawManualPropertyEditField(go,
-													propertPath,
-													accepatbleTypes,
-													dropDown);
+				result = DrawManualPropertyEditField(go, propertPath, accepatbleTypes, dropDown);
 			}
 			else
 			{
 				bool isPropertyOrFieldFound = true;
 				if (string.IsNullOrEmpty(result))
 				{
-					var options = GetFieldsAndProperties (go,
-														comparer,
-														result,
-														accepatbleTypes);
+					var options = GetFieldsAndProperties (go, comparer, result, accepatbleTypes);
 					isPropertyOrFieldFound = options.Any ();
 					if (isPropertyOrFieldFound)
 					{
 						result = options.First();
 					}
-				}
+				} 
 
 				if (isPropertyOrFieldFound)
 				{
-					dropDown.Draw (go.name + '.',
-									result,
-									() =>
-									{
-										try
-										{
-											var options = GetFieldsAndProperties (go,
-																				comparer,
-																				result,
-																				accepatbleTypes);
-
-											return options.ToArray ();
-										}
-										catch (ArgumentException)
-										{
-											Debug.LogWarning ("An exception was thrown while resolving property list. Reseting property path.");
-											result = "";
-											return new string[0];
-										}
-									},
-									s => result = s);
+					dropDown.Draw (go.name + '.', result,
+					() =>
+					{
+						try
+						{
+							var options = GetFieldsAndProperties (go, comparer, result, accepatbleTypes);
+							return options.ToArray ();
+						}
+						catch (Exception)
+						{
+							Debug.LogWarning ("An exception was thrown while resolving property list. Reseting property path.");
+							result = "";
+							return new string[0];
+						}
+					}, s => result = s);
 				}
 				else
 				{
-					result = DrawManualPropertyEditField(go,
-														propertPath,
-														 accepatbleTypes,
-														 dropDown);
+					result = DrawManualPropertyEditField(go, propertPath, accepatbleTypes, dropDown);
 				}
 			}
 			return result;
@@ -110,9 +87,7 @@ namespace UnityTest
 		private static List<string> GetFieldsAndProperties ( GameObject go, ActionBase comparer, string extendPath, Type[] accepatbleTypes )
 		{
 			var propertyResolver = new PropertyResolver {AllowedTypes = accepatbleTypes, ExcludedFieldNames = comparer.GetExcludedFieldNames ()};
-			var options = propertyResolver.GetFieldsAndPropertiesFromGameObject (go,
-																				comparer.GetDepthOfSearch (), 
-																				extendPath).ToList ();
+			var options = propertyResolver.GetFieldsAndPropertiesFromGameObject (go, comparer.GetDepthOfSearch (), extendPath).ToList ();
 			options.Sort ((x, y) =>
 			{
 				if (char.IsLower (x[0]))
@@ -133,13 +108,11 @@ namespace UnityTest
 			{
 				try
 				{
-					list = propertyResolver.GetFieldsAndPropertiesUnderPath (go,
-																			propertPath);
+					list = propertyResolver.GetFieldsAndPropertiesUnderPath (go, propertPath);
 				}
 				catch (ArgumentException)
 				{
-					list = propertyResolver.GetFieldsAndPropertiesUnderPath (go,
-																			"");
+					list = propertyResolver.GetFieldsAndPropertiesUnderPath (go, "");
 				}
 				return list.ToArray ();
 			});
@@ -165,7 +138,7 @@ namespace UnityTest
 			var result = GUILayout.TextField(propertPath, EditorStyles.textField);
 			if (EditorGUI.EndChangeCheck ())
 			{
-				errorType = DoesPropertyExist (go, result);
+				error = DoesPropertyExist (go, result);
 			}
 
 			if (focusBackToEdit)
@@ -174,14 +147,12 @@ namespace UnityTest
 				GUI.FocusControl (btnName);
 			}
 
-			if (GUILayout.Button ("clear",
-								EditorStyles.miniButton,
-								GUILayout.Width (38)))
+			if (GUILayout.Button ("clear", EditorStyles.miniButton, GUILayout.Width (38)))
 			{
 				result = "";
 				GUI.FocusControl (null);
 				focusBackToEdit = true;
-				errorType = DoesPropertyExist (go, result);
+				error = DoesPropertyExist (go, result);
 			}
 			EditorGUILayout.EndHorizontal();
 			EditorGUILayout.BeginHorizontal ();
@@ -192,41 +163,49 @@ namespace UnityTest
 				result = s;
 				GUI.FocusControl (null);
 				focusBackToEdit = true;
-				errorType = DoesPropertyExist (go, result);
+				error = DoesPropertyExist (go, result);
 			});
 			EditorGUILayout.EndHorizontal();
 
-			if (errorType != ErrorType.None)
+			switch (error)
 			{
-				if (errorType == ErrorType.MissingComponent)
-					EditorGUILayout.HelpBox ("This property or field is not attached or set. It will fail unless it will be attached before check is perfomed.", MessageType.Warning);
-				else if (errorType == ErrorType.DoesNotExist)
+				case SelectedPathError.InvalidPath:
 					EditorGUILayout.HelpBox ("This property does not exist", MessageType.Error);
+					break;
+				case SelectedPathError.MissingComponent:
+					EditorGUILayout.HelpBox ("This property or field is not attached or set. It will fail unless it will be attached before the check is perfomed.", MessageType.Warning);
+					break;
 			}
+				
 			return result;
 		}
 
-		private static ErrorType DoesPropertyExist ( GameObject go, string propertPath )
+		private SelectedPathError DoesPropertyExist ( GameObject go, string propertPath )
 		{
 			try
 			{
-				PropertyResolver.GetPropertyValueFromString (go,
-															propertPath);
-				return ErrorType.None;
+				object obj;
+				if(MemberResolver.TryGetValue (go, propertPath, out obj))
+					return SelectedPathError.None;
+				else
+					return SelectedPathError.InvalidPath;
 			}
-			catch (Exception e)
+			catch (TargetInvocationException  e)
 			{
-				if (e.InnerException is MissingComponentException)
-				{
-					return ErrorType.MissingComponent;
-				}
-				return ErrorType.DoesNotExist;
+				if(e.InnerException is MissingComponentException)
+					return SelectedPathError.MissingComponent;
+				else
+					throw;
 			}
 		}
 
-		private enum ErrorType
+		private enum SelectedPathError
 		{
-			None, MissingComponent, DoesNotExist
+			None,
+			MissingComponent,
+			InvalidPath
 		}
 	}
+
+
 }

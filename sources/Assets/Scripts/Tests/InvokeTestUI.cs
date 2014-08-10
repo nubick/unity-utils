@@ -11,7 +11,7 @@ namespace Assets.Scripts.Tests
             
             if (GUILayout.Button("Invoke"))
             {
-                Invoke(() => InvokedFunc(), 3);
+                Invoke(() => InvokedFunc(), 3f);
             }
             
             if (GUILayout.Button("IsInvoking"))
@@ -22,7 +22,7 @@ namespace Assets.Scripts.Tests
             
             if (GUILayout.Button("InvokeRepeating"))
             {
-                InvokeRepeating(() => InvokedFunc(), 1, 1);
+                InvokeRepeating(() => InvokedFunc(), 1f, 1f);
             }
 
             if (GUILayout.Button("CancelInvoke"))
@@ -37,6 +37,5 @@ namespace Assets.Scripts.Tests
         {
             Debug.Log("Invoked func executed.");
         }
-
     }
 }

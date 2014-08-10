@@ -32,7 +32,7 @@ namespace UnityTest
 				if (!result)
 				{
 					assertion.hasFailed = true;
-					Debug.LogException (new AssertionException (assertion), assertion);
+					assertion.Action.Fail (assertion);
 				}
 			}
 		}

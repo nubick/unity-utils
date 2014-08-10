@@ -6,41 +6,8 @@ using UnityEngine;
 namespace UnityTest
 {
 	[Serializable]
-	public class AssertionComponent : MonoBehaviour
+	public class AssertionComponent : MonoBehaviour, AssertionComponentConfigurator
 	{
-		[Flags]
-		public enum CheckMethod
-		{
-			AfterPeriodOfTime		= 1 << 0,
-			Start					= 1 << 1,
-			Update					= 1 << 2,
-			FixedUpdate				= 1 << 3,
-			LateUpdate				= 1 << 4,
-			OnDestroy				= 1 << 5,
-			OnEnable				= 1 << 6,
-			OnDisable				= 1 << 7,
-			OnControllerColliderHit	= 1 << 8,
-			OnParticleCollision		= 1 << 9,
-			OnJointBreak			= 1 << 10,
-			OnBecameInvisible		= 1 << 11,
-			OnBecameVisible			= 1 << 12,
-			OnTriggerEnter			= 1 << 13,
-			OnTriggerExit			= 1 << 14,
-			OnTriggerStay			= 1 << 15,
-			OnCollisionEnter		= 1 << 16,
-			OnCollisionExit			= 1 << 17,
-			OnCollisionStay			= 1 << 18,
-			
-#if !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2
-			OnTriggerEnter2D		= 1 << 19,
-			OnTriggerExit2D			= 1 << 20,
-			OnTriggerStay2D			= 1 << 21,
-			OnCollisionEnter2D		= 1 << 22,
-			OnCollisionExit2D		= 1 << 23,
-			OnCollisionStay2D		= 1 << 24,
-#endif
-		}
-
 		[SerializeField] public float checkAfterTime = 1f;
 		[SerializeField] public bool repeatCheckTime = true;
 		[SerializeField] public float repeatEveryTime = 1f;
@@ -56,6 +23,9 @@ namespace UnityTest
 
 		private int checkOnFrame = 0;
 
+		private string createdInFilePath;
+		private int createdInFileLine = -1;
+
 		public ActionBase Action
 		{
 			get { return m_ActionBase; }
@@ -63,12 +33,26 @@ namespace UnityTest
 			{
 				m_ActionBase = value;
 				m_ActionBase.go = gameObject;
-				
-				m_ActionBase.thisPropertyPath = "";
-				if (m_ActionBase is ComparerBase)
-					(m_ActionBase as ComparerBase).otherPropertyPath = "";
-
 			}
+		}
+
+		public UnityEngine.Object GetFailureReferenceObject ()
+		{
+			if (!string.IsNullOrEmpty (createdInFilePath))
+			{
+				return Resources.LoadAssetAtPath (createdInFilePath, typeof (UnityEngine.Object));
+			}
+			return this;
+		}
+
+		public string GetCreationLocation ()
+		{
+			if (!string.IsNullOrEmpty (createdInFilePath))
+			{
+				var idx = createdInFilePath.LastIndexOf ("\\") + 1;
+				return string.Format ("{0}, line {1} ({2})", createdInFilePath.Substring (idx), createdInFileLine, createdInFilePath);
+			}
+			return "";
 		}
 
 		public void Awake ()
@@ -78,17 +62,16 @@ namespace UnityTest
 			OnComponentCopy ();
 		}
 
-#if UNITY_EDITOR
 		public void OnValidate ()
 		{
-			OnComponentCopy ();
+			if(Application.isEditor)
+				OnComponentCopy ();
 		}
-#endif
 
 		private void OnComponentCopy ()
 		{
 			if (m_ActionBase == null) return;
-			var oldActionList = FindObjectsOfType (typeof (AssertionComponent)).Where (o => ((AssertionComponent) o).m_ActionBase == m_ActionBase && o != this);
+			var oldActionList = Resources.FindObjectsOfTypeAll (typeof (AssertionComponent)).Where (o => ((AssertionComponent) o).m_ActionBase == m_ActionBase && o != this);
 
 			//if it's not a copy but a new component don't do anything
 			if (!oldActionList.Any ()) return;
@@ -209,6 +192,7 @@ namespace UnityTest
 		{
 			CheckAssertionFor (CheckMethod.OnTriggerStay);
 		}
+
 		public void OnCollisionEnter ()
 		{
 			CheckAssertionFor (CheckMethod.OnCollisionEnter);
@@ -224,7 +208,6 @@ namespace UnityTest
 			CheckAssertionFor (CheckMethod.OnCollisionStay);
 		}
 
-#if !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2
 		public void OnTriggerEnter2D ()
 		{
 			CheckAssertionFor (CheckMethod.OnTriggerEnter2D);
@@ -254,7 +237,6 @@ namespace UnityTest
 		{
 			CheckAssertionFor (CheckMethod.OnCollisionStay2D);
 		}
-#endif
 
 		private void CheckAssertionFor (CheckMethod checkMethod)
 		{
@@ -268,5 +250,124 @@ namespace UnityTest
 		{
 			return method == (checkMethods & method);
 		}
+
+
+		#region Assertion Component create methods
+
+		public static T Create<T> (CheckMethod checkOnMethods, GameObject gameObject, string propertyPath) where T : ActionBase
+		{
+			AssertionComponentConfigurator configurator;
+			return Create<T> (out configurator, checkOnMethods, gameObject, propertyPath);
+		}
+
+		public static T Create<T> ( out AssertionComponentConfigurator configurator, CheckMethod checkOnMethods, GameObject gameObject, string propertyPath ) where T : ActionBase
+		{
+			return CreateAssertionComponent<T> (out configurator, checkOnMethods, gameObject, propertyPath);
+		}
+
+		public static T Create<T> ( CheckMethod checkOnMethods, GameObject gameObject, string propertyPath, GameObject gameObject2, string propertyPath2 ) where T : ComparerBase
+		{
+			AssertionComponentConfigurator configurator;
+			return Create<T> (out configurator, checkOnMethods, gameObject, propertyPath, gameObject2, propertyPath2);
+		}
+
+		public static T Create<T> ( out AssertionComponentConfigurator configurator, CheckMethod checkOnMethods, GameObject gameObject, string propertyPath, GameObject gameObject2, string propertyPath2 ) where T : ComparerBase
+		{
+			var comparer = CreateAssertionComponent<T> (out configurator, checkOnMethods, gameObject, propertyPath);
+			comparer.compareToType = ComparerBase.CompareToType.CompareToObject;
+			comparer.other = gameObject2;
+			comparer.otherPropertyPath = propertyPath2;
+			return comparer;
+		}
+
+		public static T Create<T> (CheckMethod checkOnMethods, GameObject gameObject, string propertyPath, object constValue) where T : ComparerBase
+		{
+			AssertionComponentConfigurator configurator;
+			return Create<T> (out configurator, checkOnMethods, gameObject, propertyPath, constValue);
+		}
+
+		public static T Create<T> ( out AssertionComponentConfigurator configurator, CheckMethod checkOnMethods, GameObject gameObject, string propertyPath, object constValue ) where T : ComparerBase
+		{
+			var comparer = CreateAssertionComponent<T> (out configurator, checkOnMethods, gameObject, propertyPath);
+			if (constValue == null)
+			{
+				comparer.compareToType = ComparerBase.CompareToType.CompareToNull;
+				return comparer;
+			}
+			comparer.compareToType = ComparerBase.CompareToType.CompareToConstantValue;
+			comparer.ConstValue = constValue;
+			return comparer;
+		}
+
+		private static T CreateAssertionComponent<T> ( out AssertionComponentConfigurator configurator, CheckMethod checkOnMethods, GameObject gameObject, string propertyPath ) where T : ActionBase
+		{
+			var ac = gameObject.AddComponent<AssertionComponent> ();
+			ac.checkMethods = checkOnMethods;
+			var comparer = ScriptableObject.CreateInstance<T> ();
+			ac.Action = comparer;
+			ac.Action.go = gameObject;
+			ac.Action.thisPropertyPath = propertyPath;
+			configurator = ac;
+
+#if !UNITY_METRO
+			var stackTrace = new System.Diagnostics.StackTrace (true);
+			var thisFileName = stackTrace.GetFrame (0).GetFileName ();
+			for (int i = 1; i < stackTrace.FrameCount; i++)
+			{
+				var stackFrame = stackTrace.GetFrame (i);
+				if (stackFrame.GetFileName () != thisFileName)
+				{
+					string filePath = stackFrame.GetFileName ().Substring (Application.dataPath.Length - "Assets".Length);
+					ac.createdInFilePath = filePath;
+					ac.createdInFileLine = stackFrame.GetFileLineNumber ();
+					break;
+				}
+			}
+#endif
+			return comparer;
+		}
+
+		#endregion
+
+		#region AssertionComponentConfigurator
+		public int UpdateCheckStartOnFrame { set { checkAfterFrames = value; } }
+		public int UpdateCheckRepeatFrequency { set { repeatEveryFrame = value; } }
+		public bool UpdateCheckRepeat { set { repeatCheckFrame = value; } }
+		public float TimeCheckStartAfter { set { checkAfterTime = value; } }
+		public float TimeCheckRepeatFrequency { set { repeatEveryTime = value; } }
+		public bool TimeCheckRepeat { set { repeatCheckTime = value; } }
+		public AssertionComponent Component { get { return this; } }
+		#endregion
+	}
+
+	public interface AssertionComponentConfigurator
+	{
+		/// <summary>
+		/// If the assertion is evaluated in Update, after how many frame should the evaluation start. Deafult is 1 (first frame)
+		/// </summary>
+		int UpdateCheckStartOnFrame { set; }
+		/// <summary>
+		/// If the assertion is evaluated in Update and UpdateCheckRepeat is true, how many frame should pass between evaluations
+		/// </summary>
+		int UpdateCheckRepeatFrequency { set; }
+		/// <summary>
+		/// If the assertion is evaluated in Update, should the evaluation be repeated after UpdateCheckRepeatFrequency frames
+		/// </summary>
+		bool UpdateCheckRepeat { set; }
+
+		/// <summary>
+		/// If the assertion is evaluated after a period of time, after how many seconds the first evaluation should be done
+		/// </summary>
+		float TimeCheckStartAfter { set; }
+		/// <summary>
+		/// If the assertion is evaluated after a period of time and TimeCheckRepeat is true, after how many seconds should the next evaluation happen
+		/// </summary>
+		float TimeCheckRepeatFrequency { set; }
+		/// <summary>
+		/// If the assertion is evaluated after a period, should the evaluation happen again after TimeCheckRepeatFrequency seconds
+		/// </summary>
+		bool TimeCheckRepeat { set; }
+
+		AssertionComponent Component { get; }
 	}
 }

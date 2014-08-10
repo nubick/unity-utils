@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace UnityTest
 {
-	public class GroupByExecutionMethodRenderer : AssertionListRenderer<AssertionComponent.CheckMethod>
+	public class GroupByExecutionMethodRenderer : AssertionListRenderer<CheckMethod>
 	{
-		protected override IEnumerable<IGrouping<AssertionComponent.CheckMethod, AssertionComponent>> GroupResult (IEnumerable<AssertionComponent> assertionComponents)
+		protected override IEnumerable<IGrouping<CheckMethod, AssertionComponent>> GroupResult (IEnumerable<AssertionComponent> assertionComponents)
 		{
-			var enumVals = Enum.GetValues (typeof (AssertionComponent.CheckMethod)).Cast<AssertionComponent.CheckMethod> ();
+			var enumVals = Enum.GetValues (typeof (CheckMethod)).Cast<CheckMethod> ();
 			var pairs = new List<CheckFunctionAssertionPair> ();
 
 			foreach (var checkMethod in enumVals)
@@ -24,7 +24,7 @@ namespace UnityTest
 		private class CheckFunctionAssertionPair
 		{
 			public AssertionComponent assertionComponent;
-			public AssertionComponent.CheckMethod checkMethod;
+			public CheckMethod checkMethod;
 		}
 	}
 }

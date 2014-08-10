@@ -84,8 +84,7 @@ namespace UnityTest
 						EditorGUILayout.EndHorizontal ();
 
 					}
-					GUILayout.Box ("",
-									new GUILayoutOption[] {GUILayout.ExpandWidth (true), GUILayout.Height (1)});
+					GUILayout.Box ("", new [] {GUILayout.ExpandWidth (true), GUILayout.Height (1)});
 
 					EditorGUILayout.EndVertical ();
 				}

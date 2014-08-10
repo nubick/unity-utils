@@ -15,21 +15,21 @@ var footstepSignals : SignalSender;
 
 function OnEnable () {
 	
-	animation[idle.name].layer = 0;
-	animation[idle.name].weight = 1;
-	animation[idle.name].enabled = true;
+	GetComponent.<Animation>()[idle.name].layer = 0;
+	GetComponent.<Animation>()[idle.name].weight = 1;
+	GetComponent.<Animation>()[idle.name].enabled = true;
 	
-	animation[walk.name].layer = 1;
-	animation[turnLeft.name].layer = 1;
-	animation[turnRight.name].layer = 1;
+	GetComponent.<Animation>()[walk.name].layer = 1;
+	GetComponent.<Animation>()[turnLeft.name].layer = 1;
+	GetComponent.<Animation>()[turnRight.name].layer = 1;
 	
-	animation[walk.name].weight = 1;
-	animation[turnLeft.name].weight = 0;
-	animation[turnRight.name].weight = 0;
+	GetComponent.<Animation>()[walk.name].weight = 1;
+	GetComponent.<Animation>()[turnLeft.name].weight = 0;
+	GetComponent.<Animation>()[turnRight.name].weight = 0;
 	
-	animation[walk.name].enabled = true;
-	animation[turnLeft.name].enabled = true;
-	animation[turnRight.name].enabled = true;
+	GetComponent.<Animation>()[walk.name].enabled = true;
+	GetComponent.<Animation>()[turnLeft.name].enabled = true;
+	GetComponent.<Animation>()[turnRight.name].enabled = true;
 	
 	//animation[walk.name].speed = 0.93;
 	
@@ -37,10 +37,10 @@ function OnEnable () {
 }
 
 function FixedUpdate () {
-	animation[walk.name].speed = Mathf.Lerp (1, animation[walk.name].length / animation[turnLeft.name].length, Mathf.Abs (turning));
+	GetComponent.<Animation>()[walk.name].speed = Mathf.Lerp (1, GetComponent.<Animation>()[walk.name].length / GetComponent.<Animation>()[turnLeft.name].length, Mathf.Abs (turning));
 	
-	animation[turnLeft.name].time = animation[walk.name].time + turnOffset;
-	animation[turnRight.name].time = animation[walk.name].time + turnOffset;
+	GetComponent.<Animation>()[turnLeft.name].time = GetComponent.<Animation>()[walk.name].time + turnOffset;
+	GetComponent.<Animation>()[turnRight.name].time = GetComponent.<Animation>()[walk.name].time + turnOffset;
 	
 	rigid.velocity = rigid.transform.forward * 2.5 * walking;
 	rigid.angularVelocity = Vector3.up * turning * 100 * Mathf.Deg2Rad;
@@ -48,9 +48,9 @@ function FixedUpdate () {
 	var turningWeight : float = rigid.angularVelocity.y * Mathf.Rad2Deg / 100.0;
 	var forwardWeight : float = rigid.velocity.magnitude / 2.5;
 	
-	animation[turnLeft.name].weight = Mathf.Clamp01 (-turningWeight);
-	animation[turnRight.name].weight = Mathf.Clamp01 (turningWeight);
-	animation[walk.name].weight = Mathf.Clamp01 (forwardWeight);
+	GetComponent.<Animation>()[turnLeft.name].weight = Mathf.Clamp01 (-turningWeight);
+	GetComponent.<Animation>()[turnRight.name].weight = Mathf.Clamp01 (turningWeight);
+	GetComponent.<Animation>()[walk.name].weight = Mathf.Clamp01 (forwardWeight);
 }
 
 function OnGUI () {

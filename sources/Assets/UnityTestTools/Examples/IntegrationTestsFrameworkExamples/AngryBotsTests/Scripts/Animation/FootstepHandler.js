@@ -24,13 +24,13 @@ function OnFootstep () {
 	var sound : AudioClip;
 	switch (footType) {
 	case FootType.Player:
-		sound = MaterialImpactManager.GetPlayerFootstepSound (physicMaterial);
+		//sound = MaterialImpactManager.GetPlayerFootstepSound (physicMaterial);
 		break;
 	case FootType.Mech:
-		sound = MaterialImpactManager.GetMechFootstepSound (physicMaterial);
+		//sound = MaterialImpactManager.GetMechFootstepSound (physicMaterial);
 		break;
 	case FootType.Spider:
-		sound = MaterialImpactManager.GetSpiderFootstepSound (physicMaterial);
+		//sound = MaterialImpactManager.GetSpiderFootstepSound (physicMaterial);
 		break;
 	}	
 	audioSource.pitch = Random.Range (0.98, 1.02);

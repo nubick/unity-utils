@@ -16,13 +16,14 @@ namespace UnityTest
 		public CompareToType compareToType = CompareToType.CompareToObject;
 
 		public GameObject other;
+		protected object objOtherVal;
 		public string otherPropertyPath = "";
-		
+		private MemberResolver memberResolverB;
+
 		protected abstract bool Compare (object a, object b);
 
 		protected override bool Compare(object objVal)
 		{
-			object objOtherVal;
 			if (compareToType == CompareToType.CompareToConstantValue)
 			{
 				objOtherVal = ConstValue;
@@ -36,13 +37,13 @@ namespace UnityTest
 				if (other == null)
 					objOtherVal = null;
 				else
-					objOtherVal = GetPropertyValue (other,
-													otherPropertyPath,
-													GetAccepatbleTypesForB ());
+				{
+					if (memberResolverB == null)
+						memberResolverB = new MemberResolver (other, otherPropertyPath);
+					objOtherVal = memberResolverB.GetValue (UseCache);
+				}
 			}
-
-			return Compare (objVal,
-							objOtherVal);
+			return Compare (objVal, objOtherVal);
 		}
 
 		public virtual Type[] GetAccepatbleTypesForB()
@@ -59,40 +60,23 @@ namespace UnityTest
 		}
 
 		#endregion
-
-		public virtual Type GetSecondParameterType() { return typeof(object); }
-
-		public object GetOtherPropertyValue ()
-		{
-			switch (compareToType)
-			{
-				case CompareToType.CompareToObject:
-					return PropertyResolver.GetPropertyValueFromString(other,
-														otherPropertyPath);
-				case CompareToType.CompareToConstantValue:
-					return ConstValue;
-				case CompareToType.CompareToNull:
-				default:
-					return null;
-			}
-		}
-
+		
 		public override string GetFailureMessage ()
 		{
-			var message = name + " assertion failed.\n(" + go + ")." + thisPropertyPath + " " + compareToType;
-
+			var message = GetType ().Name + " assertion failed.\n" + go.name + "." + thisPropertyPath + " " + compareToType;
 			switch (compareToType)
 			{
 				case ComparerBase.CompareToType.CompareToObject:
 					message += " (" + other + ")." + otherPropertyPath + " failed.";
 					break;
 				case ComparerBase.CompareToType.CompareToConstantValue:
-					message += ConstValue + " failed.";
+					message += " " + ConstValue + " failed.";
 					break;
 				case ComparerBase.CompareToType.CompareToNull:
 					message += " failed.";
 					break;
 			}
+			message += " Expected: " + objOtherVal + " Actual: " + objVal;
 			return message;
 		}
 	}
@@ -107,7 +91,7 @@ namespace UnityTest
 	{
 		public T2 constantValueGeneric = default(T2);
 
-		public override Object  ConstValue
+		public override Object ConstValue
 		{
 			get 
 			{
@@ -124,10 +108,19 @@ namespace UnityTest
 			return default(T2);
 		}
 
+		static bool IsValueType (Type type)
+		{
+#if !UNITY_METRO
+			return type.IsValueType;
+#else
+			return false;
+#endif
+		}
+
 		protected override bool Compare(object a, object b)
 		{
 			var type = typeof(T2);
-			if (b == null && type.IsValueType)
+			if (b == null && IsValueType (type))
 			{
 				throw new ArgumentException("Null was passed to a value-type argument");
 			}
@@ -146,14 +139,6 @@ namespace UnityTest
 			return new[] {typeof (T2)};
 		}
 
-		public override Type GetParameterType()
-		{
-			return typeof(T1);
-		}
-
-		public override Type GetSecondParameterType()
-		{
-			return typeof(T2);
-		}
+		protected override bool UseCache { get { return true; } }
 	}
 }

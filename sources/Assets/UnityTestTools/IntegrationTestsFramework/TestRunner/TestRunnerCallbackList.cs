@@ -17,7 +17,7 @@ namespace UnityTest.IntegrationTestRunner
 			callbackList.Remove (callback);
 		}
 
-		public void RunStarted (string platform, List<TestResult> testsToRun)
+		public void RunStarted (string platform, List<TestComponent> testsToRun)
 		{
 			foreach (var unitTestRunnerCallback in callbackList)
 			{
@@ -49,7 +49,7 @@ namespace UnityTest.IntegrationTestRunner
 			}
 		}
 
-		public void TestRunInterrupted (List<TestResult> testsNotRun)
+		public void TestRunInterrupted (List<ITestComponent> testsNotRun)
 		{
 			foreach (var unitTestRunnerCallback in callbackList)
 			{

@@ -38,8 +38,8 @@ function ChoseNewAnimationTargetCoroutine () {
 }
 
 function Update () {
-	renderer.material.mainTextureOffset.x += Time.deltaTime * aniDir * scrollSpeed;
-	renderer.material.SetTextureOffset ("_NoiseTex", Vector2 (-Time.time * aniDir * scrollSpeed, 0.0));
+	GetComponent.<Renderer>().material.mainTextureOffset.x += Time.deltaTime * aniDir * scrollSpeed;
+	GetComponent.<Renderer>().material.SetTextureOffset ("_NoiseTex", Vector2 (-Time.time * aniDir * scrollSpeed, 0.0));
 
 	var aniFactor : float = Mathf.PingPong (Time.time * pulseSpeed, 1.0);
 	aniFactor = Mathf.Max (minWidth, aniFactor) * maxWidth;
@@ -49,12 +49,12 @@ function Update () {
 	var hitInfo : RaycastHit = raycast.GetHitInfo ();
 	if (hitInfo.transform) {
 		lRenderer.SetPosition (1, (hitInfo.distance * Vector3.forward));
-		renderer.material.mainTextureScale.x = 0.1 * (hitInfo.distance);
-		renderer.material.SetTextureScale ("_NoiseTex", Vector2 (0.1 * hitInfo.distance * noiseSize, noiseSize));		
+		GetComponent.<Renderer>().material.mainTextureScale.x = 0.1 * (hitInfo.distance);
+		GetComponent.<Renderer>().material.SetTextureScale ("_NoiseTex", Vector2 (0.1 * hitInfo.distance * noiseSize, noiseSize));		
 		
 		// Use point and normal to align a nice & rough hit plane
 		if (pointer) {
-			pointer.renderer.enabled = true;
+			pointer.GetComponent.<Renderer>().enabled = true;
 			pointer.transform.position = hitInfo.point + (transform.position - hitInfo.point) * 0.01;
 			pointer.transform.rotation = Quaternion.LookRotation (hitInfo.normal, transform.up);
 			pointer.transform.eulerAngles.x = 90.0;
@@ -62,10 +62,10 @@ function Update () {
 	}
 	else {
 		if (pointer)
-			pointer.renderer.enabled = false;		
+			pointer.GetComponent.<Renderer>().enabled = false;		
 		var maxDist : float = 200.0;
 		lRenderer.SetPosition (1, (maxDist * Vector3.forward));
-		renderer.material.mainTextureScale.x = 0.1 * (maxDist);		
-		renderer.material.SetTextureScale ("_NoiseTex", Vector2 (0.1 * (maxDist) * noiseSize, noiseSize));		
+		GetComponent.<Renderer>().material.mainTextureScale.x = 0.1 * (maxDist);		
+		GetComponent.<Renderer>().material.SetTextureScale ("_NoiseTex", Vector2 (0.1 * (maxDist) * noiseSize, noiseSize));		
 	}
 }

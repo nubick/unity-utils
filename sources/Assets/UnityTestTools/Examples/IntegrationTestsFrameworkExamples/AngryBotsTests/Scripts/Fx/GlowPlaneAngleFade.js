@@ -15,5 +15,5 @@ function Update () {
 }
 
 function OnWillRenderObject () {	
-	renderer.sharedMaterial.SetColor ("_TintColor",  glowColor * dot);	
+	GetComponent.<Renderer>().sharedMaterial.SetColor ("_TintColor",  glowColor * dot);	
 }

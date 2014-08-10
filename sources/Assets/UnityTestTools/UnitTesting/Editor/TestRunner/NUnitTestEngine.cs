@@ -1,101 +1,149 @@
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using NUnit.Core;
-using NUnit.Core.Filters;
 using System.Linq;
+using NUnit.Core.Filters;
+using UnityEditor;
+using UnityEngine;
 
 namespace UnityTest
 {
 	public class NUnitTestEngine : IUnitTestEngine
 	{
-		private List<UnitTestResult> testList = new List<UnitTestResult>();
-		private string[] assembliesWithTests = new[]
+		static string[] whitelistedAssemblies = 
+		{
+			"Assembly-CSharp-Editor", 
+			"Assembly-Boo-Editor", 
+			"Assembly-UnityScript-Editor"
+		};
+		private TestSuite testSuite;
+
+		public UnitTestRendererLine GetTests ( out UnitTestResult[] results, out string[] categories )
+		{
+			if (testSuite == null)
 			{
-				"Assembly-CSharp", "Assembly-CSharp-Editor", 
-				"Assembly-Boo", "Assembly-Boo-Editor", 
-				"Assembly-UnityScript", "Assembly-UnityScript-Editor"
-			};
-
-		public UnitTestResult[] GetTests(bool reload)
-		{
-			if (reload) ReloadTestList();
-			return testList.ToArray();
-		}
-
-		public UnitTestResult[] RunTests(string[] tests, UnitTestRunner.ITestRunnerCallback testRunnerEventListener)
-		{
-			List<String> assemblies = GetAssemblies();
-			TestSuite suite = PrepareTestSuite(assemblies);
-
-			ITestFilter filter = TestFilter.Empty;
-			if (tests != null && tests.Any())
-				filter = new SimpleNameFilter(tests);
-
-			testRunnerEventListener.RunStarted(suite.TestName.FullName, suite.TestCount);
-
-			NUnit.Core.TestResult result = ExecuteTestSuite(suite,
-												testRunnerEventListener,
-												filter);
-			UpdateTestResults(result);
-
-			testRunnerEventListener.RunFinished();
-
-			return testList.ToArray();
-		}
-
-		private void ReloadTestList()
-		{
-			List<String> assemblies = GetAssemblies();
-			TestSuite suite = PrepareTestSuite(assemblies);
-			UpdateTestResults(suite);
-		}
-
-		private void UpdateTestResults(NUnit.Core.TestSuite suite)
-		{
-			ToUnitTestResult(suite);
-		}
-
-		private void UpdateTestResults(NUnit.Core.TestResult result)
-		{
-			ToUnitTestResult(result);
-		}
-
-		private List<String> GetAssemblies()
-		{
-			var assemblyList = new List<String>();
-
-			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-			{
-				var assemblyName = assembly.GetName().Name;
-				if (assembliesWithTests.Contains(assemblyName)) assemblyList.Add (assembly.Location);
+				List<String> assemblies = GetAssembliesWithTests ().Select (a=>a.Location).ToList ();
+				TestSuite suite = PrepareTestSuite (assemblies);
+				testSuite = suite;
 			}
 
-			return assemblyList;
+			var resultList = new List<UnitTestResult> ();
+			var categoryList = new HashSet<string> ();
+
+			UnitTestRendererLine lines = null;
+			if(testSuite != null)
+				lines = ParseTestList (testSuite, resultList, categoryList).Single ();
+			results = resultList.ToArray ();
+			categories = categoryList.ToArray ();
+
+			return lines;
+		}
+
+		private UnitTestRendererLine[] ParseTestList ( Test test, List<UnitTestResult> results, HashSet<string> categories )
+		{
+			foreach (string category in test.Categories) categories.Add (category);
+
+			if (test is TestMethod)
+			{
+				var result = new UnitTestResult ()
+				{
+					Test = new UnitTestInfo (test as TestMethod)
+				};
+
+				results.Add (result);
+				return new[] { new TestLine (test as TestMethod, result.Id) };
+			}
+
+			GroupLine group = null;
+			if (test is TestSuite)
+				group = new GroupLine (test as TestSuite);
+			
+			var namespaceList = new List<UnitTestRendererLine> (new []{group});
+
+			foreach (Test result in test.Tests )
+			{
+				if (result is NamespaceSuite || test is TestAssembly)
+					namespaceList.AddRange (ParseTestList (result, results, categories));
+				else
+					group.AddChildren (ParseTestList (result, results, categories));
+			}
+
+			namespaceList.Sort ();
+			return namespaceList.ToArray ();
+		}
+
+		public void RunTests (UnitTestRunner.ITestRunnerCallback testRunnerEventListener)
+		{
+			RunTests (TestFilter.Empty, testRunnerEventListener);
+		}
+
+		public void RunTests ( TestFilter filter, UnitTestRunner.ITestRunnerCallback testRunnerEventListener )
+		{
+			try
+			{
+				if (testRunnerEventListener != null)
+					testRunnerEventListener.RunStarted (testSuite.TestName.FullName, testSuite.TestCount);
+
+				ExecuteTestSuite (testSuite, testRunnerEventListener, filter);
+
+				if (testRunnerEventListener != null)
+					testRunnerEventListener.RunFinished ();
+			}
+			catch (Exception e)
+			{
+				Debug.LogException (e);
+				if (testRunnerEventListener != null)
+					testRunnerEventListener.RunFinishedException (e);
+			}
+		}
+
+		public static Assembly[] GetAssembliesWithTests ()
+		{
+			var libs = new List<Assembly> ();
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies ())
+			{
+				if(assembly.GetReferencedAssemblies ().All (a => a.Name != "nunit.framework")) continue;
+				if (assembly.Location.Replace ('\\', '/').StartsWith (Application.dataPath)
+					|| whitelistedAssemblies.Contains (assembly.GetName ().Name)) libs.Add (assembly);
+			}
+			return libs.ToArray ();
 		}
 
 		private TestSuite PrepareTestSuite(List<String> assemblyList)
 		{
 			CoreExtensions.Host.InitializeService();
-			var testPackage = new TestPackage("Unity",
-												assemblyList);
+			var testPackage = new TestPackage (PlayerSettings.productName, assemblyList);
 			var builder = new TestSuiteBuilder();
 			TestExecutionContext.CurrentContext.TestPackage = testPackage;
 			TestSuite suite = builder.Build(testPackage);
-
-
 			return suite;
 		}
 
-		private NUnit.Core.TestResult ExecuteTestSuite(TestSuite suite, UnitTestRunner.ITestRunnerCallback testRunnerEventListener, ITestFilter filter)
+		private void ExecuteTestSuite ( TestSuite suite, UnitTestRunner.ITestRunnerCallback testRunnerEventListener, TestFilter filter )
 		{
-			var result = suite.Run(new TestRunnerEventListener(testRunnerEventListener),
-									filter);
-			return result;
+			EventListener eventListener;
+			if (testRunnerEventListener == null)
+				eventListener = new NullListener ();
+			else
+				eventListener = new TestRunnerEventListener (testRunnerEventListener);
+			suite.Run(eventListener, GetFilter(filter));
 		}
 
-		private class TestRunnerEventListener : EventListener
+		private ITestFilter GetFilter (TestFilter filter)
+		{
+			var nUnitFilter = new AndFilter();
+
+			if(filter.names != null && filter.names.Length>0)
+				nUnitFilter.Add ( new SimpleNameFilter(filter.names));
+			if (filter.categories != null && filter.categories.Length > 0)
+				nUnitFilter.Add (new CategoryFilter(filter.categories));
+			if (filter.objects != null && filter.objects.Length > 0)
+				nUnitFilter.Add (new OrFilter (filter.objects.Where (o => o is TestName).Select(o => new NameFilter (o as TestName)).ToArray ()));
+			return nUnitFilter;
+		}
+
+		public class TestRunnerEventListener : EventListener
 		{
 			private UnitTestRunner.ITestRunnerCallback testRunnerEventListener;
 
@@ -145,64 +193,5 @@ namespace UnityTest
 			{
 			}
 		}
-
-		#region Test and TestResult to UnitTestTestResult
-
-		private void ToUnitTestResult(NUnit.Core.Test test)
-		{
-			if (test.IsSuite)
-				ToUnitTestResult(test.Tests);
-			else
-			{
-				if(test is TestMethod)
-				{
-					var tm = test as TestMethod;
-					if( tm.Method.DeclaringType != tm.Method.ReflectedType )
-						return;
-
-				}
-				UpdateTest(test.UnitTestResult());
-			}
-		}
-
-		private void ToUnitTestResult(IList list)
-		{
-			foreach (var obj in list)
-			{
-				if (obj is TestAssembly && File.Exists((obj as TestAssembly).TestName.FullName))
-					(obj as TestResult).SetCurrentAssembly((obj as TestAssembly).TestName.FullName);
-
-				if (obj is NUnit.Core.Test) ToUnitTestResult(obj as NUnit.Core.Test);
-				else if (obj is TestResult) ToUnitTestResult(obj as NUnit.Core.TestResult);
-			}
-		}
-
-		private void ToUnitTestResult(NUnit.Core.TestResult result)
-		{
-			if (result.HasResults)
-			{
-				ToUnitTestResult(result.Results);
-			}
-			else
-			{
-				UpdateTest(result.UnitTestResult());
-			}
-
-		}
-
-		private void UpdateTest(UnitTestResult unitTestResult)
-		{
-			var result = testList.FirstOrDefault(m => m.Test.Equals(unitTestResult.Test));
-			if (result != null)
-			{
-				result.Update(unitTestResult);
-			}
-			else
-			{
-				testList.Add(unitTestResult);
-			}
-		}
-
-		#endregion
 	}
 }

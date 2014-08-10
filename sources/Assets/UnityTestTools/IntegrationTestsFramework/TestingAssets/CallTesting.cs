@@ -26,14 +26,12 @@ namespace UnityTest
 			OnCollisionEnter,
 			OnCollisionExit,
 			OnCollisionStay,
-#if !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2
 			OnTriggerEnter2D,
 			OnTriggerExit2D,
 			OnTriggerStay2D,
 			OnCollisionEnter2D,
 			OnCollisionExit2D,
 			OnCollisionStay2D,
-#endif
 		}
 
 		public enum Method
@@ -171,7 +169,6 @@ namespace UnityTest
 			TryToCallTesting (Functions.OnCollisionStay);
 		}
 
-#if !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2
 		public void OnTriggerEnter2D ()
 		{
 			TryToCallTesting (Functions.OnTriggerEnter2D);
@@ -201,6 +198,5 @@ namespace UnityTest
 		{
 			TryToCallTesting (Functions.OnCollisionStay2D);
 		}
-#endif
 	}
 }

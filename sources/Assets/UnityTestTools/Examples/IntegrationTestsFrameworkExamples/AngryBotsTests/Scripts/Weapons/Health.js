@@ -32,10 +32,10 @@ function Awake () {
 		var effect : GameObject = Spawner.Spawn (damagePrefab, Vector3.zero, Quaternion.identity);
 		effect.transform.parent = damageEffectTransform;
 		effect.transform.localPosition = Vector3.zero;
-		damageEffect = effect.particleEmitter;
-		var tempSize : Vector2 = Vector2(collider.bounds.extents.x,collider.bounds.extents.z);
+		damageEffect = effect.GetComponent.<ParticleEmitter>();
+		var tempSize : Vector2 = Vector2(GetComponent.<Collider>().bounds.extents.x,GetComponent.<Collider>().bounds.extents.z);
 		colliderRadiusHeuristic = tempSize.magnitude * 0.5;
-		damageEffectCenterYOffset = collider.bounds.extents.y;
+		damageEffectCenterYOffset = GetComponent.<Collider>().bounds.extents.y;
 
 	}
 	if (scorchMarkPrefab) {
@@ -106,7 +106,7 @@ function OnDamage (amount : float, fromDirection : Vector3) {
 			// on slopes with proper normal alignments
 			// @TODO: spawn a yield Sub() to handle placement, as we can
 			// spread calculations over several frames => cheap in total
-			var scorchPosition : Vector3 = collider.ClosestPointOnBounds (transform.position - Vector3.up * 100);
+			var scorchPosition : Vector3 = GetComponent.<Collider>().ClosestPointOnBounds (transform.position - Vector3.up * 100);
 			scorchMark.transform.position = scorchPosition + Vector3.up * 0.1;
 			scorchMark.transform.eulerAngles.y = Random.Range (0.0, 90.0);
 		}

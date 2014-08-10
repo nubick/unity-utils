@@ -15,7 +15,7 @@ function Start () {
 		playerTransform = GameObject.FindWithTag ("Player").transform;	
 	pos = transform.position;
 	scale = transform.localScale;
-	mat = renderer.material;
+	mat = GetComponent.<Renderer>().material;
 	enabled = false;
 }
 
