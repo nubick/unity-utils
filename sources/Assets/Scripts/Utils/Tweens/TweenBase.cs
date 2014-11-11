@@ -29,6 +29,11 @@ namespace Assets.Scripts.Utils.Tweens
             _startTime = Time.time + delay;
         }
 
+        public void SetEase(Func<float, float, float, float> easeFunc)
+        {
+            EaseFunc = easeFunc;
+        }
+
         protected abstract void OnStart();
 
         public void Update()

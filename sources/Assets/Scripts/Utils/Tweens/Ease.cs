@@ -2,21 +2,21 @@
 {
     public class Ease
     {
-        public static float EaseOutBack(float start, float end, float value)
+        public static float OutBack(float start, float end, float time)
         {
             float s = 1.70158f;
             end -= start;
-            value = (value) - 1;
-            return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
+            time = (time) - 1;
+            return end * ((time) * time * ((s + 1) * time + s) + 1) + start;
         }
 
-        public static float EaseInBack(float start, float end, float value)
+        public static float InBack(float start, float end, float time)
         {
-            return EaseOutBack(end, start, 1f - value);
+            //return OutBack(end, start, 1f - time);
             end -= start;
-            value /= 1;
+            time /= 1;
             float s = 1.70158f;
-            return end * (value) * value * ((s + 1) * value - s) + start;
+            return end * (time) * time * ((s + 1) * time - s) + start;
         }
     }
 }

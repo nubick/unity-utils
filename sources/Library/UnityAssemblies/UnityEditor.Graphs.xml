@@ -1,0 +1,29 @@
+﻿<?xml version="1.0"?>
+<doc>
+	<assembly>
+		<name>UnityEditor.Graphs</name>
+	</assembly>
+	<members>
+		<member name="T:UnityEditor.Graphs.Styles/Color">
+			<summary>Representation of RGBA colors.</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Grey">
+			<summary>English spelling for gray. RGBA is the same (0.5, 0.5, 0.5, 1).</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Gray">
+			<summary>Gray. RGBA is (0.5, 0.5, 0.5, 1).</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Blue">
+			<summary>Solid blue. RGBA is (0, 0, 1, 1).</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Green">
+			<summary>Solid green. RGBA is (0, 1, 0, 1).</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Yellow">
+			<summary>Yellow. RGBA is (1, 0.92, 0.016, 1), but the color is nice to look at!</summary>
+		</member>
+		<member name="F:UnityEditor.Graphs.Styles/Color.Red">
+			<summary>Solid red. RGBA is (1, 0, 0, 1).</summary>
+		</member>
+	</members>
+</doc>

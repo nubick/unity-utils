@@ -8,12 +8,19 @@ namespace Assets.Scripts.Utils.Tweens
         private Vector3 _targetPosition;
         private bool _isLocal;
 
-        public static void Run(GameObject item, Vector3 position, float duration, bool isLocal)
+
+        public static MoveToTween Run(GameObject item, Vector3 position, float duration)
         {
             MoveToTween tween = Create<MoveToTween>(item);
             tween._targetPosition = position;
-            tween._isLocal = isLocal;
             tween.Run(duration);
+            return tween;
+        }
+
+        public MoveToTween SetLocal(bool isLocal)
+        {
+            _isLocal = isLocal;
+            return this;
         }
 
         protected override void OnStart()

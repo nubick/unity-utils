@@ -1,47 +1,30 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Utils.Tweens
 {
-    public class NumberRunTween : MonoBehaviourBase
+    public class NumberRunTween : TweenBase
     {
         private int _from;
         private int _to;
-        private float _duration;
-        private Action<int> _updateDelegate;
-        private float _startTime;
+        private Text _text;  
 
-        public static void Run(GameObject item, int from, int to, float duration, Action<int> updateDelegate)
+        public static void Run(GameObject item, int from, int to, float duration)
         {
-            NumberRunTween tween = item.GetComponent<NumberRunTween>();
-            if (tween == null)
-                tween = item.AddComponent<NumberRunTween>();
-            else
-                tween.StopAllCoroutines();
-            tween.Run(from, to, duration, updateDelegate);
+            NumberRunTween tween = Create<NumberRunTween>(item);
+            tween._from = from;
+            tween._to = to;
+            tween.Run(duration);
+        }
+      
+        protected override void OnStart()
+        {
+            _text = GetComponent<Text>();
         }
 
-        private void Run(int from, int to, float duration, Action<int> updateDelegate)
+        protected override void UpdateValue(float time)
         {
-            _startTime = Time.time;
-            _from = from;
-            _to = to;
-            _duration = duration;
-            _updateDelegate = updateDelegate;
-        }
-
-        public void Update()
-        {
-            float t = (Time.time - _startTime)/_duration;
-            if (t > 1.0f)
-            {
-                _updateDelegate(_to);
-                Destroy(this);
-            }
-            else
-            {
-                _updateDelegate((int)Mathf.Lerp(_from, _to, t));
-            }
+            _text.text = ((int)Mathf.Lerp(_from, _to, time)).ToString();
         }
     }
 }
