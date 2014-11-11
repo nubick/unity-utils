@@ -2,60 +2,21 @@
 
 namespace Assets.Scripts.Utils.Tweens
 {
-    public class FadeOutTween : MonoBehaviourBase
+    public class FadeOutTween : FadeTweenBase
     {
-        private float _starTime;
-        private float _duration;
-        private SpriteRenderer _spriteRenderer;
-        private TextMesh _textMesh;
-
         public static void Run(GameObject item, float duration)
         {
-            FadeOutTween tween = item.GetComponent<FadeOutTween>();
-            if (tween == null)
-                tween = item.gameObject.AddComponent<FadeOutTween>();
-            else
-                tween.StopAllCoroutines();
-            tween.Run(duration);
+            Create<FadeOutTween>(item).Run(duration);
         }
 
-        public static void Stop(GameObject item)
+        public static void Run(GameObject item, float duration, float delay)
         {
-            FadeOutTween tween = item.GetComponent<FadeOutTween>();
-            if (tween != null)
-                tween.Stop();
+            Create<FadeOutTween>(item).Run(duration, delay);
         }
 
-        private void Run(float duration)
+        protected override void UpdateValue(float time)
         {
-            _duration = duration;
-            _starTime = Time.time;
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _textMesh = GetComponent<TextMesh>();
-        }
-
-        public void Update()
-        {
-            float normalizedTime = (Time.time - _starTime) / _duration;
-            if (normalizedTime > 1f)
-                Stop();
-            else
-                UpdateAlpha(Mathf.Lerp(1f, 0f, normalizedTime));
-        }
-
-        private void UpdateAlpha(float alpha)
-        {
-            if (_spriteRenderer != null)
-                _spriteRenderer.color = _spriteRenderer.color.SetA(alpha);
-            if (_textMesh != null)
-                _textMesh.color = _textMesh.color.SetA(alpha);
-        }
-
-        private void Stop()
-        {
-            gameObject.SetActive(false);
-            Destroy(this);
-            UpdateAlpha(1f);
+            UpdateAlpha(Mathf.Lerp(1f, 0f, time));
         }
     }
 }

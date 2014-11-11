@@ -27,5 +27,10 @@ namespace Assets.Scripts.Tests
             }
         }
 
+        private void F()
+        {
+            FadeOutTween.Run(gameObject, 1f);
+        }
+
     }
 }
