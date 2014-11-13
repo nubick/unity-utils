@@ -7,14 +7,14 @@ namespace Assets.Scripts.Utils.Tweens
     {
         private int _from;
         private int _to;
-        private Text _text;  
+        private Text _text;
 
-        public static void Run(GameObject item, int from, int to, float duration)
+        public static NumberRunTween Run(GameObject item, int from, int to, float duration)
         {
-            NumberRunTween tween = Create<NumberRunTween>(item);
+            NumberRunTween tween = Create<NumberRunTween>(item, duration);
             tween._from = from;
             tween._to = to;
-            tween.Run(duration);
+            return tween;
         }
       
         protected override void OnStart()

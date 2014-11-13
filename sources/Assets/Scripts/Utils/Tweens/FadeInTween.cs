@@ -4,14 +4,9 @@ namespace Assets.Scripts.Utils.Tweens
 {
     public class FadeInTween : FadeTweenBase
     {
-        public static void Run(GameObject item, float duration)
+        public static FadeInTween Run(GameObject item, float duration)
         {
-            Create<FadeInTween>(item).Run(duration);
-        }
-
-        public static void Run(GameObject item, float duration, float delay)
-        {
-            Create<FadeInTween>(item).Run(duration, delay);
+            return Create<FadeInTween>(item, duration);
         }
 
         protected override void OnStart()

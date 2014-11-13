@@ -10,7 +10,7 @@ namespace Assets.Scripts.Utils.Tweens
         protected float _duration;
         protected Func<float, float, float, float> EaseFunc;
 
-        protected static T Create<T>(GameObject item) where T:TweenBase
+        protected static T Create<T>(GameObject item, float duration) where T:TweenBase
         {
             //T tween = item.GetComponent<T>();
             //if (tween == null)
@@ -19,19 +19,20 @@ namespace Assets.Scripts.Utils.Tweens
             //    tween.StopAllCoroutines();
 
             T tween = item.gameObject.AddComponent<T>();
+            tween.EaseFunc = Mathf.Lerp;
+            tween._duration = duration;
+            tween._startTime = Time.time;
             return tween;
-        }
-
-        protected void Run(float duration, float delay = 0)
-        {
-            EaseFunc = Mathf.Lerp;
-            _duration = duration;
-            _startTime = Time.time + delay;
         }
 
         public void SetEase(Func<float, float, float, float> easeFunc)
         {
             EaseFunc = easeFunc;
+        }
+
+        public void SetDelay(float delay)
+        {
+            _startTime = Time.time + delay;
         }
 
         protected abstract void OnStart();

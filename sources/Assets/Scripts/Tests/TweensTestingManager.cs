@@ -18,13 +18,13 @@ namespace Assets.Scripts.Tests
         public void OnFadeTweens()
         {
             FadeOutTween.Run(ActiveObject, 2f);
-            FadeInTween.Run(ActiveObject, 2f, 2.5f);
+            FadeInTween.Run(ActiveObject, 2f).SetDelay(2.5f);
         }
 
         public void OnScaleTween()
         {
             ScaleTween.Run(ActiveObject, Vector3.zero, 1f);
-            ScaleTween.Run(ActiveObject, Vector3.one, 1f, 1.5f);
+            ScaleTween.Run(ActiveObject, Vector3.one, 1f).SetDelay(1.5f);
         }
 
         public void OnMoveTween()

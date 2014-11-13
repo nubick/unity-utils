@@ -7,18 +7,11 @@ namespace Assets.Scripts.Utils.Tweens
         private Vector3 _startScale;
         private Vector3 _targetScale;
 
-        public static void Run(GameObject item, Vector3 scale, float duration)
+        public static ScaleTween Run(GameObject item, Vector3 scale, float duration)
         {
-            ScaleTween tween = Create<ScaleTween>(item);
+            ScaleTween tween = Create<ScaleTween>(item, duration);
             tween._targetScale = scale;
-            tween.Run(duration);
-        }
-
-        public static void Run(GameObject item, Vector3 scale, float duration, float delay)
-        {
-            ScaleTween tween = Create<ScaleTween>(item);
-            tween._targetScale = scale;
-            tween.Run(duration, delay);
+            return tween;
         }
 
         protected override void OnStart()

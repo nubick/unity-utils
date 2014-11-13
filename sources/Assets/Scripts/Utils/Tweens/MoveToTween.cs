@@ -8,12 +8,10 @@ namespace Assets.Scripts.Utils.Tweens
         private Vector3 _targetPosition;
         private bool _isLocal;
 
-
         public static MoveToTween Run(GameObject item, Vector3 position, float duration)
         {
-            MoveToTween tween = Create<MoveToTween>(item);
+            MoveToTween tween = Create<MoveToTween>(item, duration);
             tween._targetPosition = position;
-            tween.Run(duration);
             return tween;
         }
 
