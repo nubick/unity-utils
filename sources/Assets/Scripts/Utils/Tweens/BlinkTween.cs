@@ -18,9 +18,10 @@ namespace Assets.Scripts.Utils.Tweens
             for (;;)
             {
                 yield return new WaitForSeconds(BlinkDelay);
-                renderer.enabled = false;
+	            GetComponent<Renderer>().enabled = false;
                 yield return new WaitForSeconds(BlinkDelay);
-                renderer.enabled = true;
+				GetComponent<Renderer>().enabled = true;
+
             }
         }
 

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Editor
 
         public void OnEnable()
         {
-            _renderer = (target as SortingLayerSettings).renderer;
+            _renderer = (target as SortingLayerSettings).GetComponent<Renderer>();
             _sortingLayerNames = GetSortingLayerNames();
         }
 
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Editor
                 if (changedSortingOrder != sortingOrder)
                 {
                     Undo.RecordObject(_renderer, "Edit Sorting Order");
-                    _renderer.renderer.sortingOrder = changedSortingOrder;
+                    _renderer.sortingOrder = changedSortingOrder;
                     EditorUtility.SetDirty(_renderer);
                 }
             }
