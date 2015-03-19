@@ -10,13 +10,13 @@ namespace Assets.Scripts.Utils.Tweens
         private Image _image;
         private Text _text;
 
-        protected override void OnStart()
-        {
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _textMesh = GetComponent<TextMesh>();
-            _image = GetComponent<Image>();
-            _text = GetComponent<Text>();
-        }
+		protected void CacheRenderers()
+		{
+			_spriteRenderer = GetComponent<SpriteRenderer>();
+			_textMesh = GetComponent<TextMesh>();
+			_image = GetComponent<Image>();
+			_text = GetComponent<Text>();
+		}
 
         protected void UpdateAlpha(float alpha)
         {

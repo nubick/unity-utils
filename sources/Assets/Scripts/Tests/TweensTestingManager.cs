@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using Assets.Scripts.Utils;
 using Assets.Scripts.Utils.Tweens;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Tests
     {
         public List<GameObject> GameObjects;
         public GameObject ActiveObject;
+		public float Duration;
+	    public float Delay;
 
         public void Awake()
         {
@@ -17,25 +20,25 @@ namespace Assets.Scripts.Tests
 
         public void OnFadeTweens()
         {
-            FadeOutTween.Run(ActiveObject, 2f);
-            FadeInTween.Run(ActiveObject, 2f).SetDelay(2.5f);
+			FadeOutTween.Run(ActiveObject, Duration);
+			FadeInTween.Run(ActiveObject, Duration).SetDelay(2.5f);
         }
 
         public void OnScaleTween()
         {
-            ScaleTween.Run(ActiveObject, Vector3.zero, 1f);
-            ScaleTween.Run(ActiveObject, Vector3.one, 1f).SetDelay(1.5f);
+			ScaleTween.Run(ActiveObject, Vector3.zero, Duration);
+			ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetDelay(Duration);
         }
 
         public void OnMoveTween()
         {
-            MoveToTween.Run(ActiveObject, Random.insideUnitCircle*Screen.height, 1f)
+			MoveToTween.Run(ActiveObject, Random.insideUnitCircle * Screen.height, Duration)
                 .SetLocal(true).SetEase(Ease.InBack);
         }
 
         public void OnNumberRunTween()
         {
-            NumberRunTween.Run(ActiveObject, 1, 99, 1f);
+			NumberRunTween.Run(ActiveObject, 1, 99, Duration);
         }
 
         public void OnNext()
@@ -58,5 +61,11 @@ namespace Assets.Scripts.Tests
             ActiveObject = GameObjects[ind];
             ActiveObject.SetActive(true);
         }
+
+		public void UpdateDuration(string value)
+	    {
+			Debug.Log(value);
+		    Duration = float.Parse(value, NumberStyles.Float);
+	    }
     }
 }

@@ -1,5 +1,6 @@
-#############
-## Unity3D
-#############
-sources/Library/metadata/
+sources/Library/
 sources/Temp/
+sources/obj/
+*.suo
+*.csproj
+*.sln

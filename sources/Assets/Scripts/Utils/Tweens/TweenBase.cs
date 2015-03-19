@@ -10,6 +10,11 @@ namespace Assets.Scripts.Utils.Tweens
         protected float _duration;
         protected Func<float, float, float, float> EaseFunc;
 
+		public Action FinishAction { get; private set; }
+
+		protected virtual void OnStart() { }
+		protected abstract void UpdateValue(float time);
+
         protected static T Create<T>(GameObject item, float duration) where T:TweenBase
         {
             //T tween = item.GetComponent<T>();
@@ -30,12 +35,11 @@ namespace Assets.Scripts.Utils.Tweens
             EaseFunc = easeFunc;
         }
 
-        public void SetDelay(float delay)
-        {
-            _startTime = Time.time + delay;
-        }
-
-        protected abstract void OnStart();
+		public TweenBase SetDelay(float delay)
+		{
+			_startTime = Time.time + delay;
+			return this;
+		}
 
         public void Update()
         {
@@ -44,8 +48,7 @@ namespace Assets.Scripts.Utils.Tweens
                 float time = (Time.time - _startTime)/_duration;
                 if (time > 1f)
                 {
-                    UpdateValue(1f);
-                    Destroy(this);
+					Finish();
                 }
                 else
                 {
@@ -59,6 +62,23 @@ namespace Assets.Scripts.Utils.Tweens
             }
         }
 
-        protected abstract void UpdateValue(float time);
+		public void Finish()
+		{
+			UpdateValue(1f);
+			OnFinish();
+			Destroy(this);
+		}
+
+		protected virtual void OnFinish()
+		{
+			if (FinishAction != null)
+				FinishAction();
+		}
+
+		public TweenBase OnFinish(Action finishAction)
+		{
+			FinishAction = finishAction;
+			return this;
+		}
     }
 }
