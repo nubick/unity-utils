@@ -24,7 +24,7 @@ namespace Assets.Scripts.Utils.Tweens
 
         protected override void UpdateValue(float time)
         {
-            _text.text = ((int)Mathf.Lerp(_from, _to, time)).ToString();
+	        _text.text = ((int) EaseFunc(_from, _to, time)).ToString();
         }
     }
 }

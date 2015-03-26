@@ -6,14 +6,25 @@ namespace Assets.Scripts.Utils.Tweens
     {
 		public static FadeOutTween Run(GameObject item, float duration)
 		{
-			FadeOutTween tween = Create<FadeOutTween>(item, duration);
-			tween.CacheRenderers();
-			return tween;
+			return Create<FadeOutTween>(item, duration);
 		}
 
-        protected override void UpdateValue(float time)
+	    protected override void OnStart()
+	    {
+		    Initialize();
+			UpdateValue(0);
+	    }
+
+	    protected override void UpdateValue(float time)
         {
 			UpdateAlpha(EaseFunc(1f, 0f, time));
         }
+
+	    protected override void OnFinish()
+	    {
+			gameObject.SetActive(false);
+			UpdateAlpha(0);
+			base.OnFinish();
+	    }
     }
 }

@@ -12,10 +12,8 @@ namespace Assets.Scripts.Utils.Tweens
 
 		public Action FinishAction { get; private set; }
 
-		protected virtual void OnStart() { }
-		protected abstract void UpdateValue(float time);
 
-        protected static T Create<T>(GameObject item, float duration) where T:TweenBase
+        public static T Create<T>(GameObject item, float duration) where T:TweenBase
         {
             //T tween = item.GetComponent<T>();
             //if (tween == null)
@@ -30,9 +28,10 @@ namespace Assets.Scripts.Utils.Tweens
             return tween;
         }
 
-        public void SetEase(Func<float, float, float, float> easeFunc)
+		public TweenBase SetEase(Func<float, float, float, float> easeFunc)
         {
             EaseFunc = easeFunc;
+			return this;
         }
 
 		public TweenBase SetDelay(float delay)
@@ -61,6 +60,10 @@ namespace Assets.Scripts.Utils.Tweens
                 OnStart();
             }
         }
+
+		protected virtual void OnStart() { }
+
+		protected abstract void UpdateValue(float time);
 
 		public void Finish()
 		{

@@ -1,22 +1,28 @@
-﻿namespace Assets.Scripts.Utils.Tweens
+﻿using System;
+using UnityEngine;
+
+namespace Assets.Scripts.Utils.Tweens
 {
     public class Ease
     {
-        public static float OutBack(float start, float end, float time)
+	    public static Func<float, float, float, float> Linear = Mathf.Lerp;
+	    public static Func<float, float, float, float> OutBack = OutBackFunc;
+		public static Func<float, float, float, float> InBack = InBackFunc;
+
+        private static float OutBackFunc(float start, float end, float time)
         {
-            float s = 1.70158f;
+            const float s = 1.70158f;
             end -= start;
-            time = (time) - 1;
-            return end * ((time) * time * ((s + 1) * time + s) + 1) + start;
+	        time = time - 1f;
+            return end * (time * time * ((s + 1f) * time + s) + 1f) + start;
         }
 
-        public static float InBack(float start, float end, float time)
+		private static float InBackFunc(float start, float end, float time)
         {
-            //return OutBack(end, start, 1f - time);
             end -= start;
-            time /= 1;
-            float s = 1.70158f;
-            return end * (time) * time * ((s + 1) * time - s) + start;
+            time /= 1f;
+            const float s = 1.70158f;
+            return end * time * time * ((s + 1f) * time - s) + start;
         }
     }
 }

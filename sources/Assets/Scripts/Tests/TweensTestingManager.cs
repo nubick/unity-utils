@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Assets.Scripts.Utils;
 using Assets.Scripts.Utils.Tweens;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Tests
 {
@@ -13,32 +16,46 @@ namespace Assets.Scripts.Tests
 		public float Duration;
 	    public float Delay;
 
+	    public Toggle[] EaseToggles;
+
+	    private readonly Func<float, float, float, float>[] EaseFunctions =
+	    {
+		    Ease.Linear,
+		    Ease.OutBack,
+		    Ease.InBack,
+	    };//Sequence must be same as in EaseToggles binding.
+
         public void Awake()
         {
             SelectActiveObject(0);
         }
 
-        public void OnFadeTweens()
-        {
-			FadeOutTween.Run(ActiveObject, Duration);
-			FadeInTween.Run(ActiveObject, Duration).SetDelay(2.5f);
-        }
+	    public void OnFadeOutTween()
+	    {
+		    FadeOutTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(GetSelectedEase());
+	    }
 
-        public void OnScaleTween()
-        {
-			ScaleTween.Run(ActiveObject, Vector3.zero, Duration);
-			ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetDelay(Duration);
-        }
+	    public void OnFadeInTween()
+	    {
+		    FadeInTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(GetSelectedEase());
+	    }
 
-        public void OnMoveTween()
-        {
-			MoveToTween.Run(ActiveObject, Random.insideUnitCircle * Screen.height, Duration)
-                .SetLocal(true).SetEase(Ease.InBack);
-        }
+	    public void OnScaleTween()
+	    {
+		    TweenSequence.Run(
+			    () => ScaleTween.Run(ActiveObject, Vector3.zero, Duration).SetEase(GetSelectedEase()).SetDelay(Delay),
+			    () => ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetEase(GetSelectedEase()));
+	    }
+
+	    public void OnMoveTween()
+	    {
+		    MoveToTween.Run(ActiveObject, Random.insideUnitCircle*Screen.height*0.75f, Duration)
+			    .SetLocal(true).SetDelay(Delay).SetEase(GetSelectedEase());
+	    }
 
         public void OnNumberRunTween()
         {
-			NumberRunTween.Run(ActiveObject, 1, 99, Duration);
+	        NumberRunTween.Run(ActiveObject, 1, 99, Duration).SetEase(GetSelectedEase()).SetDelay(Delay);
         }
 
         public void OnNext()
@@ -59,13 +76,28 @@ namespace Assets.Scripts.Tests
         {
             GameObjects.ForEach(_=>_.SetActive(false));
             ActiveObject = GameObjects[ind];
+	        ActiveObject.transform.localPosition = Vector3.zero;
             ActiveObject.SetActive(true);
         }
 
 		public void UpdateDuration(string value)
 	    {
-			Debug.Log(value);
 		    Duration = float.Parse(value, NumberStyles.Float);
+	    }
+
+		public void UpdateDelay(string value)
+		{
+			Delay = float.Parse(value, NumberStyles.Float);
+		}
+
+	    private Func<float, float, float, float> GetSelectedEase()
+	    {
+		    for (int i = 0; i < EaseToggles.Length; i++)
+		    {
+			    if (EaseToggles[i].isOn)
+				    return EaseFunctions[i];
+		    }
+			throw new Exception("No any ease selected.");
 	    }
     }
 }
