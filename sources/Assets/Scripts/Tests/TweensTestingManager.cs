@@ -23,6 +23,10 @@ namespace Assets.Scripts.Tests
 		    Ease.Linear,
 		    Ease.OutBack,
 		    Ease.InBack,
+			Ease.InOutBack,
+			Ease.OutCirc,
+			Ease.InCirc,
+			Ease.InOutCirc
 	    };//Sequence must be same as in EaseToggles binding.
 
         public void Awake()
