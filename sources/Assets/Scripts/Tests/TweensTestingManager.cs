@@ -53,6 +53,12 @@ namespace Assets.Scripts.Tests
 			    .SetLocal(true).SetDelay(Delay).SetEase(GetSelectedEase());
 	    }
 
+		public void OnMoveXTween()
+		{
+			MoveToTween.RunX(ActiveObject, (Random.insideUnitCircle*Screen.height*0.75f).x, Duration)
+				.SetLocal(true).SetDelay(Delay).SetEase(GetSelectedEase());
+		}
+
         public void OnNumberRunTween()
         {
 	        NumberRunTween.Run(ActiveObject, 1, 99, Duration).SetEase(GetSelectedEase()).SetDelay(Delay);
