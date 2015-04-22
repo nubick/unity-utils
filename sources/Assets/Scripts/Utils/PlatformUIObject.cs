@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
     public class PlatformUIObject : MonoBehaviour
     {
-        public RuntimePlatform Platform;
+	    public RuntimePlatform[] Platforms;
         public bool IsForceVisible;
 
         public void OnEnable()
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Utils
 
         private void UpdateVisibility()
         {
-            gameObject.SetActive(IsForceVisible || Application.platform == Platform);
+	        gameObject.SetActive(IsForceVisible || Platforms.Contains(Application.platform));
         }
     }
 
