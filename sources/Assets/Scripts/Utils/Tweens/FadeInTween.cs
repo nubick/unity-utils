@@ -2,8 +2,8 @@
 
 namespace Assets.Scripts.Utils.Tweens
 {
-    public class FadeInTween : FadeTweenBase
-    {
+	public class FadeInTween : FadeTweenBase
+	{
 		public static FadeInTween Run(GameObject item, float duration)
 		{
 			FadeInTween fadeInTween = Create<FadeInTween>(item, duration);
@@ -13,9 +13,9 @@ namespace Assets.Scripts.Utils.Tweens
 			return fadeInTween;
 		}
 
-        protected override void UpdateValue(float time)
-        {
-            UpdateAlpha(EaseFunc(0f, 1f, time));
-        }
-    }
+		protected override void UpdateValue(float time)
+		{
+			UpdateAlpha(EaseFunc(0f, 1f, time));
+		}
+	}
 }
