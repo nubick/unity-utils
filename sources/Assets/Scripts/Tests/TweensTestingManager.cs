@@ -46,7 +46,7 @@ namespace Assets.Scripts.Tests
 
 	    public void OnScaleTween()
 	    {
-		    TweenSequence.Run(
+		    TweenSequence.Run2(
 			    () => ScaleTween.Run(ActiveObject, Vector3.zero, Duration).SetEase(GetSelectedEase()).SetDelay(Delay),
 			    () => ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetEase(GetSelectedEase()));
 	    }
@@ -66,6 +66,24 @@ namespace Assets.Scripts.Tests
         public void OnNumberRunTween()
         {
 	        NumberRunTween.Run(ActiveObject, 1, 99, Duration).SetEase(GetSelectedEase()).SetDelay(Delay);
+        }
+
+        public void OnShakeTween()
+        {
+            TweenSequence.Run3(
+                () => ShakeTween.Run(ActiveObject, 25, Duration),
+                () => ShakeTween.RunVertical(ActiveObject, 25, Duration),
+                () => ShakeTween.Run(ActiveObject, 25, Duration).SetDirection(new Vector2(3f, 1f)));
+        }
+
+        public void RunKickTween()
+        {
+            TweenSequence.Run5(
+                () => KickTween.RunLeft(ActiveObject, 100f),
+                () => KickTween.RunRight(ActiveObject, 100f),
+                () => KickTween.RunUp(ActiveObject, 100f),
+                () => KickTween.RunDown(ActiveObject, 100f),
+                () => KickTween.RunDirection(ActiveObject, 100f, new Vector2(4f, 3f)));
         }
 
         public void OnNext()
