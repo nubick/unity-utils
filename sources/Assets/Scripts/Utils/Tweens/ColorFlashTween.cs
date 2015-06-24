@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Utils.Tweens
 {
     public class ColorFlashTween : TweenBase
     {
         private SpriteRenderer _spriteRenderer;
+        private Image _image;
         private Color _startColor;
         private Color _targetColor;
 
@@ -18,16 +20,26 @@ namespace Assets.Scripts.Utils.Tweens
         protected override void OnStart()
         {
             _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            _startColor = _spriteRenderer.color;
+            if(_spriteRenderer != null)
+                _startColor = _spriteRenderer.color;
+
+            _image = gameObject.GetComponent<Image>();
+            if (_image != null)
+                _startColor = _image.color;
         }
 
         protected override void UpdateValue(float time)
         {
             time = EaseFunc(0f, 1f, time);
-            if (time <= 0.5f)
-                _spriteRenderer.color = Color.Lerp(_startColor, _targetColor, time*2);
-            else
-                _spriteRenderer.color = Color.Lerp(_targetColor, _startColor, (time - 0.5f)*2);
+            Color color = time <= 0.5f
+                ? Color.Lerp(_startColor, _targetColor, time*2)
+                : Color.Lerp(_targetColor, _startColor, (time - 0.5f)*2);
+
+            if (_spriteRenderer != null)
+                _spriteRenderer.color = color;
+
+            if (_image != null)
+                _image.color = color;
         }
     }
 }
