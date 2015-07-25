@@ -77,7 +77,20 @@ namespace Assets.Scripts.Tests
 			EaseFunc = Ease.InOutCirc;
 		}
 
-		
 
+		public void SelectOutCubic()
+		{
+			EaseFunc = Ease.OutCubic;
+		}
+
+		public void SelectInCubic()
+		{
+			EaseFunc = Ease.InCubic;
+		}
+
+		public void SelectInOutCubic()
+		{
+			EaseFunc = Ease.InOutCubic;
+		}
 	}
 }

@@ -30,10 +30,10 @@ namespace Assets.Scripts.Utils.Tweens
 		{
 			time *= 2f;
 			if (time < 1f)
-				return (end - start)/2f*(time*time*((BackS2 + 1)*time - BackS2)) + start;
+				return (end - start)/2f*(time*time*((BackS2 + 1f)*time - BackS2)) + start;
 
 			time -= 2f;
-			return (end - start)/2f*(time*time*((BackS2 + 1)*time + BackS2) + 2) + start;
+			return (end - start)/2f*(time*time*((BackS2 + 1f)*time + BackS2) + 2f) + start;
 		}
 
 		#endregion
@@ -58,16 +58,43 @@ namespace Assets.Scripts.Utils.Tweens
 		private static float InOutCircFunc(float start, float end, float time)
 		{
 			time *= 2f;
-			if (time < 1)
-				return -(end - start)/2*(Mathf.Sqrt(1 - time*time) - 1) + start;
+			if (time < 1f)
+				return -(end - start)/2f*(Mathf.Sqrt(1f - time*time) - 1f) + start;
 
-			time -= 2;
-			return (end - start)/2*(Mathf.Sqrt(1 - time*time) + 1) + start;
+			time -= 2f;
+			return (end - start)/2f*(Mathf.Sqrt(1f - time*time) + 1f) + start;
 		}
 
 		#endregion
 
+		#region Cubic
+		
+		public static Func<float, float, float, float> OutCubic = OutCubicFunc;
+		public static Func<float, float, float, float> InCubic = InCubicFunc;
+		public static Func<float, float, float, float> InOutCubic = InOutCubicFunc;
+		
+		private static float OutCubicFunc(float start, float end, float time)
+		{
+			time -= 1f;
+			return (end - start)*(time*time*time + 1f) + start;
+		}
+		
+		private static float InCubicFunc(float start, float end, float time)
+		{
+			return (end - start)*time*time*time + start;
+		}
+		
+		private static float InOutCubicFunc(float start, float end, float time)
+		{
+			time *= 2f;
+			if (time < 1f)
+				return (end - start)/2f*time*time*time + start;
 
+			time -= 2f;
+			return (end - start)/2f*(time*time*time + 2f) + start;
+		}
+		
+		#endregion
 		
     }
 }
