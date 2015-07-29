@@ -11,61 +11,83 @@ namespace Assets.Scripts.Tests
 {
     public class TweensTestingManager : MonoBehaviourBase
     {
+		private List<Toggle> _easeToggles = new List<Toggle>();
+
         public List<GameObject> GameObjects;
         public GameObject ActiveObject;
 		public float Duration;
 	    public float Delay;
-
-	    public Toggle[] EaseToggles;
-
-	    private readonly Func<float, float, float, float>[] EaseFunctions =
-	    {
-		    Ease.Linear,
-		    Ease.OutBack,
-		    Ease.InBack,
-			Ease.InOutBack,
-			Ease.OutCirc,
-			Ease.InCirc,
-			Ease.InOutCirc
-	    };//Sequence must be same as in EaseToggles binding.
+		public Ease Ease;
+		public RectTransform EaseTogglesRoot;
+		public RectTransform EaseTogglePrefab;
 
         public void Awake()
         {
             SelectActiveObject(0);
+			CreateEaseToggles();
         }
+
+		private void CreateEaseToggles()
+		{
+			Toggle.ToggleEvent toggleEvent = new Toggle.ToggleEvent();
+			toggleEvent.AddListener(new UnityEngine.Events.UnityAction<bool>(OnValueChanged));
+
+			ToggleGroup toggleGroup = EaseTogglesRoot.GetComponent<ToggleGroup>();
+			foreach(string easeName in Enum.GetNames(typeof(Ease)))
+			{
+				RectTransform easeToggle = Instantiate(EaseTogglePrefab);
+				easeToggle.SetParent(EaseTogglesRoot);
+				easeToggle.name = easeName;
+				easeToggle.localScale = Vector3.one;
+				easeToggle.GetComponentInChildren<Text>().text = easeName;
+				Toggle toggle = easeToggle.GetComponent<Toggle>();
+				toggle.group = toggleGroup;
+				toggle.onValueChanged = toggleEvent;
+				_easeToggles.Add(toggle);
+			}
+			toggleGroup.SetAllTogglesOff();
+			_easeToggles[0].isOn = true;
+		}
+
+		private void OnValueChanged(bool isOn)
+		{
+			foreach(Toggle toggle in _easeToggles)
+				if(toggle.isOn)
+					Ease = (Ease)Enum.Parse(typeof(Ease), toggle.name);
+		}
 
 	    public void OnFadeOutTween()
 	    {
-		    FadeOutTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(GetSelectedEase());
+		    FadeOutTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(Ease);
 	    }
 
 	    public void OnFadeInTween()
 	    {
-		    FadeInTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(GetSelectedEase());
+		    FadeInTween.Run(ActiveObject, Duration).SetDelay(Delay).SetEase(Ease);
 	    }
 
 	    public void OnScaleTween()
 	    {
 		    TweenSequence.Run2(
-			    () => ScaleTween.Run(ActiveObject, Vector3.zero, Duration).SetEase(GetSelectedEase()).SetDelay(Delay),
-			    () => ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetEase(GetSelectedEase()));
+			    () => ScaleTween.Run(ActiveObject, Vector3.zero, Duration).SetEase(Ease).SetDelay(Delay),
+			    () => ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetEase(Ease));
 	    }
 
 	    public void OnMoveTween()
 	    {
 		    MoveToTween.Run(ActiveObject, Random.insideUnitCircle*Screen.height*0.75f, Duration)
-			    .SetLocal(true).SetDelay(Delay).SetEase(GetSelectedEase());
+			    .SetLocal(true).SetDelay(Delay).SetEase(Ease);
 	    }
 
 		public void OnMoveXTween()
 		{
 			MoveToTween.RunX(ActiveObject, (Random.insideUnitCircle*Screen.height*0.75f).x, Duration)
-				.SetLocal(true).SetDelay(Delay).SetEase(GetSelectedEase());
+				.SetLocal(true).SetDelay(Delay).SetEase(Ease);
 		}
 
         public void OnNumberRunTween()
         {
-	        NumberRunTween.Run(ActiveObject, 1, 99, Duration).SetEase(GetSelectedEase()).SetDelay(Delay);
+	        NumberRunTween.Run(ActiveObject, 1, 99, Duration).SetEase(Ease).SetDelay(Delay);
         }
 
         public void OnShakeTween()
@@ -90,8 +112,8 @@ namespace Assets.Scripts.Tests
 		{
 			float startSize = Camera.main.orthographicSize;
 			TweenSequence.Run2(
-				() => CameraTween.ChangeSize(Camera.main, 200, Duration).SetEase(GetSelectedEase()),
-				() => CameraTween.ChangeSize(Camera.main, startSize, Duration).SetEase(GetSelectedEase()).SetDelay(1f));
+				() => CameraTween.ChangeSize(Camera.main, 200, Duration).SetEase(Ease),
+				() => CameraTween.ChangeSize(Camera.main, startSize, Duration).SetEase(Ease).SetDelay(1f));
 		}
 
         public void OnNext()
@@ -125,15 +147,5 @@ namespace Assets.Scripts.Tests
 		{
 			Delay = float.Parse(value, NumberStyles.Float);
 		}
-
-	    private Func<float, float, float, float> GetSelectedEase()
-	    {
-		    for (int i = 0; i < EaseToggles.Length; i++)
-		    {
-			    if (EaseToggles[i].isOn)
-				    return EaseFunctions[i];
-		    }
-			throw new Exception("No any ease selected.");
-	    }
     }
 }

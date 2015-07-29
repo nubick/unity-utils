@@ -34,6 +34,12 @@ namespace Assets.Scripts.Utils.Tweens
 			return this;
 		}
 
+		public TweenBase SetEase(Ease ease)
+		{
+			EaseFunc = EaseFunctions.Get(ease);
+			return this;
+		}
+
 		public TweenBase SetDelay(float delay)
 		{
 			_startTime = Time.time + delay;

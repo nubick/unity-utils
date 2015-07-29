@@ -15,13 +15,13 @@ namespace Assets.Scripts.Tests
 
 		public void Awake()
 		{
-			EaseFunc = Ease.Linear;
+			UpdateEase(0);
 		}
 
 		public void OnDrawGizmos()
 		{
 			if (EaseFunc == null)
-				EaseFunc = Ease.Linear;
+				UpdateEase(0);
 
 			Gizmos.color = Color.blue;
 			Gizmos.DrawCube(
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Tests
 
 			Gizmos.color = Color.white;
 			Vector2 previousPoint = new Vector2(FromTime, FromValue);
-			for (float time = 0.0f; time <= 1.0f; time += 0.01f)
+			for (float time = 0.0f; time <= 1.0f; time += 0.005f)
 			{
 				float value = EaseFunc(FromValue, ToValue, time);
 				Vector2 currentPoint = new Vector2(time*(ToTime - FromTime) + FromTime, value);
@@ -39,58 +39,9 @@ namespace Assets.Scripts.Tests
 			}
 		}
 
-		public void SelectLinear()
+		public void UpdateEase(int easeInt)
 		{
-			EaseFunc = Ease.Linear;
-		}
-
-		
-		public void SelectInBack()
-		{
-			EaseFunc = Ease.InBack;
-		}
-
-		public void SelectOutBack()
-		{
-			EaseFunc = Ease.OutBack;
-		}
-
-		public void SelectInOutBack()
-		{
-			EaseFunc = Ease.InOutBack;
-		}
-
-
-
-		public void SelectOutCirc()
-		{
-			EaseFunc = Ease.OutCirc;
-		}
-
-		public void SelectInCirc()
-		{
-			EaseFunc = Ease.InCirc;
-		}
-
-		public void SelectInOutCirc()
-		{
-			EaseFunc = Ease.InOutCirc;
-		}
-
-
-		public void SelectOutCubic()
-		{
-			EaseFunc = Ease.OutCubic;
-		}
-
-		public void SelectInCubic()
-		{
-			EaseFunc = Ease.InCubic;
-		}
-
-		public void SelectInOutCubic()
-		{
-			EaseFunc = Ease.InOutCubic;
+			EaseFunc = EaseFunctions.Get((Ease)easeInt);
 		}
 	}
 }
