@@ -1,11 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tests/EaseTestingManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tests/TweensTestingManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Utils/Tweens/CameraTween.cs" Line="18" Column="10" />
-      <File FileName="Assets/Scripts/Tests/TweensTestingManager.cs" Line="17" Column="25" />
-      <File FileName="Assets/Scripts/Utils/Tweens/EaseFunctions.cs" Line="7" Column="31" />
-      <File FileName="Assets/Scripts/Tests/EaseTestingManager.cs" Line="18" Column="27" />
+      <File FileName="Assets/Scripts/Tests/TweensTestingManager.cs" Line="56" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
