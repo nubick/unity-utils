@@ -86,6 +86,14 @@ namespace Assets.Scripts.Tests
                 () => KickTween.RunDirection(ActiveObject, 100f, new Vector2(4f, 3f)));
         }
 
+		public void RunCameraTween()
+		{
+			float startSize = Camera.main.orthographicSize;
+			TweenSequence.Run2(
+				() => CameraTween.ChangeSize(Camera.main, 200, Duration).SetEase(GetSelectedEase()),
+				() => CameraTween.ChangeSize(Camera.main, startSize, Duration).SetEase(GetSelectedEase()).SetDelay(1f));
+		}
+
         public void OnNext()
         {
             int ind = GameObjects.IndexOf(ActiveObject);
