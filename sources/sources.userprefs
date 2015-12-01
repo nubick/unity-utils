@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tests/TweensTestingManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Utils/GameRandom.cs">
     <Files>
-      <File FileName="Assets/Scripts/Tests/TweensTestingManager.cs" Line="56" Column="19" />
+      <File FileName="Assets/Scripts/Tests/Editor/GameRandomTest.cs" Line="94" Column="1" />
+      <File FileName="Assets/Scripts/Utils/GameRandom.cs" Line="95" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
