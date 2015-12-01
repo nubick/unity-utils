@@ -89,6 +89,12 @@ namespace Assets.Scripts.Utils
 			return items;
 		}
 
-
+		/// <summary>
+		/// Return random bool value.
+		/// </summary>
+		public static bool NextBool()
+		{
+			return Random.Range(0, 2) == 0;
+		}
 	}
 }
