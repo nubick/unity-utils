@@ -2,7 +2,6 @@
 using Assets.Scripts.Utils;
 using NUnit.Framework;
 
-
 namespace Assets.Scripts.Tests.Editor
 {
 	[TestFixture]
@@ -104,7 +103,6 @@ namespace Assets.Scripts.Tests.Editor
 					counter++;
 			}
 			Console.WriteLine(counter);
-			Assert.Pass();
 		}
 	}
 }
