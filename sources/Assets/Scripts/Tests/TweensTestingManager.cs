@@ -116,6 +116,34 @@ namespace Assets.Scripts.Tests
 				() => CameraTween.ChangeSize(Camera.main, startSize, Duration).SetEase(Ease).SetDelay(1f));
 		}
 
+        public void RunValueTween(bool isIntegerValue)
+        {
+            Text textComponent = ActiveObject.GetComponent<Text>();
+            if (textComponent == null)
+            {
+                Debug.Log("Test error! Can't test ValueTween. Select text component before.");
+            }
+            else
+            {
+                if (isIntegerValue)
+                {
+                    ValueTween.Run(ActiveObject, 10, 100, Duration,
+                        iValue =>
+                        {
+                            textComponent.text = iValue.ToString();
+                        }).SetEase(Ease).SetDelay(Delay);
+                }
+                else
+                {
+                    ValueTween.Run(ActiveObject, 100f, 10f, Duration,
+                        fValue =>
+                        {
+                            textComponent.text = fValue.ToString("F");
+                        }).SetEase(Ease).SetDelay(Delay);
+                }
+            }
+        }
+
         public void OnNext()
         {
             int ind = GameObjects.IndexOf(ActiveObject);
