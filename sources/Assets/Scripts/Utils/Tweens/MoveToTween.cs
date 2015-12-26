@@ -57,22 +57,17 @@ namespace Assets.Scripts.Utils.Tweens
 			    _targetPosition = new Vector3(_startPosition.x, _startPosition.y, _targetZ.Value);
 	    }
 
-	    protected override void UpdateValue(float time)
+        protected override void UpdateValue(float time)
         {
+            Vector3 nextPosition = new Vector3(
+                EaseFunc(_startPosition.x, _targetPosition.x, time),
+                EaseFunc(_startPosition.y, _targetPosition.y, time),
+                EaseFunc(_startPosition.z, _targetPosition.z, time));
+
             if (_isLocal)
-            {
-                Transform.localPosition = new Vector3(
-                    EaseFunc(_startPosition.x, _targetPosition.x, time),
-                    EaseFunc(_startPosition.y, _targetPosition.y, time),
-                    EaseFunc(_startPosition.z, _targetPosition.z, time));
-            }
+                Transform.localPosition = nextPosition;
             else
-            {
-                Transform.position = new Vector3(
-                    EaseFunc(_startPosition.x, _targetPosition.x, time),
-                    EaseFunc(_startPosition.y, _targetPosition.y, time),
-                    EaseFunc(_startPosition.z, _targetPosition.z, time));
-            }
+                Transform.position = nextPosition;
         }
     }
 }

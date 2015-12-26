@@ -73,15 +73,20 @@ namespace Assets.Scripts.Tests
 			    () => ScaleTween.Run(ActiveObject, Vector3.one, Duration).SetEase(Ease));
 	    }
 
+        private Vector2 GetRandomScreenPoint()
+        {
+            return Random.insideUnitCircle*Screen.height*0.75f;
+        }
+
 	    public void OnMoveTween()
 	    {
-		    MoveToTween.Run(ActiveObject, Random.insideUnitCircle*Screen.height*0.75f, Duration)
+		    MoveToTween.Run(ActiveObject, GetRandomScreenPoint(), Duration)
 			    .SetLocal(true).SetDelay(Delay).SetEase(Ease);
 	    }
 
 		public void OnMoveXTween()
 		{
-			MoveToTween.RunX(ActiveObject, (Random.insideUnitCircle*Screen.height*0.75f).x, Duration)
+			MoveToTween.RunX(ActiveObject, GetRandomScreenPoint().x, Duration)
 				.SetLocal(true).SetDelay(Delay).SetEase(Ease);
 		}
 
@@ -142,6 +147,11 @@ namespace Assets.Scripts.Tests
                         }).SetEase(Ease).SetDelay(Delay);
                 }
             }
+        }
+
+        public void RunJump2DTween()
+        {
+            Jump2DTween.Run(ActiveObject, GetRandomScreenPoint(), Duration).SetJumpYOffset(100).SetDelay(Delay);
         }
 
         public void OnNext()
