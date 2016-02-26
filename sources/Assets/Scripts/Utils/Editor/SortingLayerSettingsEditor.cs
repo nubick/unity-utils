@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using Assets.Scripts.Utils;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Assets.Scripts.Editor
+namespace Assets.Scripts.Utils.Editor
 {
     [CustomEditor(typeof(SortingLayerSettings))]
     public class SortingLayerSettingsEditor : UnityEditor.Editor

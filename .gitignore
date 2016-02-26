@@ -1,7 +1,6 @@
 sources/Library/
 sources/Temp/
 sources/obj/
-sources/Assets/UnityVS/
 *.suo
 *.csproj
 *.sln

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Editor
+namespace Assets.Scripts.Utils.Editor
 {
 	public class TaggedGameObjectsLister: EditorWindow
 	{
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Editor
 			_scrollPosition = Vector2.zero;
 		}
 
-		[MenuItem("GameName/Find game objects by tag")]
-		public static void Launch()
+		[MenuItem("Window/Utils/Find game objects by tag")]
+        public static void Launch()
 		{
 			EditorWindow window = GetWindow(typeof(TaggedGameObjectsLister));
 			window.Show();
