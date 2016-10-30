@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Put Debug.Log("") string with 5 parameters.</Title>
+			<Shortcut>dlog5</Shortcut>
+			<Description>Code snippet for Unity Debug.Log() with 5 parameters.</Description>
+			<Author>Oleg Andrushko - nubick</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Imports>
+        <Import>
+           <Namespace>UnityEngine</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>str1</ID>
+          <Default>val1</Default>
+        </Literal>
+        <Literal>
+          <ID>val1</ID>
+          <Default>val1</Default>
+        </Literal>
+        <Literal>
+          <ID>str2</ID>
+          <Default>val2</Default>
+        </Literal>
+        <Literal>
+          <ID>val2</ID>
+          <Default>val2</Default>
+        </Literal>
+        <Literal>
+          <ID>str3</ID>
+          <Default>val3</Default>
+        </Literal>
+        <Literal>
+          <ID>val3</ID>
+          <Default>val3</Default>
+        </Literal>
+        <Literal>
+          <ID>str4</ID>
+          <Default>val4</Default>
+        </Literal>
+        <Literal>
+          <ID>val4</ID>
+          <Default>val4</Default>
+        </Literal>
+        <Literal>
+          <ID>str5</ID>
+          <Default>val5</Default>
+        </Literal>
+        <Literal>
+          <ID>val5</ID>
+          <Default>val5</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp"><![CDATA[Debug.Log("$str1$: " + $val1$ + ", $str2$: " + $val2$ + ", $str3$: " + $val3$ + ", $str4$: " + $val4$ + ", $str5$: " + $val5$);
+      $end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

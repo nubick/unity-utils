@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Put Debug.Log("") string with 2 parameters.</Title>
+			<Shortcut>dlog2</Shortcut>
+			<Description>Code snippet for Unity Debug.Log() with 2 parameters.</Description>
+			<Author>Oleg Andrushko - nubick</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Imports>
+        <Import>
+           <Namespace>UnityEngine</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal>
+          <ID>str1</ID>
+          <Default>val1</Default>
+        </Literal>
+        <Literal>
+          <ID>val1</ID>
+          <Default>val1</Default>
+        </Literal>
+        <Literal>
+          <ID>str2</ID>
+          <Default>val2</Default>
+        </Literal>
+        <Literal>
+          <ID>val2</ID>
+          <Default>val2</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp"><![CDATA[Debug.Log("$str1$: " + $val1$ + ", $str2$: " + $val2$);
+      $end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
