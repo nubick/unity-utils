@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Utils
 {
-    public class Parallax : MonoBehaviourBase
+    public class Parallax : MonoBehaviour
     {
         private Transform[] _items;
 
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Utils
             _items = new Transform[ItemsCount];
             for (int i = 0; i < ItemsCount; i++)
             {
-                _items[i] = Instantiate<Transform>(ItemPrefab);
-                _items[i].parent = Transform;
+                _items[i] = Instantiate(ItemPrefab);
+                _items[i].parent = transform;
                 _items[i].SetLocalXY(BoundX, 0f);
             }
         }

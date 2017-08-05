@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Tests
 {
-    public class InvokeTestUI : MonoBehaviourBase
+    public class InvokeTestUI : MonoBehaviour
     {
         public void OnGUI()
         {
@@ -11,23 +11,23 @@ namespace Assets.Scripts.Tests
             
             if (GUILayout.Button("Invoke"))
             {
-                Invoke(() => InvokedFunc(), 3f);
+                this.Invoke(() => InvokedFunc(), 3f);
             }
             
             if (GUILayout.Button("IsInvoking"))
             {
-                bool isInvoking = IsInvoking(() => InvokedFunc());
+                bool isInvoking = this.IsInvoking(() => InvokedFunc());
                 Debug.Log("IsInvoking:" + isInvoking);
             }
             
             if (GUILayout.Button("InvokeRepeating"))
             {
-                InvokeRepeating(() => InvokedFunc(), 1f, 1f);
+                this.InvokeRepeating(() => InvokedFunc(), 1f, 1f);
             }
 
             if (GUILayout.Button("CancelInvoke"))
             {
-                CancelInvoke(() => InvokedFunc());
+                this.CancelInvoke(() => InvokedFunc());
             }
 
             GUILayout.EndVertical();
