@@ -5,14 +5,28 @@ using NUnit.Framework;
 namespace Assets.Scripts.Tests.Editor
 {
 	[TestFixture]
-	public class GameRandomTest
+	public class RandomUtilTest
 	{
-        [Test]
+		[Test]
+		public void NextBoolTest()
+		{
+			int counter = 0;
+            int iterations = 1000;
+            for (int i = 0; i < iterations; i++)
+			{
+				bool randomBool = RandomUtil.NextBool();
+				if (randomBool)
+					counter++;
+			}
+            Console.WriteLine(string.Format("NextBool: {0} from {1}", counter, iterations));
+		}
+
+		[Test]
         public void NextDiscreteTest1()
         {
             for (int attempt = 1; attempt <= 100; attempt++)
             {
-                float randomValue = GameRandom.NextDiscrete(-100f, 100f, 25);
+                float randomValue = RandomUtil.NextDiscrete(-100f, 100f, 25);
                 Assert.IsTrue(randomValue >= -100 && randomValue <= 100);
             }
         }
@@ -22,13 +36,13 @@ namespace Assets.Scripts.Tests.Editor
         {
             const float minValue = 55.5f;
             
-            float randomValue = GameRandom.NextDiscrete(minValue, 155.4f, 1);
+            float randomValue = RandomUtil.NextDiscrete(minValue, 155.4f, 1);
             Assert.AreEqual(minValue, randomValue);
 
-            randomValue = GameRandom.NextDiscrete(minValue, 155.4f, 0);
+            randomValue = RandomUtil.NextDiscrete(minValue, 155.4f, 0);
             Assert.AreEqual(minValue, randomValue);
 
-            randomValue = GameRandom.NextDiscrete(minValue, 155.4f, -1);
+            randomValue = RandomUtil.NextDiscrete(minValue, 155.4f, -1);
             Assert.AreEqual(minValue, randomValue);
         }
 
@@ -39,7 +53,7 @@ namespace Assets.Scripts.Tests.Editor
             const float max = 50.0f;
             for (int attempt = 1; attempt <= 100; attempt++)
             {
-                float randomValue = GameRandom.NextDiscrete(min, max, 2);
+                float randomValue = RandomUtil.NextDiscrete(min, max, 2);
                 Assert.IsTrue(Math.Abs(randomValue - min) < 0.001 || Math.Abs(randomValue - max) < 0.001);
             }
         }
@@ -51,7 +65,7 @@ namespace Assets.Scripts.Tests.Editor
             const float max = 50.0f;
             for (int attempt = 1; attempt <= 100; attempt++)
             {
-                float randomValue = GameRandom.NextDiscrete(min, max, 3);
+                float randomValue = RandomUtil.NextDiscrete(min, max, 3);
 				Assert.IsTrue(
 					Math.Abs(randomValue - min) < 0.001 ||
 					Math.Abs(randomValue - max) < 0.001 ||
@@ -65,7 +79,7 @@ namespace Assets.Scripts.Tests.Editor
 	        int[] weights = {10, 0};
 	        for (int attempt = 1; attempt <= 100; attempt++)
 	        {
-	            int ind = GameRandom.NextWeightedInd(weights);
+	            int ind = RandomUtil.NextWeightedInd(weights);
 	            Assert.AreEqual(0, ind);
 	        }
 	    }
@@ -76,7 +90,7 @@ namespace Assets.Scripts.Tests.Editor
             int[] weights = { 0, 100 };
             for (int attempt = 1; attempt <= 100; attempt++)
             {
-                int ind = GameRandom.NextWeightedInd(weights);
+                int ind = RandomUtil.NextWeightedInd(weights);
                 Assert.AreEqual(1, ind);
             }
         }
@@ -87,22 +101,10 @@ namespace Assets.Scripts.Tests.Editor
             int[] weights = {0, 100, 0, 0, 200};
             for (int attempt = 1; attempt <= 100; attempt++)
             {
-                int ind = GameRandom.NextWeightedInd(weights);
+                int ind = RandomUtil.NextWeightedInd(weights);
                 Assert.IsTrue(ind == 1 || ind == 4);
             }
         }
 
-		[Test]
-		public void NextBool()
-		{
-			int counter = 0;
-			for(int i = 0; i < 1000; i++)
-			{
-				bool randomBool = GameRandom.NextBool();
-				if(randomBool)
-					counter++;
-			}
-			Console.WriteLine(counter);
-		}
 	}
 }
