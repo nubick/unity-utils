@@ -6,7 +6,7 @@ namespace Assets.Scripts.Tests.Views
     {
         public MainMenuView MainMenuView;
 
-        protected override void OnBackKey()
+        public override void OnBackKey()
         {
             SwitchTo(MainMenuView);
         }

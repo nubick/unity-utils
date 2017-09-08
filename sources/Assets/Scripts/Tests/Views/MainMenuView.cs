@@ -17,7 +17,7 @@ namespace Assets.Scripts.Tests.Views
 			SwitchTo(OptionsView);
 		}
 
-        protected override void OnBackKey()
+        public override void OnBackKey()
         {
             Exit();
         }

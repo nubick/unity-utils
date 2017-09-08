@@ -17,7 +17,7 @@ namespace Assets.Scripts.Tests.Views
             SwitchTo(MainMenuView);
         }
 
-        protected override void OnBackKey()
+        public override void OnBackKey()
         {
             OnBack();
         }

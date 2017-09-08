@@ -31,24 +31,14 @@ namespace Assets.Scripts.Utils.Views
 
         #region Back button
 
-#if UNITY_ANDROID || UNITY_EDITOR
-
-        public void Update()
-        {
-            if (IsActive && Input.GetKeyUp(KeyCode.Escape))
-            {
-                OnBackKey();
-            }
-        }
-
-#endif
-
-        protected virtual void OnBackKey()
-        {
-            Debug.Log("OnBackKey is not implemented for View: " + name);
-        }
+		public virtual void OnBackKey()
+		{
+			Debug.Log("OnBackKey is not implemented for View: " + name);
+		}
 
 #if UNITY_ANDROID
+        //This method can be used on Android platform. It moves application to background, don't close application.
+        //Application just looses focus after that. It can be useful when back button clicked in main menu, for instance.
         protected void AndroidMoveGameToBack()
         {
             AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity");
