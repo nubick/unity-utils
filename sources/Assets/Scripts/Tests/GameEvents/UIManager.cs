@@ -29,5 +29,12 @@ namespace Assets.Scripts.Tests.GameEvents
         {
             MetagameEvents.GameFinished.Publish(new GameFinishedArgs(GameFinishedReason.Restart));
         }
+
+        public void RaiseStarAppeared()
+        {
+            float posX = Random.Range(0, Screen.width) - Screen.width / 2f;
+            float posY = Random.Range(0, Screen.height) - Screen.height / 2f;
+            MetagameEvents.StarAppeared.Publish(posX, posY);
+        }
     }
 }
