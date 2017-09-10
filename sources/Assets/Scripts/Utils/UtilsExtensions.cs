@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
@@ -226,7 +227,16 @@ namespace Assets.Scripts.Utils
             transform.Rotate(Vector3.forward, angle);
         }
 
-        #endregion
-    }
+		#endregion
 
+		#region Dot Net
+
+		public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+		{
+			foreach (T item in items)
+				action(item);
+		}
+
+		#endregion
+	}
 }
