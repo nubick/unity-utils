@@ -4,10 +4,10 @@ namespace Assets.Scripts.Tests.GameEvents
 {
     public static class MetagameEvents 
     {
-        public static GameEvent NewGameStarted = new GameEvent();
+        public static GameEvent NewGameStarted = new GameEvent("NewGameStarted");
 		public static GameEvent<int> CoinsGot = new GameEvent<int>();
 		public static GameEvent<GameFinishedArgs> GameFinished = new GameEvent<GameFinishedArgs>();
-        public static GameEvent<float, float> StarAppeared = new GameEvent<float, float>();
+        public static GameEvent<float, float> StarAppeared = new GameEvent<float, float>("StarAppeared");
     }
 
     public class GameFinishedArgs
