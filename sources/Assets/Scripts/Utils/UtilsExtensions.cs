@@ -83,62 +83,62 @@ namespace Assets.Scripts.Utils
             transform.position = new Vector3(x, y, transform.position.z);
         }
 
-		public static void SetXY(this Transform transform, Vector3 pos)
-		{
-			transform.position = new Vector3(pos.x, pos.y, transform.position.z);
-		}
+        public static void SetXY(this Transform transform, Vector3 pos)
+        {
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        }
 
-		public static void SetLocalXY(this Transform transform, float x, float y)
+        public static void SetLocalXY(this Transform transform, float x, float y)
         {
             transform.localPosition = new Vector3(x, y, transform.localPosition.z);
         }
 
-		public static void SetLocalXY(this Transform transform, Vector3 pos)
-		{
+        public static void SetLocalXY(this Transform transform, Vector3 pos)
+        {
             transform.localPosition = new Vector3(pos.x, pos.y, transform.localPosition.z);
-		}
+        }
 
-		public static void SetXZ(this Transform transform, float x, float z)
-		{
+        public static void SetXZ(this Transform transform, float x, float z)
+        {
             transform.position = new Vector3(x, transform.position.y, z);
-		}
+        }
 
-		public static void SetXZ(this Transform transform, Vector3 pos)
-		{
+        public static void SetXZ(this Transform transform, Vector3 pos)
+        {
             transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-		}
+        }
 
-		public static void SetLocalXZ(this Transform transform, float x, float z)
-		{
+        public static void SetLocalXZ(this Transform transform, float x, float z)
+        {
             transform.localPosition = new Vector3(x, transform.localPosition.y, z);
-		}
+        }
 
-		public static void SetLocalXZ(this Transform transform, Vector3 pos)
-		{
+        public static void SetLocalXZ(this Transform transform, Vector3 pos)
+        {
             transform.localPosition = new Vector3(pos.x, transform.localPosition.y, pos.z);
-		}
+        }
 
-		public static void SetYZ(this Transform transform, float y, float z)
-		{
+        public static void SetYZ(this Transform transform, float y, float z)
+        {
             transform.position = new Vector3(transform.position.x, y, z);
-		}
+        }
 
-		public static void SetYZ(this Transform transform, Vector3 pos)
-		{
+        public static void SetYZ(this Transform transform, Vector3 pos)
+        {
             transform.position = new Vector3(transform.position.x, pos.y, pos.z);
-		}
+        }
 
-		public static void SetLocalYZ(this Transform transform, float y, float z)
-		{
+        public static void SetLocalYZ(this Transform transform, float y, float z)
+        {
             transform.localPosition = new Vector3(transform.localPosition.x, y, z);
-		}
+        }
 
-		public static void SetLocalYZ(this Transform transform, Vector3 pos)
-		{
+        public static void SetLocalYZ(this Transform transform, Vector3 pos)
+        {
             transform.localPosition = new Vector3(transform.localPosition.x, pos.y, pos.z);
-		}
+        }
 
-		public static void SetX(this Transform transform, float x)
+        public static void SetX(this Transform transform, float x)
         {
             transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
@@ -183,17 +183,17 @@ namespace Assets.Scripts.Utils
             SetY(transform, transform.position.y + dy);
         }
 
-		public static void IncLocalY(this Transform transform, float dy)
+        public static void IncLocalY(this Transform transform, float dy)
         {
             SetLocalY(transform, transform.localPosition.y + dy);
         }
 
-		public static void IncZ(this Transform transform, float dz)
-		{
-			SetZ(transform, transform.position.z + dz);
-		}
+        public static void IncZ(this Transform transform, float dz)
+        {
+            SetZ(transform, transform.position.z + dz);
+        }
 
-		public static void IncLocalZ(this Transform transform, float dz)
+        public static void IncLocalZ(this Transform transform, float dz)
         {
             SetLocalZ(transform, transform.localPosition.z + dz);
         }
@@ -227,16 +227,150 @@ namespace Assets.Scripts.Utils
             transform.Rotate(Vector3.forward, angle);
         }
 
-		#endregion
+        #endregion
 
-		#region Dot Net
+        #region RectTransform
 
-		public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
-		{
-			foreach (T item in items)
-				action(item);
-		}
+        #region Left, Right, Top, Bottom
 
-		#endregion
-	}
+        public static void SetLeft(this RectTransform rectTransform, float left)
+        {
+            rectTransform.offsetMin = new Vector2(left, rectTransform.offsetMin.y);
+        }
+
+        public static void SetRight(this RectTransform rectTransform, float right)
+        {
+            rectTransform.offsetMax = new Vector2(-right, rectTransform.offsetMax.y);
+        }
+
+        public static void SetTop(this RectTransform rectTransform, float top)
+        {
+            rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -top);
+        }
+
+        public static void SetBottom(this RectTransform rectTransform, float bottom)
+        {
+            rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, bottom);
+        }
+
+        public static void SetLeftTopRightBottom(this RectTransform rectTransform, float left, float top, float right, float bottom)
+        {
+            rectTransform.offsetMin = new Vector2(left, bottom);
+            rectTransform.offsetMax = new Vector2(-right, -top);
+        }
+
+        #endregion
+
+        #region PosX, PosY, Width, Height
+
+        public static void SetPosX(this RectTransform rectTransform, float posX)
+        {
+            rectTransform.localPosition = new Vector2(posX, rectTransform.localPosition.y);
+        }
+
+        public static void SetPosY(this RectTransform rectTransform, float posY)
+        {
+            rectTransform.localPosition = new Vector2(rectTransform.localPosition.x, posY);
+        }
+
+        public static void SetPosXY(this RectTransform rectTransform, float posX, float posY)
+        {
+            rectTransform.localPosition = new Vector2(posX, posY);
+        }
+
+        public static void SetWidth(this RectTransform rectTransform, float width)
+        {
+            rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
+        }
+
+        public static void SetHeight(this RectTransform rectTransform, float height)
+        {
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, height);
+        }
+
+        public static void SetWidthHeight(this RectTransform rectTransform, float width, float height)
+        {
+            rectTransform.sizeDelta = new Vector2(width, height);
+        }
+
+        public static void SetPosAndSize(this RectTransform rectTransform, float posX, float posY, float width, float height)
+        {
+            rectTransform.localPosition = new Vector2(posX, posY);
+            rectTransform.sizeDelta = new Vector2(width, height);
+        }
+
+        #endregion
+
+        #region World positions
+
+        private static Vector3[] _fourCorners = new Vector3[4];//start bottom left and clockwise
+
+        public static Vector2 GetWorldCenter(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return new Vector2((_fourCorners[0].x + _fourCorners[3].x) / 2f, (_fourCorners[0].y + _fourCorners[1].y) / 2f);
+        }
+
+        public static float GetWorldLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return _fourCorners[0].x;
+        }
+
+        public static float GetWorldRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return _fourCorners[2].x;
+        }
+
+        public static float GetWorldTop(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return _fourCorners[1].y;
+        }
+
+        public static float GetWorldBottom(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return _fourCorners[0].y;
+        }
+
+        public static Vector2 GetWorldTopLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return new Vector2(_fourCorners[0].x, _fourCorners[1].y);
+        }
+
+        public static Vector2 GetWorldTopRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return new Vector2(_fourCorners[2].x, _fourCorners[1].y);
+        }
+
+        public static Vector2 GetWorldBottomLeft(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return new Vector2(_fourCorners[0].x, _fourCorners[0].y);
+        }
+
+        public static Vector2 GetWorldBottomRight(this RectTransform rectTransform)
+        {
+            rectTransform.GetWorldCorners(_fourCorners);
+            return new Vector2(_fourCorners[2].x, _fourCorners[0].y);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Dot Net
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+        {
+            foreach (T item in items)
+                action(item);
+        }
+
+        #endregion
+    }
 }
