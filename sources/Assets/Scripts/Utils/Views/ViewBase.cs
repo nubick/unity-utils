@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Utils.Views
 {
@@ -11,16 +12,25 @@ namespace Assets.Scripts.Utils.Views
         protected virtual void OnShow() { }
         protected virtual void OnHide() { }
 
+        public Action<ViewBase> OnShowEvent;
+        public Action<ViewBase> OnHideEvent;
+
         public void Show()
         {
             Content.SetActive(true);
             OnShow();
+
+            if (OnShowEvent != null)
+                OnShowEvent(this);
         }
 
         public void Hide()
         {
             Content.SetActive(false);
             OnHide();
+
+            if (OnHideEvent != null)
+                OnHideEvent(this);
         }
 
         protected void SwitchTo(ViewBase otherView)
@@ -31,10 +41,10 @@ namespace Assets.Scripts.Utils.Views
 
         #region Back button
 
-		public virtual void OnBackKey()
-		{
-			Debug.Log("OnBackKey is not implemented for View: " + name);
-		}
+        public virtual void OnBackKey()
+        {
+            Debug.Log("OnBackKey is not implemented for View: " + name);
+        }
 
 #if UNITY_ANDROID
         //This method can be used on Android platform. It moves application to background, don't close application.
