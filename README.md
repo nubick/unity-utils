@@ -85,7 +85,39 @@ we can use type-safe methods:
     3.  bool isInvoking = this.IsInvoking(() => InvokedFunc());
     4.  this.CancelInvoke(() => InvokedFunc());
 
+RectTransform wrappers
+------
+RectTransform component contains properties which are not obvious and not easy to use (ex: offsetMin, offsetMax, sizeDelta etc). Unity editor provides more understandable input fields in Inspector for RectTransform like Left, Top, Right, Bottom, Width, Height, PosX, PosY etc.
+
+![My image](http://nubick.github.com/readme/rect-transform-editor2.png)
+![My image](http://nubick.github.com/readme/rect-transform-editor1.png)
+
+Sometimes we want to set this fields from code and can't easy understand how to manipulate with RectTransform for that. Following wrappers allow us to do this:
+
+    rectTransform.SetLeft(fLeft);
+    rectTransform.SetRight(fRight);
+    rectTransform.SetTop(fTop);
+    rectTransform.SetBottom(fBottom);
+    rectTransform.SetLeftTopRightBottom(fLeft, fTop, fRight, fBottom);
     
+    rectTransform.SetPosX(fPosX);
+    rectTransform.SetPosY(fPosY);
+    rectTransform.SetPosXY(fPosX, fPosY);    
+    rectTransform.SetWidth(fWidth);
+    rectTransform.SetHeight(fHeight);
+    rectTransform.SetWidthHeight(fWidth, fHeight);
+    rectTransform.SetPosAndSize(fPosX, fPosY, fWidth, fHeight);
+
+RectTransform provides world coordinates of all four RectTransform corners. Method GetWorldCorners returns array of four Vector3 and we always have to read documentation as we can't determinate mapping of this Vector3 points to corners. Following methods wrap this to readable code:
+
+    worldTransform.position = rectTransform.GetWorldCenter();
+    worldTransform.position = rectTransform.GetWorldTopLeft();
+    worldTransform.position = rectTransform.GetWorldTopRight();
+    worldTransform.position = rectTransform.GetWorldBottomLeft();
+    worldTransform.position = rectTransform.GetWorldBottomRight();
+    worldTransform.position = new Vector2(rectTransform.GetWorldLeft(), rectTransform.GetWorldTop());
+    worldTransform.position = new Vector2(rectTransform.GetWorldRight(), rectTransform.GetWorldBottom());
+
 
 Visual Studio Snippets
 ======
