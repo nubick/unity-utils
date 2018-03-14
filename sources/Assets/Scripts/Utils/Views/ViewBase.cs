@@ -33,7 +33,7 @@ namespace Assets.Scripts.Utils.Views
                 OnHideEvent(this);
         }
 
-        protected void SwitchTo(ViewBase otherView)
+        public void SwitchTo(ViewBase otherView)
         {
             Hide();
             otherView.Show();
