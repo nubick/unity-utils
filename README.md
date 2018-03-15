@@ -60,6 +60,25 @@ public static void Shuffle<T>(T[] array)
     float[] array = new float[] { 1.1f, 1.2f, 1.3f, 1.5f, 1.6f };
     RandomUtil.Shuffle(array);
 
+Return random point on line.
+
+    Vector2 point1 = new Vector2(123f, 321f);
+    Vector2 point2 = new Vector2(0f, 0f);
+    Vector2 randomPoint2 = RandomUtil.NextPointOnLine(point1, point2);
+    
+    Vector3 point3 = new Vector3(123f, 321f, 213f);
+    Vector3 point4 = new Vector3(0f, 0f, 0f);
+    Vector3 randomPoint3 = RandomUtil.NextPointOnLine(point3, point4);
+
+Get a chance with given percentage (from 0 to 100). If percentage is 25 it will return true each 4th time on an average.
+
+    int percentage = 25;
+    bool isSuccess = RandomUtil.GetChance(percentage);
+
+Gets a chance with given probability (from 0f to 1f). If probability is 0.25 it will return true each 4th time on an average.
+
+    float probability = 0.25f;
+    bool isSuccess = RandomUtil.GetChance(probability);
 
 Utils Extensions
 ======
