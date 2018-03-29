@@ -265,17 +265,17 @@ namespace Assets.Scripts.Utils
 
         public static void SetPosX(this RectTransform rectTransform, float posX)
         {
-            rectTransform.localPosition = new Vector2(posX, rectTransform.localPosition.y);
+            rectTransform.anchoredPosition = new Vector2(posX, rectTransform.localPosition.y);
         }
 
         public static void SetPosY(this RectTransform rectTransform, float posY)
         {
-            rectTransform.localPosition = new Vector2(rectTransform.localPosition.x, posY);
+            rectTransform.anchoredPosition = new Vector2(rectTransform.localPosition.x, posY);
         }
 
         public static void SetPosXY(this RectTransform rectTransform, float posX, float posY)
         {
-            rectTransform.localPosition = new Vector2(posX, posY);
+            rectTransform.anchoredPosition = new Vector2(posX, posY);
         }
 
         public static void SetWidth(this RectTransform rectTransform, float width)
@@ -283,9 +283,19 @@ namespace Assets.Scripts.Utils
             rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
         }
 
+        public static float GetWidth(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.width;
+        }
+
         public static void SetHeight(this RectTransform rectTransform, float height)
         {
             rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, height);
+        }
+
+        public static float GetHeight(this RectTransform rectTransform)
+        {
+            return rectTransform.rect.height;
         }
 
         public static void SetWidthHeight(this RectTransform rectTransform, float width, float height)
@@ -295,7 +305,7 @@ namespace Assets.Scripts.Utils
 
         public static void SetPosAndSize(this RectTransform rectTransform, float posX, float posY, float width, float height)
         {
-            rectTransform.localPosition = new Vector2(posX, posY);
+            rectTransform.anchoredPosition = new Vector2(posX, posY);
             rectTransform.sizeDelta = new Vector2(width, height);
         }
 
