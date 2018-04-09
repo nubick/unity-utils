@@ -23,6 +23,11 @@ namespace Assets.Scripts.Tests
         public Transform Star6;
         public Transform Star7;
 
+        public RectTransform AnchoredTopLeft;
+        public RectTransform AnchoredTopRight;
+        public RectTransform AnchoredBottomLeft;
+        public RectTransform AnchoredBottomRight;
+
         public void Awake()
         {
             StartCoroutine(RunTestsCoroutine());
@@ -91,6 +96,19 @@ namespace Assets.Scripts.Tests
 
             yield return waitForSeconds;
             Star7.position = new Vector2(RectBottom.GetWorldRight(), RectBottom.GetWorldBottom());
+
+            yield return waitForSeconds;
+            AnchoredTopLeft.SetPosX(30f);
+            AnchoredTopLeft.SetPosY(-30f);
+            yield return waitForSeconds;
+            AnchoredTopRight.SetPosX(-30f);
+            AnchoredTopRight.SetPosY(-30f);
+            yield return waitForSeconds;
+            AnchoredBottomLeft.SetPosX(30f);
+            AnchoredBottomLeft.SetPosY(30f);
+            yield return waitForSeconds;
+            AnchoredBottomRight.SetPosX(-30f);
+            AnchoredBottomRight.SetPosY(30f);
         }
     }
 }

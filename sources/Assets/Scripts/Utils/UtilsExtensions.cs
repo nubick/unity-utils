@@ -265,12 +265,12 @@ namespace Assets.Scripts.Utils
 
         public static void SetPosX(this RectTransform rectTransform, float posX)
         {
-            rectTransform.anchoredPosition = new Vector2(posX, rectTransform.localPosition.y);
+            rectTransform.anchoredPosition = new Vector2(posX, rectTransform.anchoredPosition.y);
         }
 
         public static void SetPosY(this RectTransform rectTransform, float posY)
         {
-            rectTransform.anchoredPosition = new Vector2(rectTransform.localPosition.x, posY);
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, posY);
         }
 
         public static void SetPosXY(this RectTransform rectTransform, float posX, float posY)
