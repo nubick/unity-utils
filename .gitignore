@@ -5,3 +5,4 @@ sources/obj/
 *.csproj
 *.sln
 sources.userprefs
+sources/.vs
