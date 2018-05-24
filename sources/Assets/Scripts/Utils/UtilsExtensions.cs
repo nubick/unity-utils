@@ -374,6 +374,12 @@ namespace Assets.Scripts.Utils
 			return new Vector2(_fourCorners[2].x, _fourCorners[0].y);
 		}
 
+		public static Rect GetWorldRect(this RectTransform rectTransform)
+		{
+			rectTransform.GetWorldCorners(_fourCorners);
+			return new Rect(_fourCorners[0].x, _fourCorners[0].y, Mathf.Abs(_fourCorners[3].x - _fourCorners[0].x), Mathf.Abs(_fourCorners[1].y - _fourCorners[0].y));
+		}
+
 		#endregion
 
 		#endregion
