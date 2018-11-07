@@ -186,11 +186,38 @@ namespace Assets.Scripts.Utils
 		}
 
 		/// <summary>
-		/// Return random point from rect bound.
+		/// Return random point from rect bound (inside rect).
 		/// </summary>
 		public static Vector2 NextPointOnRect(Rect rect)
 		{
 			return new Vector2(Random.Range(rect.xMin, rect.xMax), Random.Range(rect.yMin, rect.yMax));
+		}
+
+		/// <summary>
+		/// Return random point on rect border (perimeter of rect).
+		/// </summary>
+		public static Vector2 NextPointOnRectBorder(Rect rect)
+		{
+			float perimeterLength = (rect.width + rect.height) * 2f;
+			float pointOnPerimeter = Random.Range(0f, perimeterLength);
+
+			if (pointOnPerimeter < rect.width)//top border
+				return new Vector2(rect.xMin + pointOnPerimeter, rect.yMax);
+
+			pointOnPerimeter -= rect.width;
+
+			if (pointOnPerimeter < rect.height)//right border
+				return new Vector2(rect.xMax, rect.yMin + pointOnPerimeter);
+
+			pointOnPerimeter -= rect.height;
+
+			if (pointOnPerimeter < rect.width)//bottom border
+				return new Vector2(rect.xMin + pointOnPerimeter, rect.yMin);
+
+			pointOnPerimeter -= rect.width;
+
+			//left border
+			return new Vector2(rect.xMin, rect.yMin + pointOnPerimeter);
 		}
 	}
 }
