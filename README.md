@@ -5,57 +5,47 @@ Random Util
 ======
 Unity provides simple Random.Range(min, max) method for int and float numeric types. Real projects need more complex random behavior and number of different advanced methods. Methods from [RandomUtil.cs](//github.com/nubick/unity-utils/blob/master/sources/Assets/Scripts/Utils/RandomUtil.cs) are based on Random.Range and make live a little easier.
 
-Return random bool value.<br/>
-public static bool NextBool()
+Return random bool value.
 
     bool randomBool = RandomUtil.NextBool();
     
-Return random item from item1, item2 or item3 items set.<br/>
-public static T Next<T>(T item1, T item2)<br/>
-public static T Next<T>(T item1, T item2, T item3)<br/>
+Return random item from item1, item2 or item3 items set.
     
     string randomPerson = RandomUtil.Next("me", "you");
-    Pork randomPork =RandomUtil.Next(Pork.NifNif, Pork.NafNaf, Pork.NufNuf);
+    Pork randomPork = RandomUtil.Next(Pork.NifNif, Pork.NafNaf, Pork.NufNuf);
     
-Return random item from array.<br/>
-public static T NextItem<T>(T[] array)
+Return random item from array.
     
     int[] intArray = new[] { 1, 3, 5, 7, 9 };
     int randomInt = RandomUtil.NextItem(intArray);
     
-Return random item from list.<br/>
-public static T NextItem<T>(List<T> list)
+Return random item from list.
     
     List<int> list = new List<int> { 1, 3, 5, 7, 9 };
     int randomInt = RandomUtil.NextItem(list);
     
-Return random enum item.<br/>
-public static T NextEnum<T>()
+Return random enum item.
 
     enum Direction { Left, Right, Up, Down }
     Direction randomDirection = RandomUtil.NextEnum<Direction>();
     
-Return random index of passed array. Index random selection is based on array weights.<br/>
-public static int NextWeightedInd(int[] weights)<br/>
-public static int NextWeightedInd(float[] weights)
+Return random index of passed array. Index random selection is based on array weights.
 
     int[] weights = new int[] { 10, 10, 30, 50 };
     int randomIndex = RandomUtil.NextWeightedInd(weights);
     
-Return sub-list of random items from origin list without repeating.<br/>
-public static List<T> Take<T>(List<T> list, int count)
+Return sub-list of random items from origin list without repeating.
 
     List<Card> deckCards = GetDeck();
     List<Card> handCards = RandomUtil.Take(deckCards, 6);
     
-Shuffle list of items.<br/>
-public static void Shuffle<T>(this List<T> list)
+Shuffle list of items.
+
     
     List<int> list = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     RandomUtil.Shuffle(list);
     
-Shuffle array of items.<br/>
-public static void Shuffle<T>(T[] array)
+Shuffle array of items.
 
     float[] array = new float[] { 1.1f, 1.2f, 1.3f, 1.5f, 1.6f };
     RandomUtil.Shuffle(array);
@@ -79,6 +69,8 @@ Gets a chance with given probability (from 0f to 1f). If probability is 0.25 it 
 
     float probability = 0.25f;
     bool isSuccess = RandomUtil.GetChance(probability);
+
+
 
 Utils Extensions
 ======
