@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Assets.Scripts.Utils;
@@ -28,6 +29,14 @@ namespace Assets.Scripts.Editor
 				return;
 
 			DrawInputParameter(methodInfo);
+			DrawExecuteButtons(methodInfo, component);
+
+			GUILayout.EndVertical();
+		}
+
+		private void DrawExecuteButtons(MethodInfo methodInfo, Component component)
+		{
+			GUILayout.BeginHorizontal();
 
 			if (GUILayout.Button("Execute"))
 			{
@@ -35,9 +44,32 @@ namespace Assets.Scripts.Editor
 					ExecuteMultiple();
 				else
 					methodInfo.Invoke(component, Target.ParamterValues);
+
 			}
 
-			GUILayout.EndVertical();
+			if (targets.Length == 1 && typeof(IEnumerator).IsAssignableFrom(methodInfo.ReturnType))
+			{
+				if (!EditorApplication.isPlaying)
+					GUI.enabled = false;
+				
+				if (GUILayout.Button("Start Coroutine"))
+				{
+					IEnumerator routine = (IEnumerator)methodInfo.Invoke(component, Target.ParamterValues);
+					if (routine == null)
+						Debug.LogError("Routine is null!");
+					else
+						(component as MonoBehaviour).StartCoroutine(routine);
+				}
+
+				if(GUILayout.Button("Stop All Coroutines"))
+				{
+					(component as MonoBehaviour).StopAllCoroutines();
+				}
+
+				GUI.enabled = true;
+			}
+
+			GUILayout.EndHorizontal();
 		}
 
 		private List<Component> GetComponents(GameObject go)
