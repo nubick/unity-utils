@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Utils
 {
@@ -57,14 +59,24 @@ namespace Assets.Scripts.Utils
 					   ? Vector2.Angle(new Vector2(1, 0), direction)
 					   : -Vector2.Angle(new Vector2(1, 0), direction);
 		}
-
+		
 		#endregion
 
 		#region Color
 
-		public static Color SetA(this Color color, float a)
+		public static Color SetAlpha(this Color color, float alpha)
 		{
-			return new Color(color.r, color.g, color.b, a);
+			return new Color(color.r, color.g, color.b, alpha);
+		}
+
+		public static void SetAlpha(this Graphic graphic, float alpha)
+		{
+			graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
+		}
+
+		public static void SetAlpha(this SpriteRenderer spriteRenderer, float alpha)
+		{
+			spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
 		}
 
 		#endregion
