@@ -16,6 +16,9 @@ namespace Assets.Scripts.Utils
 
 		public static void Invoke(this MonoBehaviour monoBehaviour, Expression<Action> expr, float time)
 		{
+			if (((MethodCallExpression) expr.Body).Arguments.Count > 0)
+				throw new ArgumentException($"Can't invoke method '{GetMethodName(expr)}' with parameters.'");
+
 			monoBehaviour.Invoke(GetMethodName(expr), time);
 		}
 
