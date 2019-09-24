@@ -426,9 +426,20 @@ namespace Assets.Scripts.Utils
 		}
 
 		#endregion
-
+		
 		#endregion
 
+		#region ParticleSystem
+		
+		public static IEnumerator PlayAndWaitForFinish(this ParticleSystem particleSystem)
+		{
+			particleSystem.Play();
+			while (particleSystem.isPlaying)
+				yield return null;
+		}
+
+		#endregion
+		
 		#region Dot Net
 
 		public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
