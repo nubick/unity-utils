@@ -100,8 +100,8 @@ RectTransform wrappers
 ------
 RectTransform component contains properties which are not obvious and not easy to use (ex: offsetMin, offsetMax, sizeDelta etc). Unity editor provides more understandable input fields in Inspector for RectTransform like Left, Top, Right, Bottom, Width, Height, PosX, PosY etc.
 
-![My image](http://nubick.github.com/readme/rect-transform-editor2.png)
-![My image](http://nubick.github.com/readme/rect-transform-editor1.png)
+![My image](readme/rect-transform-editor2.png)
+![My image](readme/rect-transform-editor1.png)
 
 Sometimes we want to set this fields from code and can't easy understand how to manipulate with RectTransform for that. Following wrappers allow us to do this:
 
@@ -119,6 +119,16 @@ Sometimes we want to set this fields from code and can't easy understand how to 
     rectTransform.SetWidthHeight(fWidth, fHeight);
     rectTransform.SetPosAndSize(fPosX, fPosY, fWidth, fHeight);
 
+<img src="https://github.com/nubick/unity-utils/blob/master/readme/rect-transform-editor3.png" width=300>
+
+Sometimes we want to use RectTransform Anchors and align UI-components using percentage of parent UI-component sizes. Following wrappers allow us to set offsets in percentage from left, top, right and bottom sides:
+
+    rectTransform.SetLeftAnchorOffset(0.1f);
+	rectTransform.SetTopAnchorOffset(0.05f);
+    rectTransform.SetRightAnchorOffset(0.05f);
+	rectTransform.SetBottomAnchorOffset(0.1f);		
+	rectTransform.SetAnchorOffset(0.1f, 0.05f, 0.05f, 0.1f);
+
 RectTransform provides world coordinates of all four RectTransform corners. Method GetWorldCorners returns array of four Vector3 and we always have to read documentation as we can't determinate mapping of this Vector3 points to corners. Following methods wrap this to readable code:
 
     worldTransform.position = rectTransform.GetWorldCenter();
@@ -128,7 +138,21 @@ RectTransform provides world coordinates of all four RectTransform corners. Meth
     worldTransform.position = rectTransform.GetWorldBottomRight();
     worldTransform.position = new Vector2(rectTransform.GetWorldLeft(), rectTransform.GetWorldTop());
     worldTransform.position = new Vector2(rectTransform.GetWorldRight(), rectTransform.GetWorldBottom());
+    Rect rect = rectTransform.GetWorldRect();
 
+ParticleSystem.PlayAndWaitForFinish()
+------
+Wrapper allows to run particle systems sequentially and do logic when concrete particles effect is finished.
+        
+    public ParticleSystem Particles1;
+	public ParticleSystem Particles2;
+		
+	public IEnumerator RunParticlesCoroutine()
+	{
+	  yield return Particles1.PlayAndWaitForFinish();
+	  yield return Particles2.PlayAndWaitForFinish();
+	  DoLogicAfterParticles();
+	}
 
 Visual Studio Snippets
 ======
@@ -150,7 +174,7 @@ Snippets
 
 Also, you can use 'dlog1', 'dlog2', 'dlog3', 'dlog4' and 'dlog5' words for Debug.Log with parameters. Check following example:
 
-![My image](http://nubick.github.com/readme/dlog-snippets.gif)
+![My image](readme/dlog-snippets.gif)
 
 
 2.Write 'glh' in VS editor and press 'tab' button. You will get:
