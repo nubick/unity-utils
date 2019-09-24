@@ -330,10 +330,40 @@ namespace Assets.Scripts.Utils
 		}
 
 		#endregion
+		
+		#region Anchor Offset
+		
+		public static void SetLeftAnchorOffset(this RectTransform rectTransform, float leftPercent)
+		{
+			rectTransform.anchorMin = new Vector2(leftPercent, rectTransform.anchorMin.y);
+		}
+
+		public static void SetRightAnchorOffset(this RectTransform rectTransform, float rightPercent)
+		{
+			rectTransform.anchorMax = new Vector2(1f - rightPercent, rectTransform.anchorMax.y);
+		}
+
+		public static void SetTopAnchorOffset(this RectTransform rectTransform, float topPercent)
+		{
+			rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 1f - topPercent);
+		}
+
+		public static void SetBottomAnchorOffset(this RectTransform rectTransform, float bottomPercent)
+		{
+			rectTransform.anchorMin = new Vector2(rectTransform.anchorMin.x, bottomPercent);
+		}
+
+		public static void SetAnchorOffset(this RectTransform rectTransform, float left, float top, float right, float bottom)
+		{
+			rectTransform.anchorMin = new Vector2(left, bottom);
+			rectTransform.anchorMax = new Vector2(1f - right, 1f - top);
+		}
+
+		#endregion
 
 		#region World positions
 
-		private static Vector3[] _fourCorners = new Vector3[4];//start bottom left and clockwise
+		private static readonly Vector3[] _fourCorners = new Vector3[4];//start bottom left and clockwise
 
 		public static Vector2 GetWorldCenter(this RectTransform rectTransform)
 		{

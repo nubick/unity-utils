@@ -28,6 +28,8 @@ namespace Assets.Scripts.Tests
         public RectTransform AnchoredBottomLeft;
         public RectTransform AnchoredBottomRight;
 
+        public RectTransform StretchedPanel;
+        
         public void Awake()
         {
             StartCoroutine(RunTestsCoroutine());
@@ -109,6 +111,19 @@ namespace Assets.Scripts.Tests
             yield return waitForSeconds;
             AnchoredBottomRight.SetPosX(-30f);
             AnchoredBottomRight.SetPosY(30f);
+
+            yield return waitForSeconds;
+            StretchedPanel.gameObject.SetActive(true);
+            yield return waitForSeconds;
+            StretchedPanel.SetLeftAnchorOffset(0.25f);
+            yield return waitForSeconds;
+            StretchedPanel.SetTopAnchorOffset(0.25f);
+            yield return waitForSeconds;
+            StretchedPanel.SetRightAnchorOffset(0.25f);
+            yield return waitForSeconds;
+            StretchedPanel.SetBottomAnchorOffset(0.25f);
+            yield return waitForSeconds;
+            StretchedPanel.SetAnchorOffset(0.05f, 0.1f, 0.15f, 0.2f);
         }
     }
 }
