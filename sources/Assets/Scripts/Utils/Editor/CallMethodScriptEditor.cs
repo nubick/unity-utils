@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Assets.Scripts.Tests;
 using Assets.Scripts.Utils;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Editor
 {
@@ -121,6 +124,8 @@ namespace Assets.Scripts.Editor
 						typeStrings.Add("float");
 					else if (parameterInfo.ParameterType == typeof(bool))
 						typeStrings.Add("bool");
+					else if (parameterInfo.ParameterType.IsEnum)
+						typeStrings.Add("enum");
 					else if (parameterInfo.ParameterType.IsSubclassOf(typeof(Object)))
 						typeStrings.Add("uobj");
 					else
@@ -174,6 +179,18 @@ namespace Assets.Scripts.Editor
 					bool oldValue = Target.ParameterValues[i] is bool ? (bool) Target.ParameterValues[i] : false;
 					bool newValue = EditorGUILayout.Toggle(parameterInfos[i].Name + " (bool)", oldValue);
 					if (newValue != oldValue)
+						UpdateParameterValue(i, newValue);
+				}
+				else if (parameterInfos[i].ParameterType.IsEnum)
+				{
+					Enum oldValue;
+					if (Target.ParameterValues[i] != null && Target.ParameterValues[i].GetType() == parameterInfos[i].ParameterType)
+						oldValue = (Enum) Target.ParameterValues[i];
+					else
+						oldValue = (Enum) Enum.GetValues(parameterInfos[i].ParameterType).GetValue(0);						
+					
+					Enum newValue = EditorGUILayout.EnumPopup(parameterInfos[i].Name + " (enum)", oldValue);
+					if(newValue != oldValue)
 						UpdateParameterValue(i, newValue);
 				}
 				else if (parameterInfos[i].ParameterType.IsSubclassOf(typeof(Object)))

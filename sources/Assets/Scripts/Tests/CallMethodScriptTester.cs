@@ -115,5 +115,43 @@ namespace Assets.Scripts.Tests
 		{
 			Log($"MethodBool2: {strParameter}, {isCool}.");
 		}
+
+		public void MethodEnum(Coolness coolness)
+		{
+			Log($"MethodEnum: {coolness}.");
+		}
+
+		public void MethodEnum2(EnumEnum enumEnum, Season season)
+		{
+			Log($"MethodEnum2: {enumEnum}, {season}.");
+		}
+
+		public void MethodEnum3(Season season, Coolness coolness, int age, EnumEnum enumEnum)
+		{
+			Log($"MethodEnum3: {season}, {coolness}, {enumEnum}.");
+		}
+	}
+
+	public enum Coolness
+	{
+		Cool,
+		NotCool
+	}
+
+	public enum EnumEnum
+	{
+		Enum1,
+		Enum2,
+		Enum3,
+		Enum4,
+		Enum5
+	}
+
+	public enum Season
+	{
+		Winter,
+		Spring,
+		Summer,
+		YellowSeason
 	}
 }
