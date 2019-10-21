@@ -12,7 +12,7 @@ namespace Assets.Scripts.Editor
 	[CanEditMultipleObjects]
 	public class CallMethodScriptEditor : UnityEditor.Editor
 	{
-		private CallMethodScript Target { get { return target as CallMethodScript; } }
+		private CallMethodScript Target => target as CallMethodScript;
 
 		public override void OnInspectorGUI()
 		{
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Editor
 				if (targets.Length > 1)
 					ExecuteMultiple();
 				else
-					methodInfo.Invoke(component, Target.ParamterValues);
+					methodInfo.Invoke(component, Target.ParameterValues);
 
 			}
 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.Editor
 				
 				if (GUILayout.Button("Start Coroutine"))
 				{
-					IEnumerator routine = (IEnumerator)methodInfo.Invoke(component, Target.ParamterValues);
+					IEnumerator routine = (IEnumerator)methodInfo.Invoke(component, Target.ParameterValues);
 					if (routine == null)
 						Debug.LogError("Routine is null!");
 					else
@@ -119,13 +119,15 @@ namespace Assets.Scripts.Editor
 						typeStrings.Add("int");
 					else if (parameterInfo.ParameterType == typeof(float))
 						typeStrings.Add("float");
+					else if (parameterInfo.ParameterType == typeof(bool))
+						typeStrings.Add("bool");
 					else if (parameterInfo.ParameterType.IsSubclassOf(typeof(Object)))
 						typeStrings.Add("uobj");
 					else
 						typeStrings.Add("not-supported");
 				}
 				string aggregatedTypes = typeStrings.Any() ? typeStrings.Aggregate((s1, s2) => s1 + "," + s2) : string.Empty;
-				methodNames[i] = string.Format("{0}({1})", methodInfos[i].Name, aggregatedTypes);
+				methodNames[i] = $"{methodInfos[i].Name}({aggregatedTypes})";
 			}
 			return methodNames;
 		}
@@ -148,23 +150,30 @@ namespace Assets.Scripts.Editor
 			{
 				if (parameterInfos[i].ParameterType == typeof(string))
 				{
-					string oldValue = Target.ParamterValues[i] is string ? (string)Target.ParamterValues[i] : string.Empty;
-					string newValue = EditorGUILayout.TextField("String parameter", oldValue);
+					string oldValue = Target.ParameterValues[i] is string ? (string)Target.ParameterValues[i] : string.Empty;
+					string newValue = EditorGUILayout.TextField(parameterInfos[i].Name + " (str)", oldValue);
 					if (newValue != oldValue)
 						UpdateParameterValue(i, newValue);
 				}
 				else if (parameterInfos[i].ParameterType == typeof(int))
 				{
-					int oldValue = Target.ParamterValues[i] is int ? (int)Target.ParamterValues[i] : 0;
-					int newValue = EditorGUILayout.IntField("Integer parameter", oldValue);
+					int oldValue = Target.ParameterValues[i] is int ? (int)Target.ParameterValues[i] : 0;
+					int newValue = EditorGUILayout.IntField(parameterInfos[i].Name + " (int)", oldValue);
 					if (newValue != oldValue)
 						UpdateParameterValue(i, newValue);
 				}
 				else if (parameterInfos[i].ParameterType == typeof(float))
 				{
-					float oldValue = Target.ParamterValues[i] is float ? (float)Target.ParamterValues[i] : 0f;
-					float newValue = EditorGUILayout.FloatField("Float parameter", oldValue);
+					float oldValue = Target.ParameterValues[i] is float ? (float)Target.ParameterValues[i] : 0f;
+					float newValue = EditorGUILayout.FloatField(parameterInfos[i].Name + " (float)", oldValue);
 					if (!Mathf.Approximately(oldValue, newValue))
+						UpdateParameterValue(i, newValue);
+				}
+				else if (parameterInfos[i].ParameterType == typeof(bool))
+				{
+					bool oldValue = Target.ParameterValues[i] is bool ? (bool) Target.ParameterValues[i] : false;
+					bool newValue = EditorGUILayout.Toggle(parameterInfos[i].Name + " (bool)", oldValue);
+					if (newValue != oldValue)
 						UpdateParameterValue(i, newValue);
 				}
 				else if (parameterInfos[i].ParameterType.IsSubclassOf(typeof(Object)))
@@ -172,8 +181,8 @@ namespace Assets.Scripts.Editor
 					System.Type parameterType = parameterInfos[i].ParameterType;
 
 					Object oldValue = null;
-					if (Target.ParamterValues[i] != null && Target.ParamterValues[i].GetType() == parameterType)
-						oldValue = Target.ParamterValues[i] as Object;
+					if (Target.ParameterValues[i] != null && Target.ParameterValues[i].GetType() == parameterType)
+						oldValue = Target.ParameterValues[i] as Object;
 
 					Object newValue = EditorGUILayout.ObjectField("Object parameter", oldValue, parameterType, true);
 					if (newValue != oldValue)
@@ -188,9 +197,9 @@ namespace Assets.Scripts.Editor
 		{
 			foreach(CallMethodScript t in targets)
 			{
-				if (t.ParamterValues == null || t.ParamterValues.Length != length)
+				if (t.ParameterValues == null || t.ParameterValues.Length != length)
 				{
-					t.ParamterValues = new object[length];
+					t.ParameterValues = new object[length];
 					EditorUtility.SetDirty(t);
 				}					
 			}
@@ -227,7 +236,7 @@ namespace Assets.Scripts.Editor
 		{
 			foreach (CallMethodScript t in targets)
 			{
-				t.ParamterValues[index] = newValue;
+				t.ParameterValues[index] = newValue;
 				EditorUtility.SetDirty(t);
 			}
 		}
@@ -238,7 +247,7 @@ namespace Assets.Scripts.Editor
 			{
 				Component component = GetComponents(t.gameObject)[t.SelectedComponentIndex];
 				MethodInfo methodInfo = component.GetType().GetMethods(GetFilter())[t.SelectedMethodIndex];
-				methodInfo.Invoke(component, t.ParamterValues);
+				methodInfo.Invoke(component, t.ParameterValues);
 			}
 		}
 

@@ -7,6 +7,6 @@ namespace Assets.Scripts.Utils
 		public int SelectedComponentIndex;
 		public int SelectedMethodIndex;
 		public bool IsShowPrivate;
-		public object[] ParamterValues;
+		public object[] ParameterValues;
 	}
 }

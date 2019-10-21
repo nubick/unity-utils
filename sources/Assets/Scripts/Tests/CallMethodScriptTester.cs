@@ -105,5 +105,15 @@ namespace Assets.Scripts.Tests
 			yield return new WaitForSeconds(delay);
 			Log("Coroutine is finished after delay.");
 		}
+
+		public void MethodBool1(bool isDone)
+		{
+			Log($"MethodBool1: {isDone}.");
+		}
+
+		public void MethodBool2(string strParameter, bool isCool)
+		{
+			Log($"MethodBool2: {strParameter}, {isCool}.");
+		}
 	}
 }
