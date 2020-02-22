@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Utils;
 using NUnit.Framework;
 using UnityEngine;
@@ -9,7 +11,7 @@ namespace Assets.Scripts.Tests.Editor
 	public class RandomUtilTest
 	{
 		private const int Attempts = 10000;
-
+		
 		[Test]
 		public void NextBoolTest()
 		{
@@ -21,7 +23,7 @@ namespace Assets.Scripts.Tests.Editor
 				if (randomBool)
 					counter++;
 			}
-			Console.WriteLine(string.Format("NextBool: {0} from {1}", counter, iterations));
+			Console.WriteLine($"NextBool: {counter} from {iterations}");
 		}
 
 		#region NextWeightedInd
@@ -218,6 +220,27 @@ namespace Assets.Scripts.Tests.Editor
 					Assert.IsTrue(onLeftOrRightBorder || onTopOrBottomBorder);
 				}
 			}
+		}
+		
+		[Test]
+		public void TakeTest()
+		{
+			int[] deck = Enumerable.Range(1, 52).ToArray();
+			int[] frequency = new int[52];
+			Debug.Log(string.Join(",", deck));
+			int count = 23;
+			int iterations = 100000;
+			for (int i = 0; i < iterations; i++)
+			{
+				List<int> hand = RandomUtil.Take(deck, count);
+				hand.ForEach(_ => frequency[_ - 1]++);
+				Assert.AreEqual(count, hand.Count);
+				Assert.AreEqual(hand.Count, hand.Distinct().Count());
+			}
+			int average = frequency.Sum() / frequency.Length;
+			float[] variance = frequency.Select(_ => Mathf.Abs((_ - average)*1f/average)).ToArray();
+			Debug.Log(string.Join(",", frequency));
+			Debug.Log(string.Join(",", variance));
 		}
 	}
 }
