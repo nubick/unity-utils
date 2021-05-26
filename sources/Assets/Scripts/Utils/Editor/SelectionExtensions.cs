@@ -6,53 +6,63 @@ namespace Assets.Scripts.Utils.Editor
 {
 	public static class SelectionExtensions
 	{
-		[MenuItem("Window/Utils/Selection/Select child 1 &#1")]
-		public static void SelectChildsAt1()
+		[MenuItem("Window/Utils/Selection/Select children 1 &#1")]
+		public static void SelectChildrenAt1()
 		{
-			SelectChilds(0);
+			SelectChildren(0);
 		}
 
-		[MenuItem("Window/Utils/Selection/Select child 2 &#2")]
-		public static void SelectChildsAt2()
+		[MenuItem("Window/Utils/Selection/Select children 2 &#2")]
+		public static void SelectChildrenAt2()
 		{
-			SelectChilds(1);
+			SelectChildren(1);
 		}
 
-		[MenuItem("Window/Utils/Selection/Select child 3 &#3")]
-		public static void SelectChildsAt3()
+		[MenuItem("Window/Utils/Selection/Select children 3 &#3")]
+		public static void SelectChildrenAt3()
 		{
-			SelectChilds(2);
+			SelectChildren(2);
 		}
 
-		[MenuItem("Window/Utils/Selection/Select child 4 &#4")]
-		public static void SelectChildsAt4()
+		[MenuItem("Window/Utils/Selection/Select children 4 &#4")]
+		public static void SelectChildrenAt4()
 		{
-			SelectChilds(3);
+			SelectChildren(3);
 		}
 
-		[MenuItem("Window/Utils/Selection/Select child 5 &#5")]
-		public static void SelectChildsAt5()
+		[MenuItem("Window/Utils/Selection/Select children 5 &#5")]
+		public static void SelectChildrenAt5()
 		{
-			SelectChilds(4);
+			SelectChildren(4);
 		}
 
-		[MenuItem("Window/Utils/Selection/Select ALL child &#0")]
-		public static void SelectAllChilds()
+		[MenuItem("Window/Utils/Selection/Select ALL children &#0")]
+		public static void SelectAllChildren()
 		{
-			List<GameObject> childs = new List<GameObject>();
+			List<GameObject> children = new List<GameObject>();
 			foreach (Transform tr in Selection.transforms)
 				for (int i = 0; i < tr.childCount; i++)
-					childs.Add(tr.GetChild(i).gameObject);
-			Selection.objects = childs.ToArray();
+					children.Add(tr.GetChild(i).gameObject);
+			Selection.objects = children.ToArray();
 		}
 
-		private static void SelectChilds(int index)
+		private static void SelectChildren(int index)
 		{
-			List<GameObject> childs = new List<GameObject>();
+			List<GameObject> children = new List<GameObject>();
 			foreach (Transform tr in Selection.transforms)
 				if (tr.childCount - 1 >= index)
-					childs.Add(tr.GetChild(index).gameObject);
-			Selection.objects = childs.ToArray();
+					children.Add(tr.GetChild(index).gameObject);
+			Selection.objects = children.ToArray();
+		}
+
+		[MenuItem("Window/Utils/Selection/Select ALL parents &#-")]
+		public static void SelectAllParents()
+		{
+			List<GameObject> parents = new List<GameObject>();
+			foreach(Transform tr in Selection.transforms)
+				if(tr.parent != null)
+					parents.Add(tr.parent.gameObject);
+			Selection.objects = parents.ToArray();
 		}
 	}
 }
