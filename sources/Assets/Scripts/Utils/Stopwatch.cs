@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Utils
@@ -7,8 +7,11 @@ namespace Assets.Scripts.Utils
 	public static class Stopwatch
 	{
 		private static readonly Dictionary<string, StopwatchBlock> Blocks = new Dictionary<string, StopwatchBlock>();
+		private static string _lastStartedBlockId;
 		
-		[MenuItem("Window/Utils/Stopwatch: Log")]
+#if UNITY_EDITOR
+		[UnityEditor.MenuItem("Window/Utils/Stopwatch: Log")]
+#endif
 		public static void Log()
 		{
 			Debug.Log("Stopwatch: Log");
@@ -25,11 +28,20 @@ namespace Assets.Scripts.Utils
 		public static void Start(string blockId, LogType logType = LogType.Silent)
 		{
 			Get(blockId).Start(logType);
+			_lastStartedBlockId = blockId;
 		}
 
 		public static void Stop(string blockId)
 		{
 			Get(blockId).Stop();
+		}
+
+		public static void Stop()
+		{
+			if (_lastStartedBlockId == null)
+				throw new Exception("You should start at least one block before any stop.");
+
+			Stop(_lastStartedBlockId);
 		}
 
 		public static void Clear(string blockId)
@@ -74,7 +86,7 @@ namespace Assets.Scripts.Utils
 				Times++;
 				IsStarted = false;
 
-				if (LogType == LogType.Always)
+				if (LogType == LogType.Always || LastTime > 10f)
 					Debug.Log($"Stopwatch: {Id}, {LastTime:0.00} ms");
 			}
 
