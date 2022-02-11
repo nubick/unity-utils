@@ -258,9 +258,19 @@ namespace Assets.Scripts.Utils
 			rectTransform.offsetMin = new Vector2(left, rectTransform.offsetMin.y);
 		}
 
+		public static float GetLeft(this RectTransform rectTransform)
+		{
+			return rectTransform.offsetMin.x;
+		}
+		
 		public static void SetRight(this RectTransform rectTransform, float right)
 		{
 			rectTransform.offsetMax = new Vector2(-right, rectTransform.offsetMax.y);
+		}
+
+		public static float GetRight(this RectTransform rectTransform)
+		{
+			return -rectTransform.offsetMax.x;
 		}
 
 		public static void SetTop(this RectTransform rectTransform, float top)
@@ -268,11 +278,21 @@ namespace Assets.Scripts.Utils
 			rectTransform.offsetMax = new Vector2(rectTransform.offsetMax.x, -top);
 		}
 
+		public static float GetTop(this RectTransform rectTransform)
+		{
+			return -rectTransform.offsetMax.y;
+		}
+
 		public static void SetBottom(this RectTransform rectTransform, float bottom)
 		{
 			rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, bottom);
 		}
 
+		public static float GetBottom(this RectTransform rectTransform)
+		{
+			return rectTransform.offsetMin.y;
+		}
+		
 		public static void SetLeftTopRightBottom(this RectTransform rectTransform, float left, float top, float right, float bottom)
 		{
 			rectTransform.offsetMin = new Vector2(left, bottom);
